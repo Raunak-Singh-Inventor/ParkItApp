@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "parkitappb2f2e68d": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

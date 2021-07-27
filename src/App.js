@@ -4,6 +4,7 @@ import "./App.css";
 import { Avatar } from "react-rainbow-components";
 
 import logo from "../src/images/Logo.jpg";
+import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
           <h1 style={{ color: "white", padding: 20 }}>Device ID: 12345</h1>
         </div>
       </div>
+      <AmplifySignOut />
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
