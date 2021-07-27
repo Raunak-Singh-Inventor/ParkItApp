@@ -1,11 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 import "./App.css";
-
-import { Avatar } from "react-rainbow-components";
 
 import logo from "../src/images/Logo.jpg";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import AWS from "aws-sdk";
+import { useEffect } from "react";
+import { getMessages } from "./graphql/queries";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -14,6 +15,27 @@ function App() {
 
   var s3 = new AWS.S3(); // we can now create our service object
   console.log(s3);
+
+  useEffect(async () => {
+    const customListMessages = /* GraphQL */ `
+      query MyQuery {
+        listMessages(limit: 1) {
+          items {
+            device_data {
+              accelOne
+              gsr
+              accelZero
+              accelTwo
+              messageTime
+              mic
+            }
+          }
+        }
+      }
+    `;
+    const messages = await API.graphql(graphqlOperation(customListMessages));
+    console.log(messages);
+  }, []);
 
   return (
     <div className="App">
