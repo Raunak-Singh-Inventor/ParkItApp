@@ -1,0 +1,13 @@
+type messages @model @aws_cognito_user_pools {
+  id: ID!
+  device_data: DeviceData
+}
+
+type DeviceData {
+  messageTime: String
+  gsr: String
+  mic: String
+  accelZero: String
+  accelOne: String
+  accelTwo: String
+}

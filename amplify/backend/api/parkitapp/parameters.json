@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "parkitapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authparkitappb2f2e68d",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
