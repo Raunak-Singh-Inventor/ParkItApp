@@ -1,10 +1,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getMessages = /* GraphQL */ `
-  query GetMessages($id: ID!) {
-    getMessages(id: $id) {
+export const getMessageTable = /* GraphQL */ `
+  query GetMessageTable($id: ID!, $insertMessageTime: String!) {
+    getMessageTable(id: $id, insertMessageTime: $insertMessageTime) {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -12,21 +13,33 @@ export const getMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const listMessages = /* GraphQL */ `
-  query ListMessages(
-    $filter: ModelmessagesFilterInput
+export const listMessageTables = /* GraphQL */ `
+  query ListMessageTables(
+    $id: ID
+    $insertMessageTime: ModelStringKeyConditionInput
+    $filter: ModelmessageTableFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMessageTables(
+      id: $id
+      insertMessageTime: $insertMessageTime
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
+        insertMessageTime
         device_data {
           messageTime
           gsr
@@ -34,6 +47,7 @@ export const listMessages = /* GraphQL */ `
           accelZero
           accelOne
           accelTwo
+          client_id
         }
         createdAt
         updatedAt

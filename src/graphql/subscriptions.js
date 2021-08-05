@@ -1,10 +1,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateMessages = /* GraphQL */ `
-  subscription OnCreateMessages {
-    onCreateMessages {
+export const onCreateMessageTable = /* GraphQL */ `
+  subscription OnCreateMessageTable {
+    onCreateMessageTable {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -12,16 +13,18 @@ export const onCreateMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateMessages = /* GraphQL */ `
-  subscription OnUpdateMessages {
-    onUpdateMessages {
+export const onUpdateMessageTable = /* GraphQL */ `
+  subscription OnUpdateMessageTable {
+    onUpdateMessageTable {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -29,16 +32,18 @@ export const onUpdateMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteMessages = /* GraphQL */ `
-  subscription OnDeleteMessages {
-    onDeleteMessages {
+export const onDeleteMessageTable = /* GraphQL */ `
+  subscription OnDeleteMessageTable {
+    onDeleteMessageTable {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -46,6 +51,7 @@ export const onDeleteMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt

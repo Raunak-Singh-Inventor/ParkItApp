@@ -7,6 +7,7 @@ import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import AWS from "aws-sdk";
 import { useEffect } from "react";
 import { getMessages } from "./graphql/queries";
+import { useState } from "react";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -16,11 +17,15 @@ function App() {
   var s3 = new AWS.S3(); // we can now create our service object
   console.log(s3);
 
+  const [Messages, setMessages] = useState({});
+  const [messageTime, setMessageTime] = useState();
+
   useEffect(async () => {
     const customListMessages = /* GraphQL */ `
       query MyQuery {
-        listMessages(limit: 1) {
+        listMessageTables(limit: 1) {
           items {
+            insertMessageTime
             device_data {
               accelOne
               gsr
@@ -28,13 +33,24 @@ function App() {
               accelTwo
               messageTime
               mic
+              client_id
             }
           }
+          nextToken
         }
       }
     `;
-    const messages = await API.graphql(graphqlOperation(customListMessages));
-    console.log(messages);
+    const response = await API.graphql(graphqlOperation(customListMessages));
+    var m = response.data;
+    setMessageTime(
+      new Date(parseInt(m.listMessageTables.items[0].insertMessageTime))
+    );
+    console.log("insertTime: " + messageTime);
+    // console.log(
+    //   "Device ID: " +
+    //     m.listMessageTables.items[0].device_data.client_id
+    // );
+    // console.log(messages.data.listMessages.items[0].device_data.client_id);
   }, []);
 
   return (
@@ -47,7 +63,7 @@ function App() {
           <img style={{ height: 100, width: 100 }} src={logo} alt={logo} />
         </div>
         <div className="col-md-4">
-          <h1 style={{ color: "white", padding: 20 }}>Device ID: 12345</h1>
+          <h1 style={{ color: "white", padding: 20 }}> Device ID: {} </h1>
         </div>
       </div>
       <AmplifySignOut />

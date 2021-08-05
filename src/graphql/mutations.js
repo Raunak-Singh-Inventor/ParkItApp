@@ -1,13 +1,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createMessages = /* GraphQL */ `
-  mutation CreateMessages(
-    $input: CreateMessagesInput!
-    $condition: ModelmessagesConditionInput
+export const createMessageTable = /* GraphQL */ `
+  mutation CreateMessageTable(
+    $input: CreateMessageTableInput!
+    $condition: ModelmessageTableConditionInput
   ) {
-    createMessages(input: $input, condition: $condition) {
+    createMessageTable(input: $input, condition: $condition) {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -15,19 +16,21 @@ export const createMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateMessages = /* GraphQL */ `
-  mutation UpdateMessages(
-    $input: UpdateMessagesInput!
-    $condition: ModelmessagesConditionInput
+export const updateMessageTable = /* GraphQL */ `
+  mutation UpdateMessageTable(
+    $input: UpdateMessageTableInput!
+    $condition: ModelmessageTableConditionInput
   ) {
-    updateMessages(input: $input, condition: $condition) {
+    updateMessageTable(input: $input, condition: $condition) {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -35,19 +38,21 @@ export const updateMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteMessages = /* GraphQL */ `
-  mutation DeleteMessages(
-    $input: DeleteMessagesInput!
-    $condition: ModelmessagesConditionInput
+export const deleteMessageTable = /* GraphQL */ `
+  mutation DeleteMessageTable(
+    $input: DeleteMessageTableInput!
+    $condition: ModelmessageTableConditionInput
   ) {
-    deleteMessages(input: $input, condition: $condition) {
+    deleteMessageTable(input: $input, condition: $condition) {
       id
+      insertMessageTime
       device_data {
         messageTime
         gsr
@@ -55,6 +60,7 @@ export const deleteMessages = /* GraphQL */ `
         accelZero
         accelOne
         accelTwo
+        client_id
       }
       createdAt
       updatedAt
