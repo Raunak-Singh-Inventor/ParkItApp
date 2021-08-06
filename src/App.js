@@ -1,48 +1,48 @@
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import "./App.css";
 
 import logo from "../src/images/Logo.jpg";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import AWS from "aws-sdk";
-import { useEffect } from "react";
-import { useState } from "react";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: "us-west-2:us-west-2_3HXIrQxxg",
   });
 
-  var s3 = new AWS.S3(); // we can now create our service object
-  console.log(s3);
+  const [measurements, setMeasurements] = useState([]);
 
-  const [Messages, setMessages] = useState({});
-  const [deviceID, setDeviceID] = useState("Not detected");
-
-  useEffect(async () => {
-    const customListMessages = /* GraphQL */ `
-      query MyQuery {
-        listMessages(limit: 300) {
-          items {
-            insertMessageTime
-            device_data {
-              measurementValue
-              measurementType
-              clientID
+  useEffect(() => {
+    async function fetchData() {
+      const customListMessages = /* GraphQL */ `
+        query MyQuery {
+          listMessages {
+            nextToken
+            items {
+              device_data {
+                clientID
+                measurementType
+                measurementValue
+              }
             }
           }
-          nextToken
+        }
+      `;
+      const messages = [];
+      const response = await API.graphql(graphqlOperation(customListMessages));
+      if (measurements.length !== response.data.listMessages.items.length) {
+        for (let i = 0; i < response.data.listMessages.items.length; i++) {
+          messages.push(response.data.listMessages.items[i].device_data);
+          setMeasurements(messages);
         }
       }
-    `;
-    const response = await API.graphql(graphqlOperation(customListMessages));
-    console.log(
-      JSON.stringify(response.data.listMessages.items[0].device_data.clientID)
-    );
-    setDeviceID(
-      JSON.stringify(response.data.listMessages.items[0].device_data.clientID)
-    );
-  }, []);
+    }
+    fetchData();
+  }, [measurements]);
+
+  console.log(measurements);
 
   return (
     <div className="App">
@@ -54,7 +54,13 @@ function App() {
           <img style={{ height: 100, width: 100 }} src={logo} alt={logo} />
         </div>
         <div className="col-md-4">
-          <h1 style={{ color: "white", padding: 20 }}>Device ID: {deviceID}</h1>
+          {measurements.length !== 0 ? (
+            <h1 style={{ color: "white", padding: 20 }}>
+              Device ID: {measurements[0].clientID}
+            </h1>
+          ) : (
+            <h1 style={{ color: "white", padding: 20 }}>Device ID: NA</h1>
+          )}
         </div>
       </div>
       <AmplifySignOut />
