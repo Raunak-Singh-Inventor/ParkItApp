@@ -6,7 +6,6 @@ import logo from "../src/images/Logo.jpg";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import AWS from "aws-sdk";
 import { useEffect } from "react";
-import { getMessages } from "./graphql/queries";
 import { useState } from "react";
 
 function App() {
@@ -18,22 +17,18 @@ function App() {
   console.log(s3);
 
   const [Messages, setMessages] = useState({});
-  const [messageTime, setMessageTime] = useState();
+  const [deviceID, setDeviceID] = useState("Not detected");
 
   useEffect(async () => {
     const customListMessages = /* GraphQL */ `
       query MyQuery {
-        listMessageTables(limit: 1) {
+        listMessages(limit: 300) {
           items {
             insertMessageTime
             device_data {
-              accelOne
-              gsr
-              accelZero
-              accelTwo
-              messageTime
-              mic
-              client_id
+              measurementValue
+              measurementType
+              clientID
             }
           }
           nextToken
@@ -41,16 +36,12 @@ function App() {
       }
     `;
     const response = await API.graphql(graphqlOperation(customListMessages));
-    var m = response.data;
-    setMessageTime(
-      new Date(parseInt(m.listMessageTables.items[0].insertMessageTime))
+    console.log(
+      JSON.stringify(response.data.listMessages.items[0].device_data.clientID)
     );
-    console.log("insertTime: " + messageTime);
-    // console.log(
-    //   "Device ID: " +
-    //     m.listMessageTables.items[0].device_data.client_id
-    // );
-    // console.log(messages.data.listMessages.items[0].device_data.client_id);
+    setDeviceID(
+      JSON.stringify(response.data.listMessages.items[0].device_data.clientID)
+    );
   }, []);
 
   return (
@@ -63,7 +54,7 @@ function App() {
           <img style={{ height: 100, width: 100 }} src={logo} alt={logo} />
         </div>
         <div className="col-md-4">
-          <h1 style={{ color: "white", padding: 20 }}> Device ID: {} </h1>
+          <h1 style={{ color: "white", padding: 20 }}>Device ID: {deviceID}</h1>
         </div>
       </div>
       <AmplifySignOut />

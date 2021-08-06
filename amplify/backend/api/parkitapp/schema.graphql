@@ -8,11 +8,7 @@ type messages
 }
 
 type DeviceData {
-  messageTime: String
-  gsr: String
-  mic: String
-  accelZero: String
-  accelOne: String
-  accelTwo: String
-  client_id: String
+  measurementType: String
+  measurementValue: Int
+  clientID: String
 }
