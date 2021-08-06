@@ -1,46 +1,46 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateMessages = /* GraphQL */ `
-  subscription OnCreateMessages {
-    onCreateMessages {
+export const onCreateMeasurements = /* GraphQL */ `
+  subscription OnCreateMeasurements {
+    onCreateMeasurements {
       id
-      insertMessageTime
-      device_data {
-        measurementType
-        measurementValue
-        clientID
-      }
+      clientID
+      measurementHour
+      measurementMinute
+      measurementSecond
+      measurementType
+      measurementValue
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateMessages = /* GraphQL */ `
-  subscription OnUpdateMessages {
-    onUpdateMessages {
+export const onUpdateMeasurements = /* GraphQL */ `
+  subscription OnUpdateMeasurements {
+    onUpdateMeasurements {
       id
-      insertMessageTime
-      device_data {
-        measurementType
-        measurementValue
-        clientID
-      }
+      clientID
+      measurementHour
+      measurementMinute
+      measurementSecond
+      measurementType
+      measurementValue
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteMessages = /* GraphQL */ `
-  subscription OnDeleteMessages {
-    onDeleteMessages {
+export const onDeleteMeasurements = /* GraphQL */ `
+  subscription OnDeleteMeasurements {
+    onDeleteMeasurements {
       id
-      insertMessageTime
-      device_data {
-        measurementType
-        measurementValue
-        clientID
-      }
+      clientID
+      measurementHour
+      measurementMinute
+      measurementSecond
+      measurementType
+      measurementValue
       createdAt
       updatedAt
     }

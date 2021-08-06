@@ -1,33 +1,31 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getMessages = /* GraphQL */ `
-  query GetMessages($id: ID!, $insertMessageTime: String!) {
-    getMessages(id: $id, insertMessageTime: $insertMessageTime) {
+export const getMeasurements = /* GraphQL */ `
+  query GetMeasurements($id: ID!) {
+    getMeasurements(id: $id) {
       id
-      insertMessageTime
-      device_data {
-        measurementType
-        measurementValue
-        clientID
-      }
+      clientID
+      measurementHour
+      measurementMinute
+      measurementSecond
+      measurementType
+      measurementValue
       createdAt
       updatedAt
     }
   }
 `;
-export const listMessages = /* GraphQL */ `
-  query ListMessages(
+export const listMeasurements = /* GraphQL */ `
+  query ListMeasurements(
     $id: ID
-    $insertMessageTime: ModelStringKeyConditionInput
-    $filter: ModelmessagesFilterInput
+    $filter: ModelmeasurementsFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listMessages(
+    listMeasurements(
       id: $id
-      insertMessageTime: $insertMessageTime
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -35,12 +33,12 @@ export const listMessages = /* GraphQL */ `
     ) {
       items {
         id
-        insertMessageTime
-        device_data {
-          measurementType
-          measurementValue
-          clientID
-        }
+        clientID
+        measurementHour
+        measurementMinute
+        measurementSecond
+        measurementType
+        measurementValue
         createdAt
         updatedAt
       }

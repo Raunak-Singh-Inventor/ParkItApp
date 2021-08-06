@@ -1,14 +1,9 @@
-type messages
-  @model
-  @aws_cognito_user_pools
-  @key(fields: ["id", "insertMessageTime"]) {
+type measurements @model @aws_cognito_user_pools @key(fields: ["id"]) {
   id: ID!
-  insertMessageTime: String!
-  device_data: DeviceData
-}
-
-type DeviceData {
-  measurementType: String
-  measurementValue: Int
-  clientID: String
+  clientID: String!
+  measurementHour: Int!
+  measurementMinute: Int!
+  measurementSecond: Int!
+  measurementType: String!
+  measurementValue: Int!
 }
