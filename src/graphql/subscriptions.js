@@ -6,9 +6,6 @@ export const onCreateMeasurements = /* GraphQL */ `
     onCreateMeasurements {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt
@@ -21,9 +18,6 @@ export const onUpdateMeasurements = /* GraphQL */ `
     onUpdateMeasurements {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt
@@ -36,9 +30,6 @@ export const onDeleteMeasurements = /* GraphQL */ `
     onDeleteMeasurements {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt

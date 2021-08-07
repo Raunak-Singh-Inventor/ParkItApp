@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Card } from "react-rainbow-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation } from "aws-amplify";
 import "./App.css";
@@ -16,26 +17,25 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const customListMessages = /* GraphQL */ `
+      const customListMeasurements = /* GraphQL */ `
         query MyQuery {
-          listMessages {
-            nextToken
+          listMeasurements {
             items {
-              device_data {
-                clientID
-                measurementType
-                measurementValue
-              }
+              clientID
+              measurementType
+              measurementValue
             }
           }
         }
       `;
-      const messages = [];
-      const response = await API.graphql(graphqlOperation(customListMessages));
-      if (measurements.length !== response.data.listMessages.items.length) {
-        for (let i = 0; i < response.data.listMessages.items.length; i++) {
-          messages.push(response.data.listMessages.items[i].device_data);
-          setMeasurements(messages);
+      const rResponses = [];
+      const response = await API.graphql(
+        graphqlOperation(customListMeasurements)
+      );
+      if (measurements.length !== response.data.listMeasurements.items.length) {
+        for (let i = 0; i < response.data.listMeasurements.items.length; i++) {
+          rResponses.push(response.data.listMeasurements.items[i]);
+          setMeasurements(rResponses);
         }
       }
     }
@@ -61,6 +61,23 @@ function App() {
           ) : (
             <h1 style={{ color: "white", padding: 20 }}>Device ID: NA</h1>
           )}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4" style={{ padding: 50 }}>
+          <Card>
+            <h1>Hello</h1>
+          </Card>
+        </div>
+        <div className="col-md-4" style={{ padding: 50 }}>
+          <Card>
+            <h1>Hello</h1>
+          </Card>
+        </div>
+        <div className="col-md-4" style={{ padding: 50 }}>
+          <Card>
+            <h1>Hello</h1>
+          </Card>
         </div>
       </div>
       <AmplifySignOut />

@@ -6,9 +6,6 @@ export const getMeasurements = /* GraphQL */ `
     getMeasurements(id: $id) {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt
@@ -34,9 +31,6 @@ export const listMeasurements = /* GraphQL */ `
       items {
         id
         clientID
-        measurementHour
-        measurementMinute
-        measurementSecond
         measurementType
         measurementValue
         createdAt

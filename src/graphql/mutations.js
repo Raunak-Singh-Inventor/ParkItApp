@@ -9,9 +9,6 @@ export const createMeasurements = /* GraphQL */ `
     createMeasurements(input: $input, condition: $condition) {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt
@@ -27,9 +24,6 @@ export const updateMeasurements = /* GraphQL */ `
     updateMeasurements(input: $input, condition: $condition) {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt
@@ -45,9 +39,6 @@ export const deleteMeasurements = /* GraphQL */ `
     deleteMeasurements(input: $input, condition: $condition) {
       id
       clientID
-      measurementHour
-      measurementMinute
-      measurementSecond
       measurementType
       measurementValue
       createdAt

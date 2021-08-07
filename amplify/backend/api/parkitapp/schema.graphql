@@ -1,9 +1,6 @@
 type measurements @model @aws_cognito_user_pools @key(fields: ["id"]) {
   id: ID!
   clientID: String!
-  measurementHour: Int!
-  measurementMinute: Int!
-  measurementSecond: Int!
   measurementType: String!
   measurementValue: Int!
 }
