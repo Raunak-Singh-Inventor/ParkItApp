@@ -14,6 +14,9 @@ function App() {
   });
 
   const [measurements, setMeasurements] = useState([]);
+  const [gsrMeasurements, setGsrMeasurements] = useState({});
+  const [micMeasurements, setMicMeasurements] = useState({});
+  const [gyroMeasurements, setGyroMeasurements] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -21,6 +24,7 @@ function App() {
         query MyQuery {
           listMeasurements {
             items {
+              id
               clientID
               measurementType
               measurementValue
@@ -42,7 +46,29 @@ function App() {
     fetchData();
   }, [measurements]);
 
-  console.log(measurements);
+  console.log("measurements:", measurements);
+
+  useEffect(() => {
+    let gsr = {};
+    let mic = {};
+    let gyro = {};
+    for (let i = 0; i < measurements.length; i++) {
+      if (measurements[i].measurementType === "GSR") {
+        gsr[measurements[i].id] = measurements[i].measurementValue;
+      } else if (measurements[i].measurementType === "Mic") {
+        mic[measurements[i].id] = measurements[i].measurementValue;
+      } else {
+        gyro[measurements[i].id] = measurements[i].measurementValue;
+      }
+    }
+    setGsrMeasurements(gsr);
+    setMicMeasurements(mic);
+    setGyroMeasurements(gyro);
+  }, [measurements.length]);
+
+  console.log("gsrMeasurements:", gsrMeasurements);
+  console.log("micMeasurements:", micMeasurements);
+  console.log("gyroMeasurements:", gyroMeasurements);
 
   return (
     <div className="App">
