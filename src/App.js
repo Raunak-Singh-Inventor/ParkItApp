@@ -64,6 +64,7 @@ function App() {
     setGsrMeasurements(gsr);
     setMicMeasurements(mic);
     setGyroMeasurements(gyro);
+    // eslint-disable-next-line
   }, [measurements.length]);
 
   console.log("gsrMeasurements:", gsrMeasurements);
