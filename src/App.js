@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "react-rainbow-components";
+import {
+  RainbowThemeContainer,
+  Input,
+  ButtonGroupPicker,
+  ButtonOption,
+} from "react-rainbow-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
@@ -8,6 +13,14 @@ import logo from "../src/images/Logo.png";
 import AWS from "aws-sdk";
 
 function App() {
+  const theme = {
+    rainbow: {
+      palette: {
+        brand: "rgb(255,0,0)",
+      },
+    },
+  };
+
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: "us-west-2:us-west-2_3HXIrQxxg",
   });
@@ -152,10 +165,26 @@ function App() {
   console.log("micMeasurements:", micMeasurements);
   console.log("gyroMeasurements:", gyroMeasurements);
 
+  const onRolePickerChange = (value) => {
+    setRole(value);
+  };
+
   return (
     <div className="App">
       {step === 2 && (
-        <div>
+        <RainbowThemeContainer theme={theme}>
+          <ButtonGroupPicker
+            id="button-group-picker-component-1"
+            label="Are you a doctor or a patient?"
+            name="filter"
+            size="medium"
+            bottomHelpText="Select one option"
+            onChange={onRolePickerChange}
+            value={role}
+          >
+            <ButtonOption label="Doctor" name="doctor" />
+            <ButtonOption label="Patient" name="patient" />
+          </ButtonGroupPicker>
           <Input placeholder="username" onChange={onChange} name="username" />
           <Input
             placeholder="password"
@@ -176,13 +205,14 @@ function App() {
             type="phone_number"
           />
           <Input
-            placeholder="doctor/patient"
             onChange={onChange}
             name="role"
             type="role"
+            value={role}
+            disabled
           />
           <button onClick={signUp}>Sign Up</button>
-        </div>
+        </RainbowThemeContainer>
       )}
       {step === 3 && (
         <div>
