@@ -212,40 +212,6 @@ function App() {
       {step === 1 && (
         <>
           <button onClick={signOut}>Sign Out</button>
-          <div className="row">
-            <div className="col-md-4">
-              <h1 style={{ color: "white", padding: 20 }}>Park It!</h1>
-            </div>
-            <div className="col-md-4">
-              <img style={{ height: 100, width: 100 }} src={logo} alt={logo} />
-            </div>
-            <div className="col-md-4">
-              {measurements.length !== 0 ? (
-                <h1 style={{ color: "white", padding: 20 }}>
-                  Device ID: {measurements[0].clientID}
-                </h1>
-              ) : (
-                <h1 style={{ color: "white", padding: 20 }}>Device ID: NA</h1>
-              )}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4" style={{ padding: 50 }}>
-              <Card>
-                <h1>Hello</h1>
-              </Card>
-            </div>
-            <div className="col-md-4" style={{ padding: 50 }}>
-              <Card>
-                <h1>Hello</h1>
-              </Card>
-            </div>
-            <div className="col-md-4" style={{ padding: 50 }}>
-              <Card>
-                <h1>Hello</h1>
-              </Card>
-            </div>
-          </div>
         </>
       )}
     </div>
