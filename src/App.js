@@ -9,7 +9,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
 
-import logo from "../src/images/Logo.png";
 import AWS from "aws-sdk";
 
 function App() {
