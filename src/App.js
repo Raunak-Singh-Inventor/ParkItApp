@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Card, Input } from "react-rainbow-components";
+import { Input } from "react-rainbow-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
 
-import logo from "../src/images/LogoTransparent.png";
+import logo from "../src/images/Logo.png";
 import AWS from "aws-sdk";
 
 function App() {
