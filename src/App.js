@@ -4,7 +4,7 @@ import {
   Input,
   ButtonGroupPicker,
   ButtonOption,
-  Button
+  Button,
 } from "react-rainbow-components";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
@@ -215,7 +215,7 @@ function App() {
         </RainbowThemeContainer>
       )}
       {step === 3 && (
-        <div>
+        <RainbowThemeContainer theme={theme}>
           <Input placeholder="username" onChange={onChange} name="username" />
           <Input
             placeholder="authentication code"
@@ -224,10 +224,10 @@ function App() {
             type="authenticationCode"
           />
           <Button onClick={confirmSignUp}>Confirm Sign Up</Button>
-        </div>
+        </RainbowThemeContainer>
       )}
       {step === 0 && (
-        <div>
+        <RainbowThemeContainer theme={theme}>
           <Input placeholder="username" onChange={onChange} name="username" />
           <Input
             placeholder="password"
@@ -237,12 +237,12 @@ function App() {
           />
           <Button onClick={signIn}>Sign In</Button>
           <Button onClick={createAccount}>Create Account</Button>
-        </div>
+        </RainbowThemeContainer>
       )}
       {step === 1 && (
-        <>
+        <RainbowThemeContainer theme={theme}>
           <Button onClick={signOut}>Sign Out</Button>
-        </>
+        </RainbowThemeContainer>
       )}
     </div>
   );
