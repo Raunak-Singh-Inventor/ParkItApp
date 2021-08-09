@@ -185,12 +185,13 @@ function App() {
             <ButtonOption label="Doctor" name="doctor" />
             <ButtonOption label="Patient" name="patient" />
           </ButtonGroupPicker>
-          <Input placeholder="username" onChange={onChange} name="username" />
+          <Input placeholder="username" onChange={onChange} name="username" value={username}/>
           <Input
             placeholder="password"
             onChange={onChange}
             name="password"
             type="password"
+            value={password}
           />
           <Input
             placeholder="email"
