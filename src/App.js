@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  RainbowThemeContainer,
-  Input,
-  ButtonGroupPicker,
-  ButtonOption,
-  Button,
-} from "react-rainbow-components";
+import { Button, ButtonGroup, TextField, Card } from "@material-ui/core";
+import unlockBrainPic from "../src/images/unlockbrain.png";
+import logo158x160 from "../src/images/Logo158x160.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
@@ -13,14 +9,6 @@ import "./App.css";
 import AWS from "aws-sdk";
 
 function App() {
-  const theme = {
-    rainbow: {
-      palette: {
-        brand: "rgb(255,0,0)",
-      },
-    },
-  };
-
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: "us-west-2:us-west-2_3HXIrQxxg",
   });
@@ -36,6 +24,7 @@ function App() {
   const [gsrMeasurements, setGsrMeasurements] = useState({});
   const [micMeasurements, setMicMeasurements] = useState({});
   const [gyroMeasurements, setGyroMeasurements] = useState({});
+  const [documentHeight, setDocumentHeight] = useState(0);
 
   const onChange = (e) => {
     console.log("e.target.name:", e.target.name);
@@ -166,71 +155,107 @@ function App() {
   console.log("gyroMeasurements:", gyroMeasurements);
 
   const onRolePickerChange = (value) => {
-    setRole(value);
+    setRole(value.target.innerText.toLowerCase());
   };
+
+  useEffect(() => {
+    setDocumentHeight(document.documentElement.offsetHeight);
+  });
 
   return (
     <div className="App">
       {step === 2 && (
-        <RainbowThemeContainer theme={theme}>
-          <ButtonGroupPicker
-            id="button-group-picker-component-1"
-            label="Are you a doctor or a patient?"
-            name="filter"
-            size="medium"
-            bottomHelpText="Select one option"
-            onChange={onRolePickerChange}
-            value={role}
-          >
-            <ButtonOption label="Doctor" name="doctor" />
-            <ButtonOption label="Patient" name="patient" />
-          </ButtonGroupPicker>
-          <Input placeholder="username" onChange={onChange} name="username" value={username}/>
-          <Input
-            placeholder="password"
-            onChange={onChange}
-            name="password"
-            type="password"
-            value={password}
-          />
-          <Input
-            placeholder="email"
-            onChange={onChange}
-            name="email"
-            type="email"
-          />
-          <Input
-            placeholder="phone number"
-            onChange={onChange}
-            name="phone_number"
-            type="phone_number"
-          />
-          <Input
-            onChange={onChange}
-            name="role"
-            type="role"
-            value={role}
-            disabled
-          />
-          <Button onClick={signUp}>Sign Up</Button>
-        </RainbowThemeContainer>
+        <>
+          <div className="row" style={{ marginTop: documentHeight / 2 }}>
+            <div className="col-md-4"></div>
+            <Card className="col-md-4" style={{ textAlign: "center" }}>
+              <img src={logo158x160} />
+              <h3>Sign up for Park It!</h3>
+              <h6>Enter your details below</h6>
+              <div>
+                <ButtonGroup
+                  disableElevation
+                  variant="contained"
+                  onClick={onRolePickerChange}
+                >
+                  <Button>Patient</Button>
+                  <Button>Doctor</Button>
+                </ButtonGroup>
+                <form noValidate autoComplete="off">
+                  <div style={{ marginTop: 20 }}>
+                    <TextField
+                      label="username"
+                      onChange={onChange}
+                      style={{ width: 500 }}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <TextField
+                      label="password"
+                      onChange={onChange}
+                      style={{ width: 500 }}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <TextField
+                      label="email"
+                      onChange={onChange}
+                      style={{ width: 500 }}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <TextField
+                      label="phone number"
+                      onChange={onChange}
+                      style={{ width: 500 }}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <TextField
+                      onChange={onChange}
+                      value={role}
+                      disabled
+                      style={{ width: 500 }}
+                    />
+                  </div>
+                </form>
+                <Button
+                  style={{ marginTop: 20, marginBottom: 10 }}
+                  variant="contained"
+                  onClick={signUp}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            </Card>
+            <div className="col-md-4"></div>
+          </div>
+        </>
       )}
       {step === 3 && (
-        <RainbowThemeContainer theme={theme}>
-          <Input placeholder="username" onChange={onChange} name="username" />
-          <Input
+        <div>
+          <TextField
+            placeholder="username"
+            onChange={onChange}
+            name="username"
+          />
+          <TextField
             placeholder="authentication code"
             onChange={onChange}
             name="authenticationCode"
             type="authenticationCode"
           />
           <Button onClick={confirmSignUp}>Confirm Sign Up</Button>
-        </RainbowThemeContainer>
+        </div>
       )}
       {step === 0 && (
-        <RainbowThemeContainer theme={theme}>
-          <Input placeholder="username" onChange={onChange} name="username" />
-          <Input
+        <div>
+          <TextField
+            placeholder="username"
+            onChange={onChange}
+            name="username"
+          />
+          <TextField
             placeholder="password"
             onChange={onChange}
             name="password"
@@ -238,12 +263,12 @@ function App() {
           />
           <Button onClick={signIn}>Sign In</Button>
           <Button onClick={createAccount}>Create Account</Button>
-        </RainbowThemeContainer>
+        </div>
       )}
       {step === 1 && (
-        <RainbowThemeContainer theme={theme}>
+        <div>
           <Button onClick={signOut}>Sign Out</Button>
-        </RainbowThemeContainer>
+        </div>
       )}
     </div>
   );
