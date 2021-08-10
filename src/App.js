@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, TextField, Card } from "@material-ui/core";
 import logo158x160 from "../src/images/Logo158x160.png";
+import signupgril from "../src/images/signupgirl.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
@@ -212,84 +213,90 @@ function App() {
         <>
           <div style={{ height: 80, backgroundColor: "red" }}>
             <div className="row"></div>
-            <div className="row" style={{ marginTop: documentHeight / 4 }}>
+            <div className="row" style={{ marginTop: documentHeight / 8 }}>
               <div className="col-md-4"></div>
-              <Card className="col-md-4" style={{ textAlign: "center" }}>
-                <img src={logo158x160} alt={""} />
-                <h3>Sign up for Park It!</h3>
-                <h6>Enter your details below</h6>
-                <div>
-                  <ButtonGroup
-                    disableElevation
-                    color="secondary"
-                    onClick={onRolePickerChange}
-                  >
-                    <Button>Patient</Button>
-                    <Button>Doctor</Button>
-                  </ButtonGroup>
-                  <form noValidate autoComplete="off">
+              <Card className="col-md-4" style={{ width: 1100, height: 550 }}>
+                <div className="row">
+                  <div className="col-md-6" style={{textAlign:"center"}}>
+                    <h1 style={{ fontSize: 64 }} className="SignUpText">Sign up to Park It!</h1>
+                    <img src={signupgril}/>
+                  </div>
+                  <div className="col-md-6">
                     <div style={{ marginTop: 20 }}>
-                      <TextField
-                        label="username"
-                        name="username"
-                        onChange={onChange}
-                        style={{ width: 500 }}
-                        error={isUsernameError}
-                        required
-                      />
+                      <ButtonGroup
+                        disableElevation
+                        size="large"
+                        color="secondary"
+                        onClick={onRolePickerChange}
+                      >
+                        <Button>Patient</Button>
+                        <Button>Doctor</Button>
+                      </ButtonGroup>
+                      <form noValidate autoComplete="off" style={{marginTop:30}}>
+                        <div>
+                          <TextField
+                            label="username"
+                            name="username"
+                            onChange={onChange}
+                            style={{ width: 500 }}
+                            error={isUsernameError}
+                            required
+                          />
+                        </div>
+                        <div style={{ marginTop: 30 }}>
+                          <TextField
+                            label="password"
+                            name="password"
+                            type="password"
+                            onChange={onChange}
+                            style={{ width: 500 }}
+                            error={isPasswordError}
+                            required
+                          />
+                        </div>
+                        <div style={{ marginTop: 30 }}>
+                          <TextField
+                            label="email"
+                            name="email"
+                            type="email"
+                            onChange={onChange}
+                            style={{ width: 500 }}
+                            error={isEmailError}
+                            required
+                          />
+                        </div>
+                        <div style={{ marginTop: 30 }}>
+                          <TextField
+                            label="phone number"
+                            name="phone number"
+                            onChange={onChange}
+                            style={{ width: 500 }}
+                            error={isPhoneNumberError}
+                            required
+                          />
+                        </div>
+                        <div style={{ marginTop: 30 }}>
+                          <TextField
+                            onChange={onChange}
+                            value={role}
+                            name="role"
+                            disabled
+                            style={{ width: 500 }}
+                            error={isRoleError}
+                            required
+                          />
+                        </div>
+                      </form>
+                      <Button
+                        style={{ marginTop: 30, marginBottom: 10 }}
+                        color="secondary"
+                        variant="contained"
+                        onClick={signUp}
+                      >
+                        Sign Up
+                      </Button>
                     </div>
-                    <div style={{ marginTop: 20 }}>
-                      <TextField
-                        label="password"
-                        name="password"
-                        type="password"
-                        onChange={onChange}
-                        style={{ width: 500 }}
-                        error={isPasswordError}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 20 }}>
-                      <TextField
-                        label="email"
-                        name="email"
-                        type="email"
-                        onChange={onChange}
-                        style={{ width: 500 }}
-                        error={isEmailError}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 20 }}>
-                      <TextField
-                        label="phone number"
-                        name="phone number"
-                        onChange={onChange}
-                        style={{ width: 500 }}
-                        error={isPhoneNumberError}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 20 }}>
-                      <TextField
-                        onChange={onChange}
-                        value={role}
-                        name="role"
-                        disabled
-                        style={{ width: 500 }}
-                        error={isRoleError}
-                        required
-                      />
-                    </div>
-                  </form>
-                  <Button
-                    style={{ marginTop: 20, marginBottom: 10 }}
-                    color="secondary"
-                    variant="contained"
-                    onClick={signUp}
-                  >
-                    Sign Up
-                  </Button>
+                  </div>
                 </div>
               </Card>
               <div className="col-md-4"></div>
