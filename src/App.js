@@ -166,70 +166,80 @@ function App() {
     <div className="App">
       {step === 2 && (
         <>
-          <div className="row" style={{ marginTop: documentHeight / 2 }}>
-            <div className="col-md-4"></div>
-            <Card className="col-md-4" style={{ textAlign: "center" }}>
-              <img src={logo158x160} />
-              <h3>Sign up for Park It!</h3>
-              <h6>Enter your details below</h6>
-              <div>
-                <ButtonGroup
-                  disableElevation
-                  variant="contained"
-                  onClick={onRolePickerChange}
-                >
-                  <Button>Patient</Button>
-                  <Button>Doctor</Button>
-                </ButtonGroup>
-                <form noValidate autoComplete="off">
-                  <div style={{ marginTop: 20 }}>
-                    <TextField
-                      label="username"
-                      onChange={onChange}
-                      style={{ width: 500 }}
-                    />
-                  </div>
-                  <div style={{ marginTop: 20 }}>
-                    <TextField
-                      label="password"
-                      onChange={onChange}
-                      style={{ width: 500 }}
-                    />
-                  </div>
-                  <div style={{ marginTop: 20 }}>
-                    <TextField
-                      label="email"
-                      onChange={onChange}
-                      style={{ width: 500 }}
-                    />
-                  </div>
-                  <div style={{ marginTop: 20 }}>
-                    <TextField
-                      label="phone number"
-                      onChange={onChange}
-                      style={{ width: 500 }}
-                    />
-                  </div>
-                  <div style={{ marginTop: 20 }}>
-                    <TextField
-                      onChange={onChange}
-                      value={role}
-                      disabled
-                      style={{ width: 500 }}
-                    />
-                  </div>
-                </form>
-                <Button
-                  style={{ marginTop: 20, marginBottom: 10 }}
-                  variant="contained"
-                  onClick={signUp}
-                >
-                  Sign Up
-                </Button>
-              </div>
-            </Card>
-            <div className="col-md-4"></div>
+          <div style={{ height: 80, backgroundColor: "red" }}>
+            <div className="row"></div>
+            <div className="row" style={{ marginTop: documentHeight / 4 }}>
+              <div className="col-md-4"></div>
+              <Card className="col-md-4" style={{ textAlign: "center" }}>
+                <img src={logo158x160} />
+                <h3>Sign up for Park It!</h3>
+                <h6>Enter your details below</h6>
+                <div>
+                  <ButtonGroup
+                    disableElevation
+                    color="secondary"
+                    onClick={onRolePickerChange}
+                  >
+                    <Button>Patient</Button>
+                    <Button>Doctor</Button>
+                  </ButtonGroup>
+                  <form noValidate autoComplete="off">
+                    <div style={{ marginTop: 20 }}>
+                      <TextField
+                        label="username"
+                        onChange={onChange}
+                        style={{ width: 500 }}
+                      />
+                    </div>
+                    <div style={{ marginTop: 20 }}>
+                      <TextField
+                        label="password"
+                        onChange={onChange}
+                        style={{ width: 500 }}
+                      />
+                    </div>
+                    <div style={{ marginTop: 20 }}>
+                      <TextField
+                        label="email"
+                        onChange={onChange}
+                        style={{ width: 500 }}
+                      />
+                    </div>
+                    <div style={{ marginTop: 20 }}>
+                      <TextField
+                        label="phone number"
+                        onChange={onChange}
+                        style={{ width: 500 }}
+                      />
+                    </div>
+                    <div style={{ marginTop: 20 }}>
+                      <TextField
+                        onChange={onChange}
+                        value={role}
+                        disabled
+                        style={{ width: 500 }}
+                      />
+                    </div>
+                  </form>
+                  <Button
+                    style={{ marginTop: 20, marginBottom: 10 }}
+                    color="secondary"
+                    variant="contained"
+                    onClick={signUp}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
+              </Card>
+              <div className="col-md-4"></div>
+            </div>
           </div>
+          <div
+            style={{
+              height: 1200,
+              background: "#f3f3f3",
+            }}
+          ></div>
         </>
       )}
       {step === 3 && (
