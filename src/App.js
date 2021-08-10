@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, TextField, Card } from "@material-ui/core";
-import unlockBrainPic from "../src/images/unlockbrain.png";
 import logo158x160 from "../src/images/Logo158x160.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
@@ -25,6 +24,11 @@ function App() {
   const [micMeasurements, setMicMeasurements] = useState({});
   const [gyroMeasurements, setGyroMeasurements] = useState({});
   const [documentHeight, setDocumentHeight] = useState(0);
+  const [isUsernameError, setIsUsernameError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPhoneNumberError, setIsPhoneNumberError] = useState(false);
+  const [isRoleError, setIsRoleError] = useState(false);
 
   const onChange = (e) => {
     console.log("e.target.name:", e.target.name);
@@ -61,6 +65,46 @@ function App() {
       console.log("succesfully signed up!");
     } catch (err) {
       console.log("error signing up:", err);
+      if (String(err).toLowerCase().includes("username")) {
+        setIsUsernameError(true);
+      } else if (
+        err.code != undefined &&
+        err.code.toLowerCase().includes("username")
+      ) {
+        setIsUsernameError(true);
+      } else {
+        setIsUsernameError(false);
+      }
+      if (String(err).toLowerCase().includes("password")) {
+        setIsPasswordError(true);
+      } else if (
+        err.code != undefined &&
+        err.code.toLowerCase().includes("password")
+      ) {
+        setIsPasswordError(true);
+      } else {
+        setIsPasswordError(false);
+      }
+      if (String(err).toLowerCase().includes("email")) {
+        setIsEmailError(true);
+      } else if (
+        err.message != undefined &&
+        err.message.toLowerCase().includes("email")
+      ) {
+        setIsEmailError(true);
+      } else {
+        setIsEmailError(false);
+      }
+      if (String(err).toLowerCase().includes("phone number")) {
+        setIsPhoneNumberError(true);
+      } else {
+        setIsPhoneNumberError(false);
+      }
+      if (String(err).toLowerCase().includes("role")) {
+        setIsRoleError(true);
+      } else {
+        setIsRoleError(false);
+      }
     }
   };
 
@@ -187,37 +231,54 @@ function App() {
                     <div style={{ marginTop: 20 }}>
                       <TextField
                         label="username"
+                        name="username"
                         onChange={onChange}
                         style={{ width: 500 }}
+                        error={isUsernameError}
+                        required
                       />
                     </div>
                     <div style={{ marginTop: 20 }}>
                       <TextField
                         label="password"
+                        name="password"
+                        type="password"
                         onChange={onChange}
                         style={{ width: 500 }}
+                        error={isPasswordError}
+                        required
                       />
                     </div>
                     <div style={{ marginTop: 20 }}>
                       <TextField
                         label="email"
+                        name="email"
+                        type="email"
                         onChange={onChange}
                         style={{ width: 500 }}
+                        error={isEmailError}
+                        required
                       />
                     </div>
                     <div style={{ marginTop: 20 }}>
                       <TextField
                         label="phone number"
+                        name="phone number"
                         onChange={onChange}
                         style={{ width: 500 }}
+                        error={isPhoneNumberError}
+                        required
                       />
                     </div>
                     <div style={{ marginTop: 20 }}>
                       <TextField
                         onChange={onChange}
                         value={role}
+                        name="role"
                         disabled
                         style={{ width: 500 }}
+                        error={isRoleError}
+                        required
                       />
                     </div>
                   </form>
