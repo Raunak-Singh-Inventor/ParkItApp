@@ -234,7 +234,7 @@ function App() {
     <div className="App">
       {step === 2 && (
         <>
-          <div style={{ height: 80, backgroundColor: "red" }}>
+          <div style={{ height: 80, backgroundColor: "#f50057" }}>
             <div className="row"></div>
             <div className="row" style={{ marginTop: documentHeight / 8 }}>
               <div className="col-md-4"></div>
@@ -306,7 +306,6 @@ function App() {
                             onChange={onChange}
                             style={{ width: textboxWidth }}
                             error={isPhoneNumberError}
-                            required
                           />
                         </div>
                         <div style={{ marginTop: 30 }}>
