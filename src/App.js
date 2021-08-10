@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, ButtonGroup, TextField, Card } from "@material-ui/core";
+import {
+  Button,
+  ButtonGroup,
+  TextField,
+  Card,
+  Grid,
+  Paper,
+} from "@material-ui/core";
 import signupgril from "../src/images/signupgirl.png";
 import { useMediaQuery } from "react-responsive";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,6 +40,10 @@ function App() {
   const [isRoleError, setIsRoleError] = useState(false);
   const [cardHeight, setCardHeight] = useState(0);
   const [textboxWidth, setTextboxWidth] = useState(0);
+  const [patientRolePickerColor, setPatientRolePickerColor] =
+    useState("outlined");
+  const [doctorRolePickerColor, setDoctorRolePickerColor] =
+    useState("outlined");
 
   const onChange = (e) => {
     console.log("e.target.name:", e.target.name);
@@ -43,7 +54,7 @@ function App() {
       setPassword(e.target.value);
     } else if (e.target.name === "email") {
       setEmail(e.target.value);
-    } else if (e.target.name === "phone_number") {
+    } else if (e.target.name === "phone number") {
       setPhoneNumber(e.target.value);
     } else if (e.target.name === "authenticationCode") {
       setAuthenticationCode(e.target.value);
@@ -204,6 +215,14 @@ function App() {
 
   const onRolePickerChange = (value) => {
     setRole(value.target.innerText.toLowerCase());
+    if (value.target.innerText.toLowerCase() === "patient") {
+      setPatientRolePickerColor("contained");
+      setDoctorRolePickerColor("outlined");
+    } else if (value.target.innerText.toLowerCase() === "doctor") {
+      setPatientRolePickerColor("outlined");
+      setDoctorRolePickerColor("contained");
+    } else {
+    }
   };
 
   // eslint-disable-next-line
@@ -230,24 +249,51 @@ function App() {
     }
   });
 
+  function SubmitButton() {
+    if (username && password && email && phoneNumber && role) {
+      return (
+        <Button
+          style={{ marginTop: 30, marginBottom: 10 }}
+          color="secondary"
+          variant="contained"
+          onClick={signUp}
+        >
+          Sign Up
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          style={{ marginTop: 30, marginBottom: 10 }}
+          color="secondary"
+          variant="contained"
+          onClick={signUp}
+          disabled
+        >
+          Sign Up
+        </Button>
+      );
+    }
+  }
+
   return (
     <div className="App">
       {step === 2 && (
-        <>
-          <div style={{ height: 80, backgroundColor: "#f50057" }}>
+        <div style={{ height: 80, backgroundColor: "#f50057" }}>
+          <div className="container">
             <div className="row"></div>
             <div className="row" style={{ marginTop: documentHeight / 8 }}>
               <div className="col-md-4"></div>
               <Card
                 className="col-md-4"
-                style={{ width: 1100, height: cardHeight }}
+                style={{ marginTop: 300, width: 2000, height: cardHeight }}
               >
                 <div className="row">
                   <div className="col-md-6" style={{ textAlign: "center" }}>
                     <h1 style={{ fontSize: 64 }} className="SignUpText">
                       Sign up to Park It!
                     </h1>
-                    {(isTabletOrMobile === false || isPortrait===false) && (
+                    {(isTabletOrMobile === false || isPortrait === false) && (
                       <img src={signupgril} alt={"signUp"} />
                     )}
                   </div>
@@ -259,8 +305,10 @@ function App() {
                         color="secondary"
                         onClick={onRolePickerChange}
                       >
-                        <Button>Patient</Button>
-                        <Button>Doctor</Button>
+                        <Button variant={patientRolePickerColor}>
+                          Patient
+                        </Button>
+                        <Button variant={doctorRolePickerColor}>Doctor</Button>
                       </ButtonGroup>
                       <form
                         noValidate
@@ -319,15 +367,8 @@ function App() {
                             required
                           />
                         </div>
+                        <SubmitButton />
                       </form>
-                      <Button
-                        style={{ marginTop: 30, marginBottom: 10 }}
-                        color="secondary"
-                        variant="contained"
-                        onClick={signUp}
-                      >
-                        Sign Up
-                      </Button>
                     </div>
                   </div>
                 </div>
@@ -335,13 +376,7 @@ function App() {
               <div className="col-md-4"></div>
             </div>
           </div>
-          <div
-            style={{
-              height: 1200,
-              background: "#f3f3f3",
-            }}
-          ></div>
-        </>
+        </div>
       )}
       {step === 3 && (
         <div>
