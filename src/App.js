@@ -68,7 +68,7 @@ function App() {
       if (String(err).toLowerCase().includes("username")) {
         setIsUsernameError(true);
       } else if (
-        err.code != undefined &&
+        err.code !== undefined &&
         err.code.toLowerCase().includes("username")
       ) {
         setIsUsernameError(true);
@@ -78,7 +78,7 @@ function App() {
       if (String(err).toLowerCase().includes("password")) {
         setIsPasswordError(true);
       } else if (
-        err.code != undefined &&
+        err.code !== undefined &&
         err.code.toLowerCase().includes("password")
       ) {
         setIsPasswordError(true);
@@ -88,7 +88,7 @@ function App() {
       if (String(err).toLowerCase().includes("email")) {
         setIsEmailError(true);
       } else if (
-        err.message != undefined &&
+        err.message !== undefined &&
         err.message.toLowerCase().includes("email")
       ) {
         setIsEmailError(true);
@@ -215,7 +215,7 @@ function App() {
             <div className="row" style={{ marginTop: documentHeight / 4 }}>
               <div className="col-md-4"></div>
               <Card className="col-md-4" style={{ textAlign: "center" }}>
-                <img src={logo158x160} />
+                <img src={logo158x160} alt={""} />
                 <h3>Sign up for Park It!</h3>
                 <h6>Enter your details below</h6>
                 <div>
