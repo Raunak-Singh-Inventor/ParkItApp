@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  ButtonGroup,
-  TextField,
-  Card,
-  Grid,
-  Paper,
-} from "@material-ui/core";
-import signupgril from "../src/images/signupgirl.png";
-import { useMediaQuery } from "react-responsive";
+import { Button, TextField } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
 
 import AWS from "aws-sdk";
+
+import SignUp from "./components/SignUp/SignUp";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -31,15 +24,11 @@ function App() {
   const [gsrMeasurements, setGsrMeasurements] = useState({});
   const [micMeasurements, setMicMeasurements] = useState({});
   const [gyroMeasurements, setGyroMeasurements] = useState({});
-  const [documentHeight, setDocumentHeight] = useState(0);
-  const [documentWidth, setDocumentWidth] = useState(0);
   const [isUsernameError, setIsUsernameError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
   const [isPhoneNumberError, setIsPhoneNumberError] = useState(false);
   const [isRoleError, setIsRoleError] = useState(false);
-  const [cardHeight, setCardHeight] = useState(0);
-  const [textboxWidth, setTextboxWidth] = useState(0);
   const [patientRolePickerColor, setPatientRolePickerColor] =
     useState("outlined");
   const [doctorRolePickerColor, setDoctorRolePickerColor] =
@@ -225,158 +214,26 @@ function App() {
     }
   };
 
-  // eslint-disable-next-line
-  useEffect(() => {
-    setDocumentHeight(document.documentElement.offsetHeight);
-    setDocumentWidth(document.documentElement.offsetWidth);
-  });
-
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
-  const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
-
-  useEffect(() => {
-    if (isTabletOrMobile === false) {
-      setCardHeight(550);
-      setTextboxWidth(500);
-    } else {
-      setCardHeight(700);
-      setTextboxWidth(300);
-    }
-  });
-
-  function SubmitButton() {
-    if (username && password && email && phoneNumber && role) {
-      return (
-        <Button
-          style={{ marginTop: 30, marginBottom: 10 }}
-          color="secondary"
-          variant="contained"
-          onClick={signUp}
-        >
-          Sign Up
-        </Button>
-      );
-    } else {
-      return (
-        <Button
-          style={{ marginTop: 30, marginBottom: 10 }}
-          color="secondary"
-          variant="contained"
-          onClick={signUp}
-          disabled
-        >
-          Sign Up
-        </Button>
-      );
-    }
-  }
-
   return (
     <div className="App">
       {step === 2 && (
-        <div style={{ height: 80, backgroundColor: "#f50057" }}>
-          <div className="container">
-            <div className="row"></div>
-            <div className="row" style={{ marginTop: documentHeight / 8 }}>
-              <div className="col-md-4"></div>
-              <Card
-                className="col-md-4"
-                style={{ marginTop: 300, width: 2000, height: cardHeight }}
-              >
-                <div className="row">
-                  <div className="col-md-6" style={{ textAlign: "center" }}>
-                    <h1 style={{ fontSize: 64 }} className="SignUpText">
-                      Sign up to Park It!
-                    </h1>
-                    {(isTabletOrMobile === false || isPortrait === false) && (
-                      <img src={signupgril} alt={"signUp"} />
-                    )}
-                  </div>
-                  <div className="col-md-6">
-                    <div style={{ marginTop: 20 }}>
-                      <ButtonGroup
-                        disableElevation
-                        size="large"
-                        color="secondary"
-                        onClick={onRolePickerChange}
-                      >
-                        <Button variant={patientRolePickerColor}>
-                          Patient
-                        </Button>
-                        <Button variant={doctorRolePickerColor}>Doctor</Button>
-                      </ButtonGroup>
-                      <form
-                        noValidate
-                        autoComplete="off"
-                        style={{ marginTop: 30 }}
-                      >
-                        <div>
-                          <TextField
-                            label="username"
-                            name="username"
-                            onChange={onChange}
-                            style={{ width: textboxWidth }}
-                            error={isUsernameError}
-                            required
-                          />
-                        </div>
-                        <div style={{ marginTop: 30 }}>
-                          <TextField
-                            label="password"
-                            name="password"
-                            type="password"
-                            onChange={onChange}
-                            style={{ width: textboxWidth }}
-                            error={isPasswordError}
-                            required
-                          />
-                        </div>
-                        <div style={{ marginTop: 30 }}>
-                          <TextField
-                            label="email"
-                            name="email"
-                            type="email"
-                            onChange={onChange}
-                            style={{ width: textboxWidth }}
-                            error={isEmailError}
-                            required
-                          />
-                        </div>
-                        <div style={{ marginTop: 30 }}>
-                          <TextField
-                            label="phone number"
-                            name="phone number"
-                            onChange={onChange}
-                            style={{ width: textboxWidth }}
-                            error={isPhoneNumberError}
-                          />
-                        </div>
-                        <div style={{ marginTop: 30 }}>
-                          <TextField
-                            onChange={onChange}
-                            value={role}
-                            name="role"
-                            disabled
-                            style={{ width: textboxWidth }}
-                            error={isRoleError}
-                            required
-                          />
-                        </div>
-                        <SubmitButton />
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-              <div className="col-md-4"></div>
-            </div>
-          </div>
-        </div>
+        <SignUp
+          onRolePickerChange={onRolePickerChange}
+          patientRolePickerColor={patientRolePickerColor}
+          doctorRolePickerColor={doctorRolePickerColor}
+          onChange={onChange}
+          isUsernameError={isUsernameError}
+          isPasswordError={isPasswordError}
+          isEmailError={isEmailError}
+          isPhoneNumberError={isPhoneNumberError}
+          isRoleError={isRoleError}
+          username={username}
+          password={password}
+          email={email}
+          phoneNumber={phoneNumber}
+          role={role}
+          signUp={signUp}
+        />
       )}
       {step === 3 && (
         <div>
