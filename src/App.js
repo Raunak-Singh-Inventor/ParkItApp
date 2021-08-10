@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, TextField, Card } from "@material-ui/core";
-import logo158x160 from "../src/images/Logo158x160.png";
 import signupgril from "../src/images/signupgirl.png";
+import { useMediaQuery } from "react-responsive";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
@@ -25,11 +25,14 @@ function App() {
   const [micMeasurements, setMicMeasurements] = useState({});
   const [gyroMeasurements, setGyroMeasurements] = useState({});
   const [documentHeight, setDocumentHeight] = useState(0);
+  const [documentWidth, setDocumentWidth] = useState(0);
   const [isUsernameError, setIsUsernameError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
   const [isPhoneNumberError, setIsPhoneNumberError] = useState(false);
   const [isRoleError, setIsRoleError] = useState(false);
+  const [cardHeight, setCardHeight] = useState(0);
+  const [textboxWidth, setTextboxWidth] = useState(0);
 
   const onChange = (e) => {
     console.log("e.target.name:", e.target.name);
@@ -203,8 +206,28 @@ function App() {
     setRole(value.target.innerText.toLowerCase());
   };
 
+  // eslint-disable-next-line
   useEffect(() => {
     setDocumentHeight(document.documentElement.offsetHeight);
+    setDocumentWidth(document.documentElement.offsetWidth);
+  });
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+  const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
+
+  useEffect(() => {
+    if (isTabletOrMobile === false) {
+      setCardHeight(550);
+      setTextboxWidth(500);
+    } else {
+      setCardHeight(700);
+      setTextboxWidth(300);
+    }
   });
 
   return (
@@ -215,11 +238,18 @@ function App() {
             <div className="row"></div>
             <div className="row" style={{ marginTop: documentHeight / 8 }}>
               <div className="col-md-4"></div>
-              <Card className="col-md-4" style={{ width: 1100, height: 550 }}>
+              <Card
+                className="col-md-4"
+                style={{ width: 1100, height: cardHeight }}
+              >
                 <div className="row">
-                  <div className="col-md-6" style={{textAlign:"center"}}>
-                    <h1 style={{ fontSize: 64 }} className="SignUpText">Sign up to Park It!</h1>
-                    <img src={signupgril}/>
+                  <div className="col-md-6" style={{ textAlign: "center" }}>
+                    <h1 style={{ fontSize: 64 }} className="SignUpText">
+                      Sign up to Park It!
+                    </h1>
+                    {(isTabletOrMobile === false || isPortrait===false) && (
+                      <img src={signupgril} alt={"signUp"} />
+                    )}
                   </div>
                   <div className="col-md-6">
                     <div style={{ marginTop: 20 }}>
@@ -232,13 +262,17 @@ function App() {
                         <Button>Patient</Button>
                         <Button>Doctor</Button>
                       </ButtonGroup>
-                      <form noValidate autoComplete="off" style={{marginTop:30}}>
+                      <form
+                        noValidate
+                        autoComplete="off"
+                        style={{ marginTop: 30 }}
+                      >
                         <div>
                           <TextField
                             label="username"
                             name="username"
                             onChange={onChange}
-                            style={{ width: 500 }}
+                            style={{ width: textboxWidth }}
                             error={isUsernameError}
                             required
                           />
@@ -249,7 +283,7 @@ function App() {
                             name="password"
                             type="password"
                             onChange={onChange}
-                            style={{ width: 500 }}
+                            style={{ width: textboxWidth }}
                             error={isPasswordError}
                             required
                           />
@@ -260,7 +294,7 @@ function App() {
                             name="email"
                             type="email"
                             onChange={onChange}
-                            style={{ width: 500 }}
+                            style={{ width: textboxWidth }}
                             error={isEmailError}
                             required
                           />
@@ -270,7 +304,7 @@ function App() {
                             label="phone number"
                             name="phone number"
                             onChange={onChange}
-                            style={{ width: 500 }}
+                            style={{ width: textboxWidth }}
                             error={isPhoneNumberError}
                             required
                           />
@@ -281,7 +315,7 @@ function App() {
                             value={role}
                             name="role"
                             disabled
-                            style={{ width: 500 }}
+                            style={{ width: textboxWidth }}
                             error={isRoleError}
                             required
                           />
