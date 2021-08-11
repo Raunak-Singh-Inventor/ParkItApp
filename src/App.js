@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";
@@ -8,6 +8,7 @@ import AWS from "aws-sdk";
 
 import SignUp from "./components/SignUp/SignUp";
 import ConfirmSignUp from "./components/ConfirmSignUp/ConfirmSignUp";
+import SignIn from "./components/SignIn/SignIn";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -254,27 +255,21 @@ function App() {
           onChange={onChange}
           confirmSignUp={confirmSignUp}
           username={username}
-          password={password}
+          authenticationCode={authenticationCode}
           isUsernameError={isUsernameError}
           isAuthenticationCodeError={isAuthenticationCodeError}
         />
       )}
       {step === 0 && (
-        <div>
-          <TextField
-            placeholder="username"
-            onChange={onChange}
-            name="username"
-          />
-          <TextField
-            placeholder="password"
-            onChange={onChange}
-            name="password"
-            type="password"
-          />
-          <Button onClick={signIn}>Sign In</Button>
-          <Button onClick={createAccount}>Create Account</Button>
-        </div>
+        <SignIn
+          onChange={onChange}
+          username={username}
+          password={password}
+          isUsernameError={isUsernameError}
+          isPasswordError={isPasswordError}
+          signIn={signIn}
+          createAccount={createAccount}
+        />
       )}
       {step === 1 && (
         <div>

@@ -16,13 +16,13 @@ export default function SignUp(props) {
     setDocumentHeight(document.documentElement.offsetHeight);
   });
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  // const isDesktopOrLaptop = useMediaQuery({
+  //   query: "(min-width: 1224px)",
+  // });
+  // const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
-  const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
+  // const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
 
   // eslint-disable-next-line
   useEffect(() => {
@@ -141,6 +141,7 @@ export default function SignUp(props) {
                       email={props.email}
                       phoneNumber={props.phoneNumber}
                       role={props.role}
+                      authenticationCode={"authenticationCode"}
                       onClick={props.signUp}
                       text={"Sign Up"}
                     />

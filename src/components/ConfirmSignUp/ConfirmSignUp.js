@@ -8,32 +8,36 @@ import SubmitButton from "../SubmitButton";
 
 export default function SignUp(props) {
   const [documentHeight, setDocumentHeight] = useState(0);
-  const [cardMargintop, setCardMarginTop] = useState(300);
+  const [cardMarginTop, setCardMarginTop] = useState(300);
   const [cardHeight, setCardHeight] = useState(430);
+  const [cardMarginLeft, setCardMarginLeft] = useState(0);
   // eslint-disable-next-line
   useEffect(() => {
     setDocumentHeight(document.documentElement.offsetHeight);
   });
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  // const isDesktopOrLaptop = useMediaQuery({
+  //   query: "(min-width: 1224px)",
+  // });
+  // const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
-  const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
+  // const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
 
   // eslint-disable-next-line
   useEffect(() => {
     if (isTabletOrMobile === true && isPortrait === true) {
       setCardMarginTop(documentHeight / 2);
       setCardHeight(430);
+      setCardMarginLeft(80);
     } else if (isTabletOrMobile === true && isPortrait === false) {
       setCardMarginTop(documentHeight / 2);
       setCardHeight(430);
+      setCardMarginLeft(0);
     } else {
       setCardMarginTop(300);
       setCardHeight(430);
+      setCardMarginLeft(0);
     }
   });
 
@@ -46,12 +50,13 @@ export default function SignUp(props) {
             className="col-md-4"
             style={{
               textAlign: "center",
-              marginTop: cardMargintop,
+              marginTop: cardMarginTop,
               width: 250,
               height: cardHeight,
+              marginLeft: cardMarginLeft,
             }}
           >
-            <img src={confirmsignupgirl} />
+            <img src={confirmsignupgirl} alt={"confirmSignUp"} />
             <form noValidate autoComplete="off">
               <div>
                 <TextField
@@ -74,10 +79,11 @@ export default function SignUp(props) {
               </div>
               <SubmitButton
                 username={props.username}
-                password={props.password}
+                password={"password"}
                 email={"email"}
                 phoneNumber={"phoneNumber"}
                 role={"role"}
+                authenticationCode={props.authenticationCode}
                 onClick={props.confirmSignUp}
                 text={"Confirm Sign Up"}
               />

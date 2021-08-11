@@ -7,7 +7,8 @@ export default function SubmitButton(props) {
     props.password &&
     props.email &&
     props.phoneNumber &&
-    props.role
+    props.role &&
+    props.authenticationCode
   ) {
     return (
       <Button
