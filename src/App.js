@@ -101,6 +101,11 @@ function App() {
       }
       if (String(err).toLowerCase().includes("phone number")) {
         setIsPhoneNumberError(true);
+      } else if (
+        err.message !== undefined &&
+        err.message.toLowerCase().includes("phone number")
+      ) {
+        setIsPhoneNumberError(true);
       } else {
         setIsPhoneNumberError(false);
       }

@@ -6,6 +6,7 @@ import SubmitButton from "./SubmitButton";
 
 export default function SignUp(props) {
   const [documentHeight, setDocumentHeight] = useState(0);
+  // eslint-disable-next-line
   useEffect(() => {
     setDocumentHeight(document.documentElement.offsetHeight);
   });
