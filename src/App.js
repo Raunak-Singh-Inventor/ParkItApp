@@ -16,7 +16,7 @@ function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("+1");
   const [authenticationCode, setAuthenticationCode] = useState("");
   const [role, setRole] = useState("");
   const [step, setStep] = useState(0);
