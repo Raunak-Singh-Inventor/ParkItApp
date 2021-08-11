@@ -123,10 +123,12 @@ function App() {
   const confirmSignUp = async () => {
     try {
       await Auth.confirmSignUp(username, authenticationCode);
-      setStep(1);
       setIsUsernameError(false);
       setIsAuthenticationCodeError(false);
       console.log("user succesfully signed up!");
+      await Auth.signIn(username, password);
+      console.log("user succesfully signed in!");
+      setStep(1);
     } catch (err) {
       console.log("error confirming sign up:", err);
       setIsUsernameError(true);
