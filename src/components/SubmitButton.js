@@ -14,9 +14,9 @@ export default function SubmitButton(props) {
         style={{ marginTop: 30, marginBottom: 10 }}
         color="secondary"
         variant="contained"
-        onClick={props.signUp}
+        onClick={props.onClick}
       >
-        Sign Up
+        {props.text}
       </Button>
     );
   } else {
@@ -25,10 +25,10 @@ export default function SubmitButton(props) {
         style={{ marginTop: 30, marginBottom: 10 }}
         color="secondary"
         variant="contained"
-        onClick={props.signUp}
+        onClick={props.onClick}
         disabled
       >
-        Sign Up
+        {props.text}
       </Button>
     );
   }

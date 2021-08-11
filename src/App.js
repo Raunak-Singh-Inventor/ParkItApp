@@ -7,6 +7,7 @@ import "./App.css";
 import AWS from "aws-sdk";
 
 import SignUp from "./components/SignUp/SignUp";
+import ConfirmSignUp from "./components/ConfirmSignUp/ConfirmSignUp";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -28,6 +29,8 @@ function App() {
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
   const [isPhoneNumberError, setIsPhoneNumberError] = useState(false);
+  const [isAuthenticationCodeError, setIsAuthenticationCodeError] =
+    useState(false);
   const [isRoleError, setIsRoleError] = useState(false);
   const [patientRolePickerColor, setPatientRolePickerColor] =
     useState("outlined");
@@ -121,9 +124,13 @@ function App() {
     try {
       await Auth.confirmSignUp(username, authenticationCode);
       setStep(1);
+      setIsUsernameError(false);
+      setIsAuthenticationCodeError(false);
       console.log("user succesfully signed up!");
     } catch (err) {
       console.log("error confirming sign up:", err);
+      setIsUsernameError(true);
+      setIsAuthenticationCodeError(true);
     }
   };
 
@@ -241,20 +248,14 @@ function App() {
         />
       )}
       {step === 3 && (
-        <div>
-          <TextField
-            placeholder="username"
-            onChange={onChange}
-            name="username"
-          />
-          <TextField
-            placeholder="authentication code"
-            onChange={onChange}
-            name="authenticationCode"
-            type="authenticationCode"
-          />
-          <Button onClick={confirmSignUp}>Confirm Sign Up</Button>
-        </div>
+        <ConfirmSignUp
+          onChange={onChange}
+          confirmSignUp={confirmSignUp}
+          username={username}
+          password={password}
+          isUsernameError={isUsernameError}
+          isAuthenticationCodeError={isAuthenticationCodeError}
+        />
       )}
       {step === 0 && (
         <div>

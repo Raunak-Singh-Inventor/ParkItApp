@@ -4,13 +4,13 @@ import { useMediaQuery } from "react-responsive";
 
 import signupgirl from "../../images/signupgirl.png";
 
-import SubmitButton from "./SubmitButton";
+import SubmitButton from "../SubmitButton";
 
 export default function SignUp(props) {
   const [documentHeight, setDocumentHeight] = useState(0);
   const [cardMargintop, setCardMarginTop] = useState(300);
   const [cardHeight, setCardHeight] = useState(550);
-  const [signUpGirlImageSize,setSignUpGirlImageSize] = useState(500);
+  const [signUpGirlImageSize, setSignUpGirlImageSize] = useState(500);
   // eslint-disable-next-line
   useEffect(() => {
     setDocumentHeight(document.documentElement.offsetHeight);
@@ -26,18 +26,18 @@ export default function SignUp(props) {
 
   // eslint-disable-next-line
   useEffect(() => {
-    if (isTabletOrMobile === true && isPortrait===true) {
+    if (isTabletOrMobile === true && isPortrait === true) {
       setCardMarginTop(documentHeight / 2);
       setCardHeight(1000);
       setSignUpGirlImageSize(300);
-    } else if (isTabletOrMobile===true && isPortrait===false) {
+    } else if (isTabletOrMobile === true && isPortrait === false) {
       setCardMarginTop(documentHeight / 2);
       setCardHeight(550);
       setSignUpGirlImageSize(300);
     } else {
       setCardMarginTop(300);
       setCardHeight(550);
-      setSignUpGirlImageSize(500)
+      setSignUpGirlImageSize(500);
     }
   });
 
@@ -60,7 +60,11 @@ export default function SignUp(props) {
                 <h1 style={{ fontSize: 64 }} className="SignUpText">
                   Sign up to Park It!
                 </h1>
-                <img style={{width:signUpGirlImageSize}} src={signupgirl} alt={"signUp"} />
+                <img
+                  style={{ width: signUpGirlImageSize }}
+                  src={signupgirl}
+                  alt={"signUp"}
+                />
               </div>
               <div className="col-md-6">
                 <div style={{ marginTop: 20 }}>
@@ -137,7 +141,8 @@ export default function SignUp(props) {
                       email={props.email}
                       phoneNumber={props.phoneNumber}
                       role={props.role}
-                      signUp={props.signUp}
+                      onClick={props.signUp}
+                      text={"Sign Up"}
                     />
                   </form>
                 </div>
