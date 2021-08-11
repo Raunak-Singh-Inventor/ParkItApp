@@ -28,16 +28,16 @@ export default function SignUp(props) {
   useEffect(() => {
     if (isTabletOrMobile === true && isPortrait === true) {
       setCardMarginTop(documentHeight / 2);
-      setCardHeight(430);
-      setCardMarginLeft(80);
+      setCardHeight(530);
+      setCardMarginLeft(0);
     } else if (isTabletOrMobile === true && isPortrait === false) {
       setCardMarginTop(documentHeight / 2);
-      setCardHeight(430);
-      setCardMarginLeft(0);
+      setCardHeight(530);
+      setCardMarginLeft(80);
     } else {
       setCardMarginTop(300);
-      setCardHeight(430);
-      setCardMarginLeft(0);
+      setCardHeight(530);
+      setCardMarginLeft(80);
     }
   });
 
@@ -51,12 +51,12 @@ export default function SignUp(props) {
             style={{
               textAlign: "center",
               marginTop: cardMarginTop,
-              width: 250,
+              width: 500,
               height: cardHeight,
               marginLeft: cardMarginLeft,
             }}
           >
-            <img src={confirmsignupgirl} alt={"confirmSignUp"} />
+            <img src={confirmsignupgirl} alt={"confirmSignUp"} style={{width:300}}/>
             <form noValidate autoComplete="off">
               <div>
                 <TextField
