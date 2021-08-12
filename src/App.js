@@ -21,6 +21,7 @@ function App() {
   const [phoneNumber, setPhoneNumber] = useState("+1");
   const [authenticationCode, setAuthenticationCode] = useState("");
   const [role, setRole] = useState("");
+  const [deviceID, setDeviceID] = useState("");
   const [step, setStep] = useState(0);
   const [measurements, setMeasurements] = useState([]);
   const [gsrMeasurements, setGsrMeasurements] = useState({});
@@ -33,6 +34,7 @@ function App() {
   const [isAuthenticationCodeError, setIsAuthenticationCodeError] =
     useState(false);
   const [isRoleError, setIsRoleError] = useState(false);
+  const [isDeviceIDError, setIsDeviceIDError] = useState(false);
   const [patientRolePickerColor, setPatientRolePickerColor] =
     useState("outlined");
   const [doctorRolePickerColor, setDoctorRolePickerColor] =
@@ -53,6 +55,8 @@ function App() {
       setAuthenticationCode(e.target.value);
     } else if (e.target.name === "role") {
       setRole(e.target.value);
+    } else if (e.target.name === "deviceID") {
+      setDeviceID(e.target.value);
     } else {
       console.log("unvalid attribute for name:", e.target.name);
     }
@@ -67,6 +71,7 @@ function App() {
           email: email,
           phone_number: phoneNumber,
           "custom:Role": role,
+          "custom:DeviceID": deviceID,
         },
       });
       setStep(3);
@@ -118,6 +123,7 @@ function App() {
       } else {
         setIsRoleError(false);
       }
+      // add error checking for deviceID
     }
   };
 
@@ -242,11 +248,13 @@ function App() {
           isEmailError={isEmailError}
           isPhoneNumberError={isPhoneNumberError}
           isRoleError={isRoleError}
+          isDeviceIDError={isDeviceIDError}
           username={username}
           password={password}
           email={email}
           phoneNumber={phoneNumber}
           role={role}
+          deviceID={deviceID}
           signUp={signUp}
         />
       )}

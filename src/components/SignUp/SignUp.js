@@ -121,17 +121,18 @@ export default function SignUp(props) {
                         onChange={props.onChange}
                         style={{ width: 500 }}
                         error={props.isPhoneNumberError}
-                        value={props.phoneNumber}
+                        value={props.phoneNumber} 
+                        required
                       />
                     </div>
                     <div style={{ marginTop: 30 }}>
                       <TextField
                         onChange={props.onChange}
-                        value={props.role}
-                        name="role"
-                        disabled
+                        value={props.deviceID}
+                        name="deviceID"
+                        label="Device ID"
                         style={{ width: 500 }}
-                        error={props.isRoleError}
+                        error={props.isDeviceIDError}
                         required
                       />
                     </div>
@@ -141,6 +142,7 @@ export default function SignUp(props) {
                       email={props.email}
                       phoneNumber={props.phoneNumber}
                       role={props.role}
+                      deviceID={props.deviceID}
                       authenticationCode={"authenticationCode"}
                       onClick={props.signUp}
                       text={"Sign Up"}

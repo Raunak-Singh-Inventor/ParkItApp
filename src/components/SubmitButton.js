@@ -8,6 +8,7 @@ export default function SubmitButton(props) {
     props.email &&
     props.phoneNumber &&
     props.role &&
+    props.deviceID &&
     props.authenticationCode
   ) {
     return (
