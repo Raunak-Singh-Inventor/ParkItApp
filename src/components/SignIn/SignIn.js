@@ -97,6 +97,7 @@ export default function SignUp(props) {
                         email={"email"}
                         phoneNumber={"phoneNumber"}
                         role={"role"}
+                        deviceID={"deviceID"}
                         authenticationCode={"authenticationCode"}
                         onClick={props.signIn}
                         text={"Sign In"}
