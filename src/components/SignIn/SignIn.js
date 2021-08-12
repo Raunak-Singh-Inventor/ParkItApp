@@ -103,7 +103,7 @@ export default function SignUp(props) {
                       />
                     </div>
                     <div>
-                      <h6>-----------------------------------------------or-----------------------------------------------</h6>
+                      <h6>-----or------</h6>
                     </div>
                     <div>
                       <Button onClick={props.createAccount}>
