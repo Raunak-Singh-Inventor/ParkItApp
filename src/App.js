@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import "./App.css";

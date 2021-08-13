@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles({
   list: {
@@ -50,7 +51,25 @@ export default function SwipeableTemporaryDrawer(props) {
         {["Dashboard"].map((text, index) => (
           <ListItem
             onClick={() => {
-              props.setStep(1);
+              if (text === "Dashboard") {
+                props.setStep(1);
+              }
+            }}
+            button
+            key={text}
+          >
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["Sign Out"].map((text, index) => (
+          <ListItem
+            onClick={() => {
+              if (text === "Sign Out") {
+                props.signOut();
+              }
             }}
             button
             key={text}
@@ -66,7 +85,13 @@ export default function SwipeableTemporaryDrawer(props) {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Open Menu</Button>
+          <Button
+            onClick={toggleDrawer(anchor, true)}
+            variant="contained"
+            color="secondary"
+          >
+            Open Menu
+          </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}

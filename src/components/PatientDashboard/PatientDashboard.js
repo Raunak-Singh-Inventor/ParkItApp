@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "@material-ui/core";
+import React, { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
-import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer/SwipeableTemporaryDrawer";
+
+import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
 export default function PatientDashboard(props) {
   // const isDesktopOrLaptop = useMediaQuery({
@@ -21,9 +21,11 @@ export default function PatientDashboard(props) {
   });
 
   return (
-    <div style={{ height: 80, backgroundColor: "#f50057" }}>
-      <Button onClick={props.signOut}>Sign Out</Button>
-      <SwipeableTemporaryDrawer setStep={props.setStep} />
+    <div>
+      <SwipeableTemporaryDrawer
+        setStep={props.setStep}
+        signOut={props.signOut}
+      />
     </div>
   );
 }
