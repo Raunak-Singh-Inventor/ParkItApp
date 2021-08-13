@@ -9,6 +9,7 @@ import AWS from "aws-sdk";
 import SignUp from "./components/SignUp/SignUp";
 import ConfirmSignUp from "./components/ConfirmSignUp/ConfirmSignUp";
 import SignIn from "./components/SignIn/SignIn";
+import PatientDashboard from "./components/PatientDashboard/PatientDashboard";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -279,11 +280,7 @@ function App() {
           createAccount={createAccount}
         />
       )}
-      {step === 1 && (
-        <div>
-          <Button onClick={signOut}>Sign Out</Button>
-        </div>
-      )}
+      {step === 1 && <PatientDashboard signOut={signOut} setStep={setStep} />}
     </div>
   );
 }
