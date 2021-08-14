@@ -57,17 +57,17 @@ export default function PatientDashboard(props) {
 
   return (
     <div className="row">
-      <div className="col-md-4">
+      <div className="col-md-4 d-flex align-items-center justify-content-center">
         <SwipeableTemporaryDrawer
           setStep={props.setStep}
           signOut={props.signOut}
         />
       </div>
-      <div className="col-md-4">
-          <h1>Hello, {props.username}</h1>
+      <div className="col-md-4 d-flex align-items-center justify-content-center">
+        <h1>Hello, {props.username}</h1>
       </div>
-      <div className="col-md-4">
-          <h1>DeviceID: {props.deviceID}</h1>
+      <div className="col-md-4 d-flex align-items-center justify-content-center">
+        <h1>DeviceID: {props.deviceID}</h1>
       </div>
     </div>
   );

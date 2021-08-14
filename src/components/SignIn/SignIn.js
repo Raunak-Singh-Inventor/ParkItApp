@@ -45,9 +45,9 @@ export default function SignUp(props) {
     <div style={{ height: 80, backgroundColor: "#f50057" }}>
       <div className="container">
         <div className="row">
-          <div className="col-md-4"></div>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
           <Card
-            className="col-md-4"
+            className="col-md-4 align-items-center justify-content-center"
             style={{
               textAlign: "center",
               marginTop: cardMargintop,
@@ -71,7 +71,7 @@ export default function SignUp(props) {
                   <div>
                     <div>
                       <TextField
-                        style={{ marginTop: 20, width:500 }}
+                        style={{ marginTop: 20, width: 500 }}
                         onChange={props.onChange}
                         label="username"
                         name="username"
@@ -81,7 +81,7 @@ export default function SignUp(props) {
                     </div>
                     <div>
                       <TextField
-                        style={{ marginTop: 20, width:500  }}
+                        style={{ marginTop: 20, width: 500 }}
                         onChange={props.onChange}
                         label="password"
                         name="password"
@@ -116,7 +116,7 @@ export default function SignUp(props) {
               </div>
             </div>
           </Card>
-          <div className="col-md-4"></div>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
         </div>
       </div>
     </div>

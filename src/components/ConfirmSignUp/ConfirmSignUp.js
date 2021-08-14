@@ -45,9 +45,9 @@ export default function SignUp(props) {
     <div style={{ height: 80, backgroundColor: "#f50057" }}>
       <div className="container">
         <div className="row">
-          <div className="col-md-4"></div>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
           <Card
-            className="col-md-4"
+            className="col-md-4 align-items-center justify-content-center"
             style={{
               textAlign: "center",
               marginTop: cardMarginTop,
@@ -90,7 +90,7 @@ export default function SignUp(props) {
               />
             </form>
           </Card>
-          <div className="col-md-4"></div>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
         </div>
       </div>
     </div>

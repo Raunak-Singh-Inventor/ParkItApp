@@ -44,11 +44,10 @@ export default function SignUp(props) {
   return (
     <div style={{ height: 80, backgroundColor: "#f50057" }}>
       <div className="container">
-        <div className="row"></div>
         <div className="row">
-          <div className="col-md-4"></div>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
           <Card
-            className="col-md-4"
+            className="col-md-4 align-items-center justify-content-center"
             style={{
               marginTop: cardMargintop,
               width: 2000,
@@ -121,7 +120,7 @@ export default function SignUp(props) {
                         onChange={props.onChange}
                         style={{ width: 500 }}
                         error={props.isPhoneNumberError}
-                        value={props.phoneNumber} 
+                        value={props.phoneNumber}
                         required
                       />
                     </div>
@@ -152,7 +151,7 @@ export default function SignUp(props) {
               </div>
             </div>
           </Card>
-          <div className="col-md-4"></div>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
         </div>
       </div>
     </div>
