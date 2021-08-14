@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "parkitappb2f2e68d": {}
+      },
+      "function": {
+        "AdminQueriesac27083c": {
+          "deploymentBucketName": "amplify-amplify788c6e996c024-staging-144610-deployment",
+          "s3Key": "amplify-builds/AdminQueriesac27083c-3241414d436952614c62-build.zip"
+        }
       }
     }
   }

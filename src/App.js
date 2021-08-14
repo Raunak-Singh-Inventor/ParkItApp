@@ -146,6 +146,8 @@ function App() {
   async function signIn() {
     try {
       await Auth.signIn(username, password);
+      const userData = (await Auth.currentSession()).getIdToken();
+      setDeviceID(userData.payload["custom:DeviceID"]);
       setStep(1);
       console.log("user succesfully signed in!");
     } catch (error) {
@@ -204,13 +206,19 @@ function App() {
     let gsr = {};
     let mic = {};
     let gyro = {};
+    let gsrCounter = 0;
+    let micCounter = 0;
+    let gyroCounter = 0;
     for (let i = 0; i < measurements.length; i++) {
       if (measurements[i].measurementType === "GSR") {
-        gsr[measurements[i].id] = measurements[i].measurementValue;
+        gsr[gsrCounter] = measurements[i].measurementValue;
+        gsrCounter++;
       } else if (measurements[i].measurementType === "Mic") {
-        mic[measurements[i].id] = measurements[i].measurementValue;
+        mic[micCounter] = measurements[i].measurementValue;
+        micCounter++;
       } else {
-        gyro[measurements[i].id] = measurements[i].measurementValue;
+        gyro[gyroCounter] = measurements[i].measurementValue;
+        gyroCounter++;
       }
     }
     setGsrMeasurements(gsr);
@@ -279,7 +287,17 @@ function App() {
           createAccount={createAccount}
         />
       )}
-      {step === 1 && <PatientDashboard signOut={signOut} setStep={setStep} />}
+      {step === 1 && (
+        <PatientDashboard
+          signOut={signOut}
+          setStep={setStep}
+          gsrMeasurements={gsrMeasurements}
+          micMeasurements={micMeasurements}
+          gyroMeasurements={gyroMeasurements}
+          username={username}
+          deviceID={deviceID}
+        />
+      )}
     </div>
   );
 }
