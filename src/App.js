@@ -26,7 +26,8 @@ function App() {
   const [measurements, setMeasurements] = useState([]);
   const [gsrMeasurements, setGsrMeasurements] = useState({});
   const [micMeasurements, setMicMeasurements] = useState({});
-  const [gyroMeasurements, setGyroMeasurements] = useState({});
+  const [pitchMeasurements, setPitchMeasurements] = useState({});
+  const [rollMeasurements, setRollMeasurements] = useState({});
   const [isUsernameError, setIsUsernameError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
@@ -176,7 +177,6 @@ function App() {
         query MyQuery {
           listMeasurements {
             items {
-              id
               clientID
               measurementType
               measurementValue
@@ -205,10 +205,12 @@ function App() {
   useEffect(() => {
     let gsr = {};
     let mic = {};
-    let gyro = {};
+    let pitch = {};
+    let roll = {};
     let gsrCounter = 0;
     let micCounter = 0;
-    let gyroCounter = 0;
+    let pitchCounter = 0;
+    let rollCounter = 0;
     if (measurements.length >= 100) {
       for (let i = 0; i < measurements.length; i++) {
         if (measurements[i].measurementType === "GSR") {
@@ -217,21 +219,26 @@ function App() {
         } else if (measurements[i].measurementType === "Mic") {
           mic[micCounter] = measurements[i].measurementValue;
           micCounter++;
-        } else {
-          gyro[gyroCounter] = measurements[i].measurementValue;
-          gyroCounter++;
+        } else if (measurements[i].measurementType === "Pitch") {
+          pitch[pitchCounter] = measurements[i].measurementValue;
+          pitchCounter++;
+        } else if (measurements[i].measurementType === "Roll") {
+          roll[rollCounter] = measurements[i].measurementValue;
+          rollCounter++;
         }
       }
     }
     setGsrMeasurements(gsr);
     setMicMeasurements(mic);
-    setGyroMeasurements(gyro);
+    setPitchMeasurements(pitch);
+    setRollMeasurements(roll);
     // eslint-disable-next-line
   }, [measurements.length]);
 
   console.log("gsrMeasurements:", gsrMeasurements);
   console.log("micMeasurements:", micMeasurements);
-  console.log("gyroMeasurements:", gyroMeasurements);
+  console.log("pitchMeasurements:", pitchMeasurements);
+  console.log("rollMeasurements:", rollMeasurements);
 
   const onRolePickerChange = (value) => {
     setRole(value.target.innerText.toLowerCase());
@@ -295,7 +302,8 @@ function App() {
           setStep={setStep}
           gsrMeasurements={gsrMeasurements}
           micMeasurements={micMeasurements}
-          gyroMeasurements={gyroMeasurements}
+          pitchMeasurements={pitchMeasurements}
+          rollMeasurements={rollMeasurements}
           username={username}
           deviceID={deviceID}
         />

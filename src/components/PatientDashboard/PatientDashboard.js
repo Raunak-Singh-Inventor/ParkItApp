@@ -15,13 +15,16 @@ import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 export default function PatientDashboard(props) {
   const [gsrAvg, setGsrAvg] = useState(0);
   const [micAvg, setMicAvg] = useState(0);
-  const [gyroAvg, setGyroAvg] = useState(0);
+  const [pitchAvg, setPitchAvg] = useState(0);
+  const [rollAvg, setRollAvg] = useState(0);
   const [gsrList, setGsrList] = useState([]);
   const [micList, setMicList] = useState([]);
-  const [gyroList, setGyroList] = useState([]);
+  const [pitchList, setPitchList] = useState([]);
+  const [rollList, setRollList] = useState([]);
   const [gsrData, setGsrData] = useState([]);
   const [micData, setMicData] = useState([]);
-  const [gyroData, setGyroData] = useState([]);
+  const [pitchData, setPitchData] = useState([]);
+  const [rollData, setRollData] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -53,19 +56,31 @@ export default function PatientDashboard(props) {
     }
     setMicAvg(Math.round(sum / Object.keys(props.micMeasurements).length));
     sum = 0;
-    for (let i = 0; i < Object.keys(props.gyroMeasurements).length; i++) {
-      sum += props.gyroMeasurements[i];
-      setGyroList((gyroList) => [...gyroList, props.gyroMeasurements[i]]);
+    for (let i = 0; i < Object.keys(props.pitchMeasurements).length; i++) {
+      sum += props.pitchMeasurements[i];
+      setPitchList((pitchList) => [...pitchList, props.pitchMeasurements[i]]);
     }
-    setGyroAvg(Math.round(sum / Object.keys(props.gyroMeasurements).length));
-  }, [props.gsrMeasurements, props.micMeasurements, props.gyroMeasurements]);
+    setPitchAvg(Math.round(sum / Object.keys(props.pitchMeasurements).length));
+    for (let i = 0; i < Object.keys(props.rollMeasurements).length; i++) {
+      sum += props.rollMeasurements[i];
+      setRollList((rollList) => [...rollList, props.rollMeasurements[i]]);
+    }
+    setRollAvg(Math.round(sum / Object.keys(props.rollMeasurements).length));
+  }, [
+    props.gsrMeasurements,
+    props.micMeasurements,
+    props.pitchMeasurements,
+    props.rollMeasurements,
+  ]);
 
   console.log("gsrAvg:", gsrAvg);
   console.log("micAvg:", micAvg);
-  console.log("gyroAvg:", gyroAvg);
+  console.log("pitchAvg:", pitchAvg);
+  console.log("rollAvg:", rollAvg);
   console.log("gsrList:", gsrList);
   console.log("micList:", micList);
-  console.log("gyroList:", gyroList);
+  console.log("pitchList:", pitchList);
+  console.log("rollList:", rollList);
 
   useEffect(() => {
     let data = [];
@@ -79,15 +94,21 @@ export default function PatientDashboard(props) {
     }
     setMicData(data);
     data = [];
-    for (let i = 0; i < gyroList.length; i++) {
-      data.push({ name: i, value: gyroList[i] });
+    for (let i = 0; i < pitchList.length; i++) {
+      data.push({ name: i, value: pitchList[i] });
     }
-    setGyroData(data);
-  }, [gsrList, micList, gyroList]);
+    setPitchData(data);
+    data = [];
+    for (let i = 0; i < rollList.length; i++) {
+      data.push({ name: i, value: rollList[i] });
+    }
+    setRollData(data);
+  }, [gsrList, micList, pitchList, rollList]);
 
   console.log("gsrData:", gsrData);
   console.log("micData:", micData);
-  console.log("gyroData:", gyroData);
+  console.log("pitchData:", pitchData);
+  console.log("rollData:", rollData);
 
   return (
     <>
@@ -113,7 +134,10 @@ export default function PatientDashboard(props) {
           <h1>Average Mic Reading: {micAvg}</h1>
         </Card>
         <Card className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Average Gyro Reading: {gyroAvg}</h1>
+          <h1>Average Pitch Reading: {pitchAvg}</h1>
+        </Card>
+        <Card className="col-md-4 d-flex align-items-center justify-content-center">
+          <h1>Average Roll Reading: {rollAvg}</h1>
         </Card>
       </div>
       <LineChart
@@ -141,7 +165,18 @@ export default function PatientDashboard(props) {
       <LineChart
         width={1000}
         height={300}
-        data={gyroData}
+        data={pitchData}
+        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+      >
+        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
+      <LineChart
+        width={1000}
+        height={300}
+        data={rollData}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
         <Line type="monotone" dataKey="value" stroke="#8884d8" />

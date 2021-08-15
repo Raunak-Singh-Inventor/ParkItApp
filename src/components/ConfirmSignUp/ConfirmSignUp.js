@@ -56,7 +56,11 @@ export default function SignUp(props) {
               marginLeft: cardMarginLeft,
             }}
           >
-            <img src={confirmsignupgirl} alt={"confirmSignUp"} style={{width:300}}/>
+            <img
+              src={confirmsignupgirl}
+              alt={"confirmSignUp"}
+              style={{ width: 300 }}
+            />
             <form noValidate autoComplete="off">
               <div>
                 <TextField
