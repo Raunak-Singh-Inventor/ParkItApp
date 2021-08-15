@@ -209,16 +209,18 @@ function App() {
     let gsrCounter = 0;
     let micCounter = 0;
     let gyroCounter = 0;
-    for (let i = 0; i < measurements.length; i++) {
-      if (measurements[i].measurementType === "GSR") {
-        gsr[gsrCounter] = measurements[i].measurementValue;
-        gsrCounter++;
-      } else if (measurements[i].measurementType === "Mic") {
-        mic[micCounter] = measurements[i].measurementValue;
-        micCounter++;
-      } else {
-        gyro[gyroCounter] = measurements[i].measurementValue;
-        gyroCounter++;
+    if (measurements.length >= 100) {
+      for (let i = 0; i < measurements.length; i++) {
+        if (measurements[i].measurementType === "GSR") {
+          gsr[gsrCounter] = measurements[i].measurementValue;
+          gsrCounter++;
+        } else if (measurements[i].measurementType === "Mic") {
+          mic[micCounter] = measurements[i].measurementValue;
+          micCounter++;
+        } else {
+          gyro[gyroCounter] = measurements[i].measurementValue;
+          gyroCounter++;
+        }
       }
     }
     setGsrMeasurements(gsr);

@@ -41,7 +41,6 @@ export default function PatientDashboard(props) {
 
   useEffect(() => {
     let sum = 0;
-    console.log(Object.keys(props.micMeasurements));
     for (let i = 0; i < Object.keys(props.gsrMeasurements).length; i++) {
       sum += props.gsrMeasurements[i];
       setGsrList((gsrList) => [...gsrList, props.gsrMeasurements[i]]);
