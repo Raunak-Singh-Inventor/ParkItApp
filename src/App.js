@@ -28,6 +28,7 @@ function App() {
   const [micMeasurements, setMicMeasurements] = useState({});
   const [pitchMeasurements, setPitchMeasurements] = useState({});
   const [rollMeasurements, setRollMeasurements] = useState({});
+  const [yawMeasurements, setYawMeasurements] = useState({});
   const [isUsernameError, setIsUsernameError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
@@ -207,10 +208,12 @@ function App() {
     let mic = {};
     let pitch = {};
     let roll = {};
+    let yaw = {};
     let gsrCounter = 0;
     let micCounter = 0;
     let pitchCounter = 0;
     let rollCounter = 0;
+    let yawCounter = 0;
     if (measurements.length >= 100) {
       for (let i = 0; i < measurements.length; i++) {
         if (measurements[i].measurementType === "GSR") {
@@ -225,6 +228,11 @@ function App() {
         } else if (measurements[i].measurementType === "Roll") {
           roll[rollCounter] = measurements[i].measurementValue;
           rollCounter++;
+        } else if (measurements[i].measurementType === "Yaw") {
+          yaw[yawCounter] = measurements[i].measurementValue;
+          yawCounter++;
+        } else {
+          console.log("measurement[i].measurementType not recogonized");
         }
       }
     }
@@ -232,6 +240,7 @@ function App() {
     setMicMeasurements(mic);
     setPitchMeasurements(pitch);
     setRollMeasurements(roll);
+    setYawMeasurements(yaw);
     // eslint-disable-next-line
   }, [measurements.length]);
 
@@ -239,6 +248,7 @@ function App() {
   console.log("micMeasurements:", micMeasurements);
   console.log("pitchMeasurements:", pitchMeasurements);
   console.log("rollMeasurements:", rollMeasurements);
+  console.log("yawMeasurements:", yawMeasurements);
 
   const onRolePickerChange = (value) => {
     setRole(value.target.innerText.toLowerCase());
@@ -304,6 +314,7 @@ function App() {
           micMeasurements={micMeasurements}
           pitchMeasurements={pitchMeasurements}
           rollMeasurements={rollMeasurements}
+          yawMeasurements={yawMeasurements}
           username={username}
           deviceID={deviceID}
         />

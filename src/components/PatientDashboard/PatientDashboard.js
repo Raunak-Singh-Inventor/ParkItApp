@@ -17,14 +17,17 @@ export default function PatientDashboard(props) {
   const [micAvg, setMicAvg] = useState(0);
   const [pitchAvg, setPitchAvg] = useState(0);
   const [rollAvg, setRollAvg] = useState(0);
+  const [yawAvg, setYawAvg] = useState([]);
   const [gsrList, setGsrList] = useState([]);
   const [micList, setMicList] = useState([]);
   const [pitchList, setPitchList] = useState([]);
   const [rollList, setRollList] = useState([]);
+  const [yawList, setYawList] = useState([]);
   const [gsrData, setGsrData] = useState([]);
   const [micData, setMicData] = useState([]);
   const [pitchData, setPitchData] = useState([]);
   const [rollData, setRollData] = useState([]);
+  const [yawData, setYawData] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -66,21 +69,29 @@ export default function PatientDashboard(props) {
       setRollList((rollList) => [...rollList, props.rollMeasurements[i]]);
     }
     setRollAvg(Math.round(sum / Object.keys(props.rollMeasurements).length));
+    for (let i = 0; i < Object.keys(props.yawMeasurements).length; i++) {
+      sum += props.yawMeasurements[i];
+      setYawList((yawList) => [...yawList, props.yawMeasurements[i]]);
+    }
+    setYawAvg(Math.round(sum / Object.keys(props.yawMeasurements).length));
   }, [
     props.gsrMeasurements,
     props.micMeasurements,
     props.pitchMeasurements,
     props.rollMeasurements,
+    props.yawMeasurements,
   ]);
 
   console.log("gsrAvg:", gsrAvg);
   console.log("micAvg:", micAvg);
   console.log("pitchAvg:", pitchAvg);
   console.log("rollAvg:", rollAvg);
+  console.log("yawAvg:", yawAvg);
   console.log("gsrList:", gsrList);
   console.log("micList:", micList);
   console.log("pitchList:", pitchList);
   console.log("rollList:", rollList);
+  console.log("yawList:", yawList);
 
   useEffect(() => {
     let data = [];
@@ -103,12 +114,18 @@ export default function PatientDashboard(props) {
       data.push({ name: i, value: rollList[i] });
     }
     setRollData(data);
-  }, [gsrList, micList, pitchList, rollList]);
+    data = [];
+    for (let i = 0; i < yawList.length; i++) {
+      data.push({ name: i, value: yawList[i] });
+    }
+    setYawData(data);
+  }, [gsrList, micList, pitchList, rollList, yawList]);
 
   console.log("gsrData:", gsrData);
   console.log("micData:", micData);
   console.log("pitchData:", pitchData);
   console.log("rollData:", rollData);
+  console.log("yawData:", yawData);
 
   return (
     <>
@@ -138,6 +155,9 @@ export default function PatientDashboard(props) {
         </Card>
         <Card className="col-md-4 d-flex align-items-center justify-content-center">
           <h1>Average Roll Reading: {rollAvg}</h1>
+        </Card>
+        <Card className="col-md-4 d-flex align-items-center justify-content-center">
+          <h1>Average Yaw Reading: {yawAvg}</h1>
         </Card>
       </div>
       <LineChart
@@ -177,6 +197,17 @@ export default function PatientDashboard(props) {
         width={1000}
         height={300}
         data={rollData}
+        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+      >
+        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
+      <LineChart
+        width={1000}
+        height={300}
+        data={yawData}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
         <Line type="monotone" dataKey="value" stroke="#8884d8" />
