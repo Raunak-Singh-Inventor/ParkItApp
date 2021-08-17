@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "@material-ui/core";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
-  LineChart,
-  Line,
-  CartesianGrid,
+  AreaChart,
+  Area,
   YAxis,
+  CartesianGrid,
   Tooltip,
+  XAxis,
 } from "recharts";
 import { useMediaQuery } from "react-responsive";
 
@@ -27,6 +28,11 @@ export default function PatientDashboard(props) {
   const [pitchData, setPitchData] = useState([]);
   const [rollData, setRollData] = useState([]);
   const [yawData, setYawData] = useState([]);
+  const [data, setData] = useState([]);
+  const [types, setTypes] = useState(["GSR", "Mic", "Gyro"]);
+  const [isGsrSelected, setIsGsrSelected] = useState(true);
+  const [isMicSelected, setIsMicSelected] = useState(true);
+  const [isGyroSelected, setIsGyroSelected] = useState(true);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -126,6 +132,65 @@ export default function PatientDashboard(props) {
   console.log("rollData:", rollData);
   console.log("yawData:", yawData);
 
+  let cd = [];
+  useEffect(() => {
+    for (let i = 0; i < 50; i++) {
+      let dict = {};
+      dict["id"] = i;
+      if (i < gsrList.length) {
+        dict["gsr"] = gsrList[i];
+      } else {
+        dict["gsr"] = 0;
+      }
+      if (i < micList.length) {
+        dict["mic"] = micList[i];
+      } else {
+        dict["mic"] = 0;
+      }
+      if (i < pitchList.length) {
+        dict["pitch"] = pitchList[i];
+      } else {
+        dict["pitch"] = 0;
+      }
+      if (i < rollList.length) {
+        dict["roll"] = rollList[i];
+      } else {
+        dict["roll"] = 0;
+      }
+      if (i < yawList.length) {
+        dict["yaw"] = yawList[i];
+      } else {
+        dict["yaw"] = 0;
+      }
+      cd.push(dict);
+      setData(cd);
+    }
+  }, [gsrList, micList, pitchList, rollList, yawList]);
+
+  console.log("data:", data);
+
+  const handleType = (event, newTypes) => {
+    setTypes(newTypes);
+    setIsGsrSelected(false);
+    setIsMicSelected(false);
+    setIsGyroSelected(false);
+    for (let i = 0; i < newTypes.length; i++) {
+      if (newTypes[i] === "GSR") {
+        setIsGsrSelected(true);
+      }
+      if (newTypes[i] === "Mic") {
+        setIsMicSelected(true);
+      }
+      if (newTypes[i] === "Gyro") {
+        setIsGyroSelected(true);
+      }
+    }
+  };
+
+  console.log("isGsrSelected", isGsrSelected);
+  console.log("isMicSelected", isMicSelected);
+  console.log("isGyroSelected", isGyroSelected);
+
   return (
     <>
       <div className="row">
@@ -136,84 +201,100 @@ export default function PatientDashboard(props) {
           />
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Hello, {props.username}</h1>
+          <h5>What measurement would you like to view?</h5>
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>DeviceID: {props.deviceID}</h1>
+          <h5>DeviceID: {props.deviceID}</h5>
         </div>
       </div>
       <div className="row">
-        <Card className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Average Gsr Reading: {gsrAvg}</h1>
-        </Card>
-        <Card className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Average Mic Reading: {micAvg}</h1>
-        </Card>
-        <Card className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Average Pitch Reading: {pitchAvg}</h1>
-        </Card>
-        <Card className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Average Roll Reading: {rollAvg}</h1>
-        </Card>
-        <Card className="col-md-4 d-flex align-items-center justify-content-center">
-          <h1>Average Yaw Reading: {yawAvg}</h1>
-        </Card>
+        <div className="row">
+          <div className="col-md-4"></div>
+          <div className="col-md-4 d-flex align-items-center justify-content-center">
+            <ToggleButtonGroup
+              value={types}
+              onChange={handleType}
+              aria-label="text formatting"
+            >
+              <ToggleButton
+                value="GSR"
+                aria-label="GSR"
+                thumbStyle={{ backgroundColor: "red" }}
+                trackStyle={{ backgroundColor: "green" }}
+              >
+                GSR
+              </ToggleButton>
+              <ToggleButton value="Mic" aria-label="Mic">
+                Mic
+              </ToggleButton>
+              <ToggleButton value="Gyro" aria-label="Gyro">
+                Gyro
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+        </div>
       </div>
-      <LineChart
-        width={1000}
-        height={300}
-        data={gsrData}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+      <AreaChart
+        width={1930}
+        height={500}
+        data={data}
+        margin={{
+          top: 10,
+          right: 30,
+          left: 0,
+          bottom: 0,
+        }}
       >
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis />
         <YAxis />
         <Tooltip />
-      </LineChart>
-      <LineChart
-        width={1000}
-        height={300}
-        data={micData}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <YAxis />
-        <Tooltip />
-      </LineChart>
-      <LineChart
-        width={1000}
-        height={300}
-        data={pitchData}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <YAxis />
-        <Tooltip />
-      </LineChart>
-      <LineChart
-        width={1000}
-        height={300}
-        data={rollData}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <YAxis />
-        <Tooltip />
-      </LineChart>
-      <LineChart
-        width={1000}
-        height={300}
-        data={yawData}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-      >
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <YAxis />
-        <Tooltip />
-      </LineChart>
+        {isGsrSelected === true && (
+          <Area
+            type="monotone"
+            dataKey="gsr"
+            stackId="1"
+            stroke="#fc0303"
+            fill="#fc0303"
+          />
+        )}
+        {isMicSelected === true && (
+          <Area
+            type="monotone"
+            dataKey="mic"
+            stackId="1"
+            stroke="#fc5e03"
+            fill="#fc5e03"
+          />
+        )}
+        {isGyroSelected === true && (
+          <Area
+            type="monotone"
+            dataKey="pitch"
+            stackId="1"
+            stroke="#fcb103"
+            fill="#fcb103"
+          />
+        )}
+        {isGyroSelected === true && (
+          <Area
+            type="monotone"
+            dataKey="roll"
+            stackId="1"
+            stroke="#fc035a"
+            fill="#fc035a"
+          />
+        )}
+        {isGyroSelected === true && (
+          <Area
+            type="monotone"
+            dataKey="yaw"
+            stackId="1"
+            stroke="#ad03fc"
+            fill="blue"
+          />
+        )}
+      </AreaChart>
     </>
   );
 }
