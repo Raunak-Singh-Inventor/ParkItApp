@@ -158,19 +158,20 @@ export default function PatientDashboard(props) {
   console.log("isGyroSelected", isGyroSelected);
 
   return (
-    <>
+    <div>
       <div className="row">
         <div className="col-md-4 d-flex align-items-center justify-content-center">
           <SwipeableTemporaryDrawer
             setStep={props.setStep}
             signOut={props.signOut}
+            color={"secondary"}
           />
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h5>What measurement would you like to view?</h5>
+          <h4>What measurement would you like to view?</h4>
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h5>DeviceID: {props.deviceID}</h5>
+          <h4>DeviceID: {props.deviceID}</h4>
         </div>
       </div>
       <div className="row">
@@ -259,12 +260,12 @@ export default function PatientDashboard(props) {
       <div className="row">
         <div className="col-md-4 d-flex align-items-center justify-content-center"></div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h2>Showing readings of&nbsp;</h2>
+          <h4>Showing readings of&nbsp;</h4>
           {types.map((type) => (
-            <h2>{type}&nbsp;</h2>
+            <h4>{type}&nbsp;</h4>
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

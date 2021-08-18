@@ -62,6 +62,21 @@ export default function SwipeableTemporaryDrawer(props) {
           </ListItem>
         ))}
       </List>
+      <List>
+        {["Exercises"].map((text, index) => (
+          <ListItem
+            onClick={() => {
+              if (text === "Exercises") {
+                props.setStep(4);
+              }
+            }}
+            button
+            key={text}
+          >
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
       <Divider />
       <List>
         {["Sign Out"].map((text, index) => (
@@ -88,7 +103,7 @@ export default function SwipeableTemporaryDrawer(props) {
           <Button
             onClick={toggleDrawer(anchor, true)}
             variant="contained"
-            color="secondary"
+            color={props.color}
           >
             Open Menu
           </Button>

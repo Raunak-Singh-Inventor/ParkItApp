@@ -10,6 +10,7 @@ import ConfirmSignUp from "./components/ConfirmSignUp/ConfirmSignUp";
 import SignIn from "./components/SignIn/SignIn";
 import PatientDashboard from "./components/PatientDashboard/PatientDashboard";
 import DoctorDashboard from "./components/DoctorDashboard/DoctorDashboard";
+import ExercisesPage from "./components/PatientDashboard/ExercisesPage/ExercisesPage";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -341,6 +342,7 @@ function App() {
           setDeviceID={setDeviceID}
         />
       )}
+      {step === 4 && <ExercisesPage setStep={setStep} signOut={signOut} />}
     </div>
   );
 }
