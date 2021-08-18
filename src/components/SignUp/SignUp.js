@@ -125,15 +125,27 @@ export default function SignUp(props) {
                       />
                     </div>
                     <div style={{ marginTop: 30 }}>
-                      <TextField
-                        onChange={props.onChange}
-                        value={props.deviceID}
-                        name="deviceID"
-                        label="Device ID"
-                        style={{ width: 500 }}
-                        error={props.isDeviceIDError}
-                        required
-                      />
+                      {props.role === "patient" ? (
+                        <TextField
+                          onChange={props.onChange}
+                          value={props.deviceID}
+                          name="deviceID"
+                          label="Device ID"
+                          style={{ width: 500 }}
+                          error={props.isDeviceIDError}
+                          required
+                        />
+                      ) : (
+                        <TextField
+                          onChange={props.onChange}
+                          value={props.deviceID}
+                          name="deviceID"
+                          label="Device ID"
+                          style={{ width: 500 }}
+                          error={props.isDeviceIDError}
+                          disabled
+                        />
+                      )}
                     </div>
                     <SubmitButton
                       username={props.username}

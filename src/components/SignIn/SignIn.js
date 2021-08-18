@@ -96,7 +96,7 @@ export default function SignUp(props) {
                         password={props.password}
                         email={"email"}
                         phoneNumber={"phoneNumber"}
-                        role={"role"}
+                        role={"patient"}
                         deviceID={"deviceID"}
                         authenticationCode={"authenticationCode"}
                         onClick={props.signIn}

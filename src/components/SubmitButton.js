@@ -7,8 +7,26 @@ export default function SubmitButton(props) {
     props.password &&
     props.email &&
     props.phoneNumber &&
-    props.role &&
+    props.role === "patient" &&
     props.deviceID &&
+    props.authenticationCode
+  ) {
+    return (
+      <Button
+        style={{ marginTop: 30, marginBottom: 10 }}
+        color="secondary"
+        variant="contained"
+        onClick={props.onClick}
+      >
+        {props.text}
+      </Button>
+    );
+  } else if (
+    props.username &&
+    props.password &&
+    props.email &&
+    props.phoneNumber &&
+    props.role === "doctor" &&
     props.authenticationCode
   ) {
     return (

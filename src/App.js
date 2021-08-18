@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp/SignUp";
 import ConfirmSignUp from "./components/ConfirmSignUp/ConfirmSignUp";
 import SignIn from "./components/SignIn/SignIn";
 import PatientDashboard from "./components/PatientDashboard/PatientDashboard";
+import DoctorDashboard from "./components/DoctorDashboard/DoctorDashboard";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -150,6 +151,7 @@ function App() {
       await Auth.signIn(username, password);
       const userData = (await Auth.currentSession()).getIdToken();
       setDeviceID(userData.payload["custom:DeviceID"]);
+      setRole(userData.payload["custom:Role"]);
       setStep(1);
       console.log("user succesfully signed in!");
     } catch (error) {
@@ -172,30 +174,31 @@ function App() {
     setStep(2);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const customListMeasurements = /* GraphQL */ `
-        query MyQuery {
-          listMeasurements {
-            items {
-              clientID
-              measurementType
-              measurementValue
-            }
+  async function fetchData() {
+    const customListMeasurements = /* GraphQL */ `
+      query MyQuery {
+        listMeasurements {
+          items {
+            clientID
+            measurementType
+            measurementValue
           }
         }
-      `;
-      const rResponses = [];
-      const response = await API.graphql(
-        graphqlOperation(customListMeasurements)
-      );
-      if (measurements.length !== response.data.listMeasurements.items.length) {
-        for (let i = 0; i < response.data.listMeasurements.items.length; i++) {
-          rResponses.push(response.data.listMeasurements.items[i]);
-          setMeasurements(rResponses);
-        }
+      }
+    `;
+    const rResponses = [];
+    const response = await API.graphql(
+      graphqlOperation(customListMeasurements)
+    );
+    if (measurements.length !== response.data.listMeasurements.items.length) {
+      for (let i = 0; i < response.data.listMeasurements.items.length; i++) {
+        rResponses.push(response.data.listMeasurements.items[i]);
+        setMeasurements(rResponses);
       }
     }
+  }
+
+  useEffect(() => {
     if (step === 1) {
       fetchData();
     }
@@ -214,25 +217,29 @@ function App() {
     let pitchCounter = 0;
     let rollCounter = 0;
     let yawCounter = 0;
+    console.log("deviceID:", deviceID);
     if (measurements.length >= 100) {
       for (let i = 0; i < measurements.length; i++) {
-        if (measurements[i].measurementType === "GSR") {
-          gsr[gsrCounter] = measurements[i].measurementValue;
-          gsrCounter++;
-        } else if (measurements[i].measurementType === "Mic") {
-          mic[micCounter] = measurements[i].measurementValue;
-          micCounter++;
-        } else if (measurements[i].measurementType === "Pitch") {
-          pitch[pitchCounter] = measurements[i].measurementValue;
-          pitchCounter++;
-        } else if (measurements[i].measurementType === "Roll") {
-          roll[rollCounter] = measurements[i].measurementValue;
-          rollCounter++;
-        } else if (measurements[i].measurementType === "Yaw") {
-          yaw[yawCounter] = measurements[i].measurementValue;
-          yawCounter++;
-        } else {
-          console.log("measurement[i].measurementType not recogonized");
+        console.log("clientID:", measurements[i].clientID);
+        if (deviceID === measurements[i].clientID) {
+          if (measurements[i].measurementType === "GSR") {
+            gsr[gsrCounter] = measurements[i].measurementValue;
+            gsrCounter++;
+          } else if (measurements[i].measurementType === "Mic") {
+            mic[micCounter] = measurements[i].measurementValue;
+            micCounter++;
+          } else if (measurements[i].measurementType === "Pitch") {
+            pitch[pitchCounter] = measurements[i].measurementValue;
+            pitchCounter++;
+          } else if (measurements[i].measurementType === "Roll") {
+            roll[rollCounter] = measurements[i].measurementValue;
+            rollCounter++;
+          } else if (measurements[i].measurementType === "Yaw") {
+            yaw[yawCounter] = measurements[i].measurementValue;
+            yawCounter++;
+          } else {
+            console.log("measurement[i].measurementType not recogonized");
+          }
         }
       }
     }
@@ -242,7 +249,7 @@ function App() {
     setRollMeasurements(roll);
     setYawMeasurements(yaw);
     // eslint-disable-next-line
-  }, [measurements.length]);
+  }, [measurements.length, deviceID]);
 
   console.log("gsrMeasurements:", gsrMeasurements);
   console.log("micMeasurements:", micMeasurements);
@@ -306,7 +313,7 @@ function App() {
           createAccount={createAccount}
         />
       )}
-      {step === 1 && (
+      {step === 1 && role === "patient" && (
         <PatientDashboard
           signOut={signOut}
           setStep={setStep}
@@ -317,6 +324,20 @@ function App() {
           yawMeasurements={yawMeasurements}
           username={username}
           deviceID={deviceID}
+        />
+      )}
+      {step === 1 && role === "doctor" && (
+        <DoctorDashboard
+          signOut={signOut}
+          setStep={setStep}
+          gsrMeasurements={gsrMeasurements}
+          micMeasurements={micMeasurements}
+          pitchMeasurements={pitchMeasurements}
+          rollMeasurements={rollMeasurements}
+          yawMeasurements={yawMeasurements}
+          username={username}
+          deviceID={deviceID}
+          setDeviceID={setDeviceID}
         />
       )}
     </div>

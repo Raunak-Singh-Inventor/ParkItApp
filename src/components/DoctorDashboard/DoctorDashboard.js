@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { TextField } from "@material-ui/core";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
   AreaChart,
@@ -12,7 +13,7 @@ import { useMediaQuery } from "react-responsive";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
-export default function PatientDashboard(props) {
+export default function DoctorDashboard(props) {
   const [gsrAvg, setGsrAvg] = useState(0);
   const [micAvg, setMicAvg] = useState(0);
   const [pitchAvg, setPitchAvg] = useState(0);
@@ -47,6 +48,11 @@ export default function PatientDashboard(props) {
 
   useEffect(() => {
     let sum = 0;
+    setGsrList([]);
+    setMicList([]);
+    setPitchList([]);
+    setRollList([]);
+    setYawList([]);
     for (let i = 0; i < Object.keys(props.gsrMeasurements).length; i++) {
       sum += props.gsrMeasurements[i];
       setGsrList((gsrList) => [...gsrList, props.gsrMeasurements[i]]);
@@ -80,6 +86,7 @@ export default function PatientDashboard(props) {
     props.pitchMeasurements,
     props.rollMeasurements,
     props.yawMeasurements,
+    props.deviceID,
   ]);
 
   console.log("gsrAvg:", gsrAvg);
@@ -126,7 +133,7 @@ export default function PatientDashboard(props) {
       cd.push(dict);
       setData(cd);
     }
-  }, [gsrList, micList, pitchList, rollList, yawList]);
+  }, [gsrList, micList, pitchList, rollList, yawList, props.deviceID]);
 
   console.log("data:", data);
 
@@ -152,6 +159,10 @@ export default function PatientDashboard(props) {
   console.log("isMicSelected", isMicSelected);
   console.log("isGyroSelected", isGyroSelected);
 
+  const deviceIdChange = (event) => {
+    props.setDeviceID(event.target.value);
+  };
+
   return (
     <>
       <div className="row">
@@ -165,7 +176,9 @@ export default function PatientDashboard(props) {
           <h5>What measurement would you like to view?</h5>
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h5>DeviceID: {props.deviceID}</h5>
+          <h5>
+            DeviceID: <TextField onChange={deviceIdChange} />
+          </h5>
         </div>
       </div>
       <div className="row">
