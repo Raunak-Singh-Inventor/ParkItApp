@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@material-ui/core";
+import { Select } from "@material-ui/core";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
   AreaChart,
@@ -29,6 +29,7 @@ export default function DoctorDashboard(props) {
   const [isGsrSelected, setIsGsrSelected] = useState(true);
   const [isMicSelected, setIsMicSelected] = useState(true);
   const [isGyroSelected, setIsGyroSelected] = useState(true);
+  const [deviceIDs, setDeviceIDs] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -45,6 +46,14 @@ export default function DoctorDashboard(props) {
     } else {
     }
   });
+
+  useEffect(() => {
+    const deviceIdSet = new Set();
+    for (let i = 0; i < props.measurements.length; i++) {
+      deviceIdSet.add(props.measurements[i].clientID);
+    }
+    setDeviceIDs(Array.from(deviceIdSet));
+  }, [props.measurements]);
 
   useEffect(() => {
     let sum = 0;
@@ -176,9 +185,23 @@ export default function DoctorDashboard(props) {
           <h5>What measurement would you like to view?</h5>
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h5>
-            DeviceID: <TextField onChange={deviceIdChange} />
-          </h5>
+          {deviceIDs.map((deviceID) => (
+            <h5>
+              DeviceID:{" "}
+              <Select
+                native
+                value={props.deviceID}
+                onChange={deviceIdChange}
+                inputProps={{
+                  name: "deviceID",
+                  id: "deviceID-native-simple",
+                }}
+              >
+                <option value={""}>{""}</option>
+                <option value={deviceID}>{deviceID}</option>;
+              </Select>
+            </h5>
+          ))}
         </div>
       </div>
       <div className="row">
@@ -264,6 +287,15 @@ export default function DoctorDashboard(props) {
           />
         )}
       </AreaChart>
+      <div className="row">
+        <div className="col-md-4 d-flex align-items-center justify-content-center"></div>
+        <div className="col-md-4 d-flex align-items-center justify-content-center">
+          <h2>Showing readings of&nbsp;</h2>
+          {types.map((type) => (
+            <h2>{type}&nbsp;</h2>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

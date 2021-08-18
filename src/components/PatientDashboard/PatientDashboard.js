@@ -47,6 +47,11 @@ export default function PatientDashboard(props) {
 
   useEffect(() => {
     let sum = 0;
+    setGsrList([]);
+    setMicList([]);
+    setPitchList([]);
+    setRollList([]);
+    setYawList([]);
     for (let i = 0; i < Object.keys(props.gsrMeasurements).length; i++) {
       sum += props.gsrMeasurements[i];
       setGsrList((gsrList) => [...gsrList, props.gsrMeasurements[i]]);
@@ -251,6 +256,15 @@ export default function PatientDashboard(props) {
           />
         )}
       </AreaChart>
+      <div className="row">
+        <div className="col-md-4 d-flex align-items-center justify-content-center"></div>
+        <div className="col-md-4 d-flex align-items-center justify-content-center">
+          <h2>Showing readings of&nbsp;</h2>
+          {types.map((type) => (
+            <h2>{type}&nbsp;</h2>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

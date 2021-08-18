@@ -150,8 +150,8 @@ function App() {
     try {
       await Auth.signIn(username, password);
       const userData = (await Auth.currentSession()).getIdToken();
-      setDeviceID(userData.payload["custom:DeviceID"]);
       setRole(userData.payload["custom:Role"]);
+      setDeviceID(userData.payload["custom:DeviceID"]);
       setStep(1);
       console.log("user succesfully signed in!");
     } catch (error) {
@@ -330,6 +330,7 @@ function App() {
         <DoctorDashboard
           signOut={signOut}
           setStep={setStep}
+          measurements={measurements}
           gsrMeasurements={gsrMeasurements}
           micMeasurements={micMeasurements}
           pitchMeasurements={pitchMeasurements}
