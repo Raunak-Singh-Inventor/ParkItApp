@@ -216,12 +216,7 @@ export default function PatientDashboard(props) {
               onChange={handleType}
               aria-label="text formatting"
             >
-              <ToggleButton
-                value="GSR"
-                aria-label="GSR"
-                thumbStyle={{ backgroundColor: "red" }}
-                trackStyle={{ backgroundColor: "green" }}
-              >
+              <ToggleButton value="GSR" aria-label="GSR">
                 GSR
               </ToggleButton>
               <ToggleButton value="Mic" aria-label="Mic">
@@ -235,7 +230,7 @@ export default function PatientDashboard(props) {
         </div>
       </div>
       <AreaChart
-        width={1930}
+        width={window.innerWidth}
         height={500}
         data={data}
         margin={{
