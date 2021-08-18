@@ -77,6 +77,21 @@ export default function SwipeableTemporaryDrawer(props) {
           </ListItem>
         ))}
       </List>
+      <List>
+        {["Info"].map((text, index) => (
+          <ListItem
+            onClick={() => {
+              if (text === "Info") {
+                props.setStep(5);
+              }
+            }}
+            button
+            key={text}
+          >
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
       <Divider />
       <List>
         {["Sign Out"].map((text, index) => (
