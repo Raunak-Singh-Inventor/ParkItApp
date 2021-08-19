@@ -9,10 +9,12 @@ type messagesToDoctor @model @aws_cognito_user_pools @key(fields: ["id"]) {
   id: ID!
   message: String!
   doctorName: String!
+  patientName: String!
 }
 
 type messagesToPatient @model @aws_cognito_user_pools @key(fields: ["id"]) {
   id: ID!
   message: String!
   patientName: String!
+  doctorName: String!
 }

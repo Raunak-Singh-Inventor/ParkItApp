@@ -46,6 +46,7 @@ export const getMessagesToDoctor = /* GraphQL */ `
       id
       message
       doctorName
+      patientName
       createdAt
       updatedAt
     }
@@ -70,6 +71,7 @@ export const listMessagesToDoctors = /* GraphQL */ `
         id
         message
         doctorName
+        patientName
         createdAt
         updatedAt
       }
@@ -83,6 +85,7 @@ export const getMessagesToPatient = /* GraphQL */ `
       id
       message
       patientName
+      doctorName
       createdAt
       updatedAt
     }
@@ -107,6 +110,7 @@ export const listMessagesToPatients = /* GraphQL */ `
         id
         message
         patientName
+        doctorName
         createdAt
         updatedAt
       }
