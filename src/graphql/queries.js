@@ -40,3 +40,77 @@ export const listMeasurements = /* GraphQL */ `
     }
   }
 `;
+export const getMessagesToDoctor = /* GraphQL */ `
+  query GetMessagesToDoctor($id: ID!) {
+    getMessagesToDoctor(id: $id) {
+      id
+      message
+      doctorName
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMessagesToDoctors = /* GraphQL */ `
+  query ListMessagesToDoctors(
+    $id: ID
+    $filter: ModelmessagesToDoctorFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listMessagesToDoctors(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        message
+        doctorName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMessagesToPatient = /* GraphQL */ `
+  query GetMessagesToPatient($id: ID!) {
+    getMessagesToPatient(id: $id) {
+      id
+      message
+      patientName
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMessagesToPatients = /* GraphQL */ `
+  query ListMessagesToPatients(
+    $id: ID
+    $filter: ModelmessagesToPatientFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listMessagesToPatients(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        message
+        patientName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

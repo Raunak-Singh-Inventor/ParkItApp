@@ -164,6 +164,13 @@ function App() {
   async function signOut() {
     try {
       await Auth.signOut();
+      setUsername("");
+      setPassword("");
+      setEmail("");
+      setPhoneNumber("");
+      setAuthenticationCode("");
+      setDeviceID("");
+      setRole("");
       setStep(0);
       console.log("user succesfully signed out");
     } catch (error) {

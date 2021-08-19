@@ -4,3 +4,15 @@ type measurements @model @aws_cognito_user_pools @key(fields: ["id"]) {
   measurementType: String!
   measurementValue: Int!
 }
+
+type messagesToDoctor @model @aws_cognito_user_pools @key(fields: ["id"]) {
+  id: ID!
+  message: String!
+  doctorName: String!
+}
+
+type messagesToPatient @model @aws_cognito_user_pools @key(fields: ["id"]) {
+  id: ID!
+  message: String!
+  patientName: String!
+}
