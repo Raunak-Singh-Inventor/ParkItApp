@@ -9,6 +9,7 @@ export default function SubmitButton(props) {
     props.phoneNumber &&
     props.role === "patient" &&
     props.deviceID &&
+    props.doctor &&
     props.authenticationCode
   ) {
     return (

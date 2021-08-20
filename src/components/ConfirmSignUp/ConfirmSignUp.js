@@ -88,6 +88,7 @@ export default function SignUp(props) {
                 phoneNumber={"phoneNumber"}
                 role={"patient"}
                 deviceID={"deviceID"}
+                doctor={"doctor"}
                 authenticationCode={props.authenticationCode}
                 onClick={props.confirmSignUp}
                 text={"Confirm Sign Up"}

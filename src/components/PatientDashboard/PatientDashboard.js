@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Divider, TextareaAutosize, Button } from "@material-ui/core";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
   AreaChart,
@@ -9,6 +10,8 @@ import {
   XAxis,
 } from "recharts";
 import { useMediaQuery } from "react-responsive";
+import { API, graphqlOperation } from "aws-amplify";
+import { createMessagesToDoctor } from "../../graphql/mutations";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
@@ -28,6 +31,7 @@ export default function PatientDashboard(props) {
   const [isGsrSelected, setIsGsrSelected] = useState(true);
   const [isMicSelected, setIsMicSelected] = useState(true);
   const [isGyroSelected, setIsGyroSelected] = useState(true);
+  const [message, setMessage] = useState("");
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -157,6 +161,19 @@ export default function PatientDashboard(props) {
   console.log("isMicSelected", isMicSelected);
   console.log("isGyroSelected", isGyroSelected);
 
+  async function sendMessageToDoctor(doctorName, sMessage, patientName) {
+    const response = await API.graphql(
+      graphqlOperation(createMessagesToDoctor, {
+        input: {
+          doctorName: doctorName,
+          message: sMessage,
+          patientName: patientName,
+        },
+      })
+    );
+    console.log(response);
+  }
+
   return (
     <div>
       <div className="row">
@@ -264,6 +281,41 @@ export default function PatientDashboard(props) {
           {types.map((type) => (
             <h4>{type}&nbsp;</h4>
           ))}
+        </div>
+      </div>
+      <Divider />
+      <div className="row" style={{ marginTop: 20 }}>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <h1>Send a message</h1>
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <h1>Recent Messages</h1>
+        </div>
+      </div>
+      <div className="row" style={{ marginTop: 5 }}>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <TextareaAutosize
+            aria-label="message"
+            placeholder="Message"
+            style={{ width: 500, height: 200 }}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+      <div className="row" style={{ marginTop: 20 }}>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ width: 500 }}
+            onClick={() => {
+              sendMessageToDoctor(props.doctor, message, props.username);
+            }}
+          >
+            Send to Doctor {props.doctor}
+          </Button>
         </div>
       </div>
     </div>

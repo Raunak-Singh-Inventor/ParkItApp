@@ -80,7 +80,7 @@ export default function SignUp(props) {
                       Doctor
                     </Button>
                   </ButtonGroup>
-                  <form noValidate autoComplete="off" style={{ marginTop: 30 }}>
+                  <form noValidate autoComplete="off" style={{ marginTop: 15 }}>
                     <div>
                       <TextField
                         label="username"
@@ -91,7 +91,7 @@ export default function SignUp(props) {
                         required
                       />
                     </div>
-                    <div style={{ marginTop: 30 }}>
+                    <div style={{ marginTop: 15 }}>
                       <TextField
                         label="password"
                         name="password"
@@ -102,7 +102,7 @@ export default function SignUp(props) {
                         required
                       />
                     </div>
-                    <div style={{ marginTop: 30 }}>
+                    <div style={{ marginTop: 15 }}>
                       <TextField
                         label="email"
                         name="email"
@@ -113,7 +113,7 @@ export default function SignUp(props) {
                         required
                       />
                     </div>
-                    <div style={{ marginTop: 30 }}>
+                    <div style={{ marginTop: 15 }}>
                       <TextField
                         label="phone number"
                         name="phone number"
@@ -124,8 +124,8 @@ export default function SignUp(props) {
                         required
                       />
                     </div>
-                    <div style={{ marginTop: 30 }}>
-                      {props.role === "patient" ? (
+                    <div style={{ marginTop: 15 }}>
+                      {props.role === "patient" && (
                         <TextField
                           onChange={props.onChange}
                           value={props.deviceID}
@@ -135,15 +135,18 @@ export default function SignUp(props) {
                           error={props.isDeviceIDError}
                           required
                         />
-                      ) : (
+                      )}
+                    </div>
+                    <div style={{ marginTop: 15 }}>
+                      {props.role === "patient" && (
                         <TextField
                           onChange={props.onChange}
-                          value={props.deviceID}
-                          name="deviceID"
-                          label="Device ID"
+                          value={props.doctor}
+                          name="doctor"
+                          label="Your doctor's username"
                           style={{ width: 500 }}
-                          error={props.isDeviceIDError}
-                          disabled
+                          error={props.isDoctorError}
+                          required
                         />
                       )}
                     </div>
@@ -154,6 +157,7 @@ export default function SignUp(props) {
                       phoneNumber={props.phoneNumber}
                       role={props.role}
                       deviceID={props.deviceID}
+                      doctor={props.doctor}
                       authenticationCode={"authenticationCode"}
                       onClick={props.signUp}
                       text={"Sign Up"}

@@ -25,6 +25,7 @@ function App() {
   const [authenticationCode, setAuthenticationCode] = useState("");
   const [role, setRole] = useState("");
   const [deviceID, setDeviceID] = useState("");
+  const [doctor, setDoctor] = useState("");
   const [step, setStep] = useState(0);
   const [measurements, setMeasurements] = useState([]);
   const [gsrMeasurements, setGsrMeasurements] = useState({});
@@ -40,6 +41,7 @@ function App() {
     useState(false);
   const [isRoleError, setIsRoleError] = useState(false);
   const [isDeviceIDError, setIsDeviceIDError] = useState(false);
+  const [isDoctorError, setIsDoctorError] = useState(false);
   const [patientRolePickerColor, setPatientRolePickerColor] =
     useState("outlined");
   const [doctorRolePickerColor, setDoctorRolePickerColor] =
@@ -62,6 +64,8 @@ function App() {
       setRole(e.target.value);
     } else if (e.target.name === "deviceID") {
       setDeviceID(e.target.value);
+    } else if (e.target.name === "doctor") {
+      setDoctor(e.target.value);
     } else {
       console.log("unvalid attribute for name:", e.target.name);
     }
@@ -77,6 +81,7 @@ function App() {
           phone_number: phoneNumber,
           "custom:Role": role,
           "custom:DeviceID": deviceID,
+          "custom:Doctor": doctor,
         },
       });
       setStep(3);
@@ -128,7 +133,6 @@ function App() {
       } else {
         setIsRoleError(false);
       }
-      // add error checking for deviceID
     }
   };
 
@@ -154,6 +158,7 @@ function App() {
       const userData = (await Auth.currentSession()).getIdToken();
       setRole(userData.payload["custom:Role"]);
       setDeviceID(userData.payload["custom:DeviceID"]);
+      setDoctor(userData.payload["custom:Doctor"]);
       setStep(1);
       console.log("user succesfully signed in!");
     } catch (error) {
@@ -170,6 +175,7 @@ function App() {
       setPhoneNumber("");
       setAuthenticationCode("");
       setDeviceID("");
+      setDoctor("");
       setRole("");
       setStep(0);
       console.log("user succesfully signed out");
@@ -292,12 +298,14 @@ function App() {
           isPhoneNumberError={isPhoneNumberError}
           isRoleError={isRoleError}
           isDeviceIDError={isDeviceIDError}
+          isDoctorError={isDoctorError}
           username={username}
           password={password}
           email={email}
           phoneNumber={phoneNumber}
           role={role}
           deviceID={deviceID}
+          doctor={doctor}
           signUp={signUp}
         />
       )}
@@ -333,6 +341,7 @@ function App() {
           yawMeasurements={yawMeasurements}
           username={username}
           deviceID={deviceID}
+          doctor={doctor}
         />
       )}
       {step === 1 && role === "doctor" && (
