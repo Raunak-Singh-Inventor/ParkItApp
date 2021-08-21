@@ -10,6 +10,8 @@ import {
   XAxis,
 } from "recharts";
 import { useMediaQuery } from "react-responsive";
+import { API } from "aws-amplify";
+import { listMessagesToDoctors } from "../../graphql/queries";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
@@ -171,6 +173,20 @@ export default function DoctorDashboard(props) {
   const deviceIdChange = (event) => {
     props.setDeviceID(event.target.value);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await API.graphql({
+        query: listMessagesToDoctors,
+        variables: {
+          filter: { doctorName: { eq: props.username } },
+        },
+      });
+      console.log("response:", response);
+    }
+
+    fetchData();
+  }, [props.username]);
 
   return (
     <>
