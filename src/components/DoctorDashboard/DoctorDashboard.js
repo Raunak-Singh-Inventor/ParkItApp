@@ -32,6 +32,7 @@ export default function DoctorDashboard(props) {
   const [isMicSelected, setIsMicSelected] = useState(true);
   const [isGyroSelected, setIsGyroSelected] = useState(true);
   const [deviceIDs, setDeviceIDs] = useState([]);
+  const [orderedMessages, setOrderedMessages] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -174,6 +175,8 @@ export default function DoctorDashboard(props) {
     props.setDeviceID(event.target.value);
   };
 
+  let messageTimes = [];
+  let messages = [];
   useEffect(() => {
     async function fetchData() {
       const response = await API.graphql({
@@ -191,11 +194,52 @@ export default function DoctorDashboard(props) {
           response.data.listMessagesToDoctors.items[i]["updatedAt"];
         let updatedAtDate = updatedAt.split("T")[0];
         let updatedAtTime = updatedAt.split("T")[1];
+        let updatedAtYear = updatedAtDate.split("-")[0];
+        let updatedAtMonth = updatedAtDate.split("-")[1];
+        let updatedAtDay = updatedAtDate.split("-")[2];
+        let updatedAtHour = updatedAtTime.split(":")[0];
+        let updatedAtMinute = updatedAtTime.split(":")[1];
+        let updatedAtSecond = updatedAtTime
+          .split(":")[2]
+          .substring(0, updatedAtTime.split(":")[2].length - 1);
+        let updatedAtTotal =
+          parseFloat(updatedAtYear) * 31536000 +
+          parseFloat(updatedAtMonth) * 2592000 +
+          parseFloat(updatedAtDay) * 86400 +
+          parseFloat(updatedAtHour) * 3600 +
+          parseFloat(updatedAtMinute) * 60 +
+          parseFloat(updatedAtSecond);
+        console.log(response.data.listMessagesToDoctors.items);
+        console.log("updatedAtTotal:", updatedAtTotal);
+        response.data.listMessagesToDoctors.items[i]["updatedAt"] =
+          updatedAtTotal;
+        messageTimes.push(updatedAtTotal);
+        messageTimes = messageTimes.sort();
       }
+      console.log("messageTimes", messageTimes);
+      for (let i = 0; i < messageTimes.length; i++) {
+        for (
+          let j = 0;
+          j < response.data.listMessagesToDoctors.items.length;
+          j++
+        ) {
+          if (
+            messageTimes[i] ===
+            response.data.listMessagesToDoctors.items[j]["updatedAt"]
+          ) {
+            messages.push(
+              response.data.listMessagesToDoctors.items[j]["message"]
+            );
+          }
+        }
+      }
+      setOrderedMessages(messages);
     }
 
     fetchData();
-  }, [props.username]);
+  },[]);
+
+  console.log("orderedMessages:", orderedMessages);
 
   return (
     <>
