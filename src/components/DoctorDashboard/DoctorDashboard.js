@@ -182,7 +182,9 @@ export default function DoctorDashboard(props) {
           filter: { doctorName: { eq: props.username } },
         },
       });
-      console.log("response:", response);
+      for(let i = 0; i<response.data.listMessagesToDoctors.items.length; i++) {
+        console.log("response:",response.data.listMessagesToDoctors.items[i]["updatedAt"])
+      }
     }
 
     fetchData();
