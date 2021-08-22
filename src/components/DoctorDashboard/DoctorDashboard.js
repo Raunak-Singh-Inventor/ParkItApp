@@ -20,6 +20,8 @@ import {
 import { useMediaQuery } from "react-responsive";
 import { API } from "aws-amplify";
 import { listMessagesToDoctors } from "../../graphql/queries";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
@@ -417,6 +419,10 @@ export default function DoctorDashboard(props) {
                   return (
                     <>
                       <ListItem alignItems="flex-start" style={{ width: 800 }}>
+                        <FontAwesomeIcon
+                          icon={faPaperPlane}
+                          style={{ height: 50, width: 30, marginRight: 20 }}
+                        />
                         <ListItemText primary={patient} secondary={message} />
                       </ListItem>
                       <Divider component="li" />
