@@ -10,8 +10,6 @@ import {
   XAxis,
 } from "recharts";
 import { useMediaQuery } from "react-responsive";
-import { API, graphqlOperation } from "aws-amplify";
-import { createMessagesToDoctor } from "../../graphql/mutations";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
@@ -161,19 +159,6 @@ export default function PatientDashboard(props) {
   console.log("isMicSelected", isMicSelected);
   console.log("isGyroSelected", isGyroSelected);
 
-  async function sendMessageToDoctor(doctorName, sMessage, patientName) {
-    const response = await API.graphql(
-      graphqlOperation(createMessagesToDoctor, {
-        input: {
-          doctorName: doctorName,
-          message: sMessage,
-          patientName: patientName,
-        },
-      })
-    );
-    console.log(response);
-  }
-
   return (
     <div>
       <div className="row">
@@ -311,7 +296,7 @@ export default function PatientDashboard(props) {
             color="secondary"
             style={{ width: 500 }}
             onClick={() => {
-              sendMessageToDoctor(props.doctor, message, props.username);
+              props.sendMessageToDoctor(props.doctor, message, props.username);
             }}
           >
             Send to Doctor {props.doctor}

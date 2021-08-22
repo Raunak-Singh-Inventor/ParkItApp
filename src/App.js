@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
+import { createMessagesToDoctor } from "./graphql/mutations";
 import "./App.css";
 
 import AWS from "aws-sdk";
@@ -70,6 +71,19 @@ function App() {
       console.log("unvalid attribute for name:", e.target.name);
     }
   };
+
+  async function sendMessageToDoctor(doctorName, sMessage, patientName) {
+    const response = await API.graphql(
+      graphqlOperation(createMessagesToDoctor, {
+        input: {
+          doctorName: doctorName,
+          message: sMessage,
+          patientName: patientName,
+        },
+      })
+    );
+    console.log(response);
+  }
 
   const signUp = async () => {
     try {
@@ -143,8 +157,13 @@ function App() {
       setIsAuthenticationCodeError(false);
       console.log("user succesfully signed up!");
       await Auth.signIn(username, password);
-      console.log("user succesfully signed in!");
+      const userData = (await Auth.currentSession()).getIdToken();
+      setRole(userData.payload["custom:Role"]);
+      setDeviceID(userData.payload["custom:DeviceID"]);
+      setDoctor(userData.payload["custom:Doctor"]);
+      sendMessageToDoctor(doctor, "signed up", username);
       setStep(1);
+      console.log("user succesfully signed in!");
     } catch (err) {
       console.log("error confirming sign up:", err);
       setIsUsernameError(true);
@@ -342,6 +361,7 @@ function App() {
           username={username}
           deviceID={deviceID}
           doctor={doctor}
+          sendMessageToDoctor={sendMessageToDoctor}
         />
       )}
       {step === 1 && role === "doctor" && (
