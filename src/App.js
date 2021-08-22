@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createMessagesToDoctor } from "./graphql/mutations";
+import { createMessagesToDoctor, createMessagesToPatient } from "./graphql/mutations";
 import "./App.css";
 
 import AWS from "aws-sdk";
@@ -79,10 +79,24 @@ function App() {
           doctorName: doctorName,
           message: sMessage,
           patientName: patientName,
+          deviceID: deviceID,
         },
       })
     );
-    console.log(response);
+    console.log("response:", response);
+  }
+
+  async function sendMessageToPatient(patientName, sMessage, doctorName) {
+    const response = await API.graphql(
+      graphqlOperation(createMessagesToPatient, {
+        input: {
+          doctorName: doctorName,
+          message: sMessage,
+          patientName: patientName,
+        },
+      })
+    );
+    console.log("response:", response);
   }
 
   const signUp = async () => {
@@ -161,7 +175,9 @@ function App() {
       setRole(userData.payload["custom:Role"]);
       setDeviceID(userData.payload["custom:DeviceID"]);
       setDoctor(userData.payload["custom:Doctor"]);
-      sendMessageToDoctor(doctor, "signed up", username);
+      if (role === "patient") {
+        sendMessageToDoctor(doctor, "signed up", username);
+      }
       setStep(1);
       console.log("user succesfully signed in!");
     } catch (err) {
@@ -240,7 +256,7 @@ function App() {
 
   console.log("measurements:", measurements);
 
-  useEffect(() => {
+  const getMeasurements = () => {
     let gsr = {};
     let mic = {};
     let pitch = {};
@@ -282,6 +298,10 @@ function App() {
     setPitchMeasurements(pitch);
     setRollMeasurements(roll);
     setYawMeasurements(yaw);
+  };
+
+  useEffect(() => {
+    getMeasurements();
     // eslint-disable-next-line
   }, [measurements.length, deviceID]);
 
@@ -377,6 +397,8 @@ function App() {
           username={username}
           deviceID={deviceID}
           setDeviceID={setDeviceID}
+          getMeasurements={getMeasurements}
+          sendMessageToPatient={sendMessageToPatient}
         />
       )}
       {step === 4 && <ExercisesPage setStep={setStep} signOut={signOut} />}

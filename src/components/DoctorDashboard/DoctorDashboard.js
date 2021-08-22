@@ -39,9 +39,11 @@ export default function DoctorDashboard(props) {
   const [isGsrSelected, setIsGsrSelected] = useState(true);
   const [isMicSelected, setIsMicSelected] = useState(true);
   const [isGyroSelected, setIsGyroSelected] = useState(true);
-  const [deviceIDs, setDeviceIDs] = useState([]);
   const [orderedMessages, setOrderedMessages] = useState([]);
   const [orderedPatients, setOrderedPatients] = useState([]);
+  const [patientsToDeviceIDs, setPatientsToDeviceIDs] = useState({});
+  const [selectedPatient, setSelectedPatient] = useState("");
+  const [message, setMessage] = useState("");
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -58,14 +60,6 @@ export default function DoctorDashboard(props) {
     } else {
     }
   });
-
-  useEffect(() => {
-    const deviceIdSet = new Set();
-    for (let i = 0; i < props.measurements.length; i++) {
-      deviceIdSet.add(props.measurements[i].clientID);
-    }
-    setDeviceIDs(Array.from(deviceIdSet));
-  }, [props.measurements]);
 
   useEffect(() => {
     let sum = 0;
@@ -121,8 +115,7 @@ export default function DoctorDashboard(props) {
   console.log("rollList:", rollList);
   console.log("yawList:", yawList);
 
-  let cd = [];
-  useEffect(() => {
+  const createData = () => {
     for (let i = 0; i < 50; i++) {
       let dict = {};
       dict["id"] = i;
@@ -154,6 +147,11 @@ export default function DoctorDashboard(props) {
       cd.push(dict);
       setData(cd);
     }
+  };
+
+  let cd = [];
+  useEffect(() => {
+    createData();
   }, [gsrList, micList, pitchList, rollList, yawList, props.deviceID]);
 
   console.log("data:", data);
@@ -180,13 +178,10 @@ export default function DoctorDashboard(props) {
   console.log("isMicSelected", isMicSelected);
   console.log("isGyroSelected", isGyroSelected);
 
-  const deviceIdChange = (event) => {
-    props.setDeviceID(event.target.value);
-  };
-
   let messageTimes = [];
   let messages = [];
   let patients = [];
+  let deviceIDs = {};
   useEffect(() => {
     async function fetchData() {
       const response = await API.graphql({
@@ -243,11 +238,15 @@ export default function DoctorDashboard(props) {
             patients.push(
               response.data.listMessagesToDoctors.items[j]["patientName"]
             );
+            deviceIDs[
+              response.data.listMessagesToDoctors.items[j]["patientName"]
+            ] = response.data.listMessagesToDoctors.items[j]["deviceID"];
           }
         }
       }
       setOrderedMessages(messages);
       setOrderedPatients(patients);
+      setPatientsToDeviceIDs(deviceIDs);
     }
 
     fetchData();
@@ -255,6 +254,12 @@ export default function DoctorDashboard(props) {
 
   console.log("orderedMessages:", orderedMessages);
   console.log("orderedPatients:", orderedPatients);
+  console.log("patientsToDeviceIDs", patientsToDeviceIDs);
+
+  const onSelectChange = (e) => {
+    setSelectedPatient(e.target.value);
+    props.setDeviceID(patientsToDeviceIDs[e.target.value]);
+  };
 
   return (
     <>
@@ -269,23 +274,28 @@ export default function DoctorDashboard(props) {
           <h5>What measurement would you like to view?</h5>
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          {deviceIDs.map((deviceID) => (
-            <h5>
-              DeviceID:{" "}
-              <Select
-                native
-                value={props.deviceID}
-                onChange={deviceIdChange}
-                inputProps={{
-                  name: "deviceID",
-                  id: "deviceID-native-simple",
-                }}
-              >
-                <option value={""}>{""}</option>
-                <option value={deviceID}>{deviceID}</option>;
-              </Select>
-            </h5>
-          ))}
+          <h5>
+            Patient:{" "}
+            <Select
+              native
+              value={selectedPatient}
+              onChange={(e) => {
+                onSelectChange(e);
+                props.getMeasurements();
+                createData();
+              }}
+              inputProps={{
+                name: "patient",
+                id: "patient-native-simple",
+              }}
+            >
+              <option value={undefined}>{""}</option>
+              {[...new Set(orderedPatients)].map((patient) => (
+                <option value={patient}>{patient}</option>
+              ))}
+              ;
+            </Select>
+          </h5>
         </div>
       </div>
       <div className="row">
@@ -394,7 +404,9 @@ export default function DoctorDashboard(props) {
             aria-label="message"
             placeholder="Message"
             style={{ width: 500, height: 200 }}
-            onChange={(e) => {}}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
           />
         </div>
         <div className="col-md-6 d-flex align-items-center justify-content-center">
@@ -422,9 +434,16 @@ export default function DoctorDashboard(props) {
             variant="contained"
             color="secondary"
             style={{ width: 500 }}
-            onClick={() => {}}
+            onClick={() => {
+              props.sendMessageToPatient(
+                selectedPatient,
+                message,
+                props.username
+              );
+            }}
+            disabled={selectedPatient === ""}
           >
-            Send to Patient
+            Send to {selectedPatient}
           </Button>
         </div>
       </div>

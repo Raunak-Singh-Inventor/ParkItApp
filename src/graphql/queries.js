@@ -47,6 +47,7 @@ export const getMessagesToDoctor = /* GraphQL */ `
       message
       doctorName
       patientName
+      deviceID
       createdAt
       updatedAt
     }
@@ -72,6 +73,7 @@ export const listMessagesToDoctors = /* GraphQL */ `
         message
         doctorName
         patientName
+        deviceID
         createdAt
         updatedAt
       }

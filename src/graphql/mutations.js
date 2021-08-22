@@ -56,6 +56,7 @@ export const createMessagesToDoctor = /* GraphQL */ `
       message
       doctorName
       patientName
+      deviceID
       createdAt
       updatedAt
     }
@@ -71,6 +72,7 @@ export const updateMessagesToDoctor = /* GraphQL */ `
       message
       doctorName
       patientName
+      deviceID
       createdAt
       updatedAt
     }
@@ -86,6 +88,7 @@ export const deleteMessagesToDoctor = /* GraphQL */ `
       message
       doctorName
       patientName
+      deviceID
       createdAt
       updatedAt
     }

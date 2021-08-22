@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Divider, TextareaAutosize, Button } from "@material-ui/core";
+import {
+  Divider,
+  TextareaAutosize,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
   AreaChart,
@@ -10,6 +17,8 @@ import {
   XAxis,
 } from "recharts";
 import { useMediaQuery } from "react-responsive";
+import { API } from "aws-amplify";
+import { listMessagesToPatients } from "../../graphql/queries";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
 
@@ -30,6 +39,7 @@ export default function PatientDashboard(props) {
   const [isMicSelected, setIsMicSelected] = useState(true);
   const [isGyroSelected, setIsGyroSelected] = useState(true);
   const [message, setMessage] = useState("");
+  const [orderedMessages, setOrderedMessages] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -159,6 +169,74 @@ export default function PatientDashboard(props) {
   console.log("isMicSelected", isMicSelected);
   console.log("isGyroSelected", isGyroSelected);
 
+  let messageTimes = [];
+  let messages = [];
+  let patients = [];
+  let deviceIDs = {};
+  useEffect(() => {
+    async function fetchData() {
+      const response = await API.graphql({
+        query: listMessagesToPatients,
+        variables: {
+          filter: { patientName: { eq: props.username } },
+        },
+      });
+      for (
+        let i = 0;
+        i < response.data.listMessagesToPatients.items.length;
+        i++
+      ) {
+        let updatedAt =
+          response.data.listMessagesToPatients.items[i]["updatedAt"];
+        let updatedAtDate = updatedAt.split("T")[0];
+        let updatedAtTime = updatedAt.split("T")[1];
+        let updatedAtYear = updatedAtDate.split("-")[0];
+        let updatedAtMonth = updatedAtDate.split("-")[1];
+        let updatedAtDay = updatedAtDate.split("-")[2];
+        let updatedAtHour = updatedAtTime.split(":")[0];
+        let updatedAtMinute = updatedAtTime.split(":")[1];
+        let updatedAtSecond = updatedAtTime
+          .split(":")[2]
+          .substring(0, updatedAtTime.split(":")[2].length - 1);
+        let updatedAtTotal =
+          parseFloat(updatedAtYear) * 31536000 +
+          parseFloat(updatedAtMonth) * 2592000 +
+          parseFloat(updatedAtDay) * 86400 +
+          parseFloat(updatedAtHour) * 3600 +
+          parseFloat(updatedAtMinute) * 60 +
+          parseFloat(updatedAtSecond);
+        console.log(response.data.listMessagesToPatients.items);
+        console.log("updatedAtTotal:", updatedAtTotal);
+        response.data.listMessagesToPatients.items[i]["updatedAt"] =
+          updatedAtTotal;
+        messageTimes.push(updatedAtTotal);
+        messageTimes = messageTimes.sort().reverse();
+      }
+      console.log("messageTimes", messageTimes);
+      for (let i = 0; i < messageTimes.length; i++) {
+        for (
+          let j = 0;
+          j < response.data.listMessagesToPatients.items.length;
+          j++
+        ) {
+          if (
+            messageTimes[i] ===
+            response.data.listMessagesToPatients.items[j]["updatedAt"]
+          ) {
+            messages.push(
+              response.data.listMessagesToPatients.items[j]["message"]
+            );
+          }
+        }
+      }
+      setOrderedMessages(messages);
+    }
+
+    fetchData();
+  }, []);
+
+  console.log("orderedMessages:", orderedMessages);
+
   return (
     <div>
       <div className="row">
@@ -287,6 +365,25 @@ export default function PatientDashboard(props) {
               setMessage(e.target.value);
             }}
           />
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <List>
+            {orderedMessages.map((message, i) => {
+              if (i <= 2) {
+                return (
+                  <>
+                    <ListItem alignItems="flex-start" style={{ width: 800 }}>
+                      <ListItemText
+                        primary={props.doctor}
+                        secondary={message}
+                      />
+                    </ListItem>
+                    <Divider component="li" />
+                  </>
+                );
+              }
+            })}
+          </List>
         </div>
       </div>
       <div className="row" style={{ marginTop: 20 }}>
