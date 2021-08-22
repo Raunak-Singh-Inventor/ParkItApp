@@ -41,6 +41,7 @@ export default function DoctorDashboard(props) {
   const [isGyroSelected, setIsGyroSelected] = useState(true);
   const [deviceIDs, setDeviceIDs] = useState([]);
   const [orderedMessages, setOrderedMessages] = useState([]);
+  const [orderedPatients, setOrderedPatients] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -185,6 +186,7 @@ export default function DoctorDashboard(props) {
 
   let messageTimes = [];
   let messages = [];
+  let patients = [];
   useEffect(() => {
     async function fetchData() {
       const response = await API.graphql({
@@ -238,16 +240,21 @@ export default function DoctorDashboard(props) {
             messages.push(
               response.data.listMessagesToDoctors.items[j]["message"]
             );
+            patients.push(
+              response.data.listMessagesToDoctors.items[j]["patientName"]
+            );
           }
         }
       }
       setOrderedMessages(messages);
+      setOrderedPatients(patients);
     }
 
     fetchData();
   }, []);
 
   console.log("orderedMessages:", orderedMessages);
+  console.log("orderedPatients:", orderedPatients);
 
   return (
     <>
@@ -392,17 +399,19 @@ export default function DoctorDashboard(props) {
         </div>
         <div className="col-md-6 d-flex align-items-center justify-content-center">
           <List>
-            {orderedMessages.map((message, index) => {
-              if (index <= 4) {
-                return (
-                  <>
-                    <ListItem alignItems="flex-start" style={{width:800}}>
-                      <ListItemText primary={message} />
-                    </ListItem>
-                    <Divider component="li" />
-                  </>
-                );
-              }
+            {orderedMessages.map((message, i) => {
+              return orderedPatients.map((patient, j) => {
+                if (i <= 2 && j === i) {
+                  return (
+                    <>
+                      <ListItem alignItems="flex-start" style={{ width: 800 }}>
+                        <ListItemText primary={patient} secondary={message} />
+                      </ListItem>
+                      <Divider component="li" />
+                    </>
+                  );
+                }
+              });
             })}
           </List>
         </div>
