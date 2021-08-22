@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Select } from "@material-ui/core";
+import {
+  Select,
+  TextareaAutosize,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+} from "@material-ui/core";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
   AreaChart,
@@ -214,7 +222,7 @@ export default function DoctorDashboard(props) {
         response.data.listMessagesToDoctors.items[i]["updatedAt"] =
           updatedAtTotal;
         messageTimes.push(updatedAtTotal);
-        messageTimes = messageTimes.sort();
+        messageTimes = messageTimes.sort().reverse();
       }
       console.log("messageTimes", messageTimes);
       for (let i = 0; i < messageTimes.length; i++) {
@@ -237,7 +245,7 @@ export default function DoctorDashboard(props) {
     }
 
     fetchData();
-  },[]);
+  }, []);
 
   console.log("orderedMessages:", orderedMessages);
 
@@ -363,6 +371,52 @@ export default function DoctorDashboard(props) {
           {types.map((type) => (
             <h2>{type}&nbsp;</h2>
           ))}
+        </div>
+      </div>
+      <div className="row" style={{ marginTop: 20 }}>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <h1>Send a message</h1>
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <h1>Recent Messages</h1>
+        </div>
+      </div>
+      <div className="row" style={{ marginTop: 5 }}>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <TextareaAutosize
+            aria-label="message"
+            placeholder="Message"
+            style={{ width: 500, height: 200 }}
+            onChange={(e) => {}}
+          />
+        </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <List>
+            {orderedMessages.map((message, index) => {
+              if (index <= 4) {
+                return (
+                  <>
+                    <ListItem alignItems="flex-start" style={{width:800}}>
+                      <ListItemText primary={message} />
+                    </ListItem>
+                    <Divider component="li" />
+                  </>
+                );
+              }
+            })}
+          </List>
+        </div>
+      </div>
+      <div className="row" style={{ marginTop: 0 }}>
+        <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ width: 500 }}
+            onClick={() => {}}
+          >
+            Send to Patient
+          </Button>
         </div>
       </div>
     </>
