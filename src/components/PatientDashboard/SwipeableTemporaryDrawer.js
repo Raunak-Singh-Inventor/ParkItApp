@@ -92,7 +92,7 @@ export default function SwipeableTemporaryDrawer(props) {
           </ListItem>
         ))}
       </List>
-      <Divider />
+      <Divider component="li"/>
       <List>
         {["Sign Out"].map((text, index) => (
           <ListItem

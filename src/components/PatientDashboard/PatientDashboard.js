@@ -348,7 +348,7 @@ export default function PatientDashboard(props) {
           ))}
         </div>
       </div>
-      <Divider />
+      <Divider component="li" style={{ height: 10 }} />
       <div className="row" style={{ marginTop: 20 }}>
         <div className="col-md-6 d-flex align-items-center justify-content-center">
           <h1>Send a message</h1>
@@ -375,7 +375,10 @@ export default function PatientDashboard(props) {
                 return (
                   <>
                     <ListItem alignItems="flex-start" style={{ width: 800 }}>
-                      <FontAwesomeIcon icon={faPaperPlane} style={{height:50,width:30,marginRight:20}}/>
+                      <FontAwesomeIcon
+                        icon={faPaperPlane}
+                        style={{ height: 50, width: 30, marginRight: 20 }}
+                      />
                       <ListItemText
                         primary={props.doctor}
                         secondary={message}

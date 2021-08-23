@@ -131,5 +131,5 @@ export default function DocumentsPage(props) {
         </div>
       </div>
     </>
-  );
+    );
 }

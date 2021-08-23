@@ -383,6 +383,7 @@ export default function DoctorDashboard(props) {
           />
         )}
       </AreaChart>
+      <Divider component="li" style={{ height: 10 }} />
       <div className="row">
         <div className="col-md-4 d-flex align-items-center justify-content-center"></div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
