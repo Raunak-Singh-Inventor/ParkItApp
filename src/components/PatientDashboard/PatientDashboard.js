@@ -489,6 +489,7 @@ export default function PatientDashboard(props) {
                             style={{ height: 50, width: 30, marginRight: 20 }}
                           />
                           <ListItemText
+                            style={{ color: "#ad03fc" }}
                             primary={props.doctor + " - " + time}
                             secondary={message}
                           />
