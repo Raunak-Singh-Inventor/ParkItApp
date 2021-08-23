@@ -34,8 +34,8 @@ export default function SignUp(props) {
   // eslint-disable-next-line
   useEffect(() => {
     if (isTabletOrMobile === true && isPortrait === true) {
-      setCardMarginTop(documentHeight / 2);
-      setCardHeight(1000);
+      setCardMarginTop(100);
+      setCardHeight(750);
       setSignInGirlImageSize(300);
     } else if (isTabletOrMobile === true && isPortrait === false) {
       setCardMarginTop(documentHeight / 2);
@@ -49,7 +49,7 @@ export default function SignUp(props) {
   });
 
   return (
-    <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
+    <div style={{ backgroundColor: "#ebd8ed", height: 1150 }}>
       <Header text1={""} />
       <div className="container">
         <div className="row">

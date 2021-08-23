@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "@material-ui/core";
+import { useMediaQuery } from "react-responsive";
 
 import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer";
 import Header from "../../Header";
@@ -10,9 +11,27 @@ import jumblecrossword from "../../../images/jumblecrossword.png";
 import usatodaypuzzles from "../../../images/usatodaypuzzles.png";
 
 export default function DocumentsPage(props) {
+  // const isDesktopOrLaptop = useMediaQuery({
+  //   query: "(min-width: 1224px)",
+  // });
+  // const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+  // const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
+
+  // eslint-disable-next-line
+  useEffect(() => {
+    if (isTabletOrMobile === true && isPortrait === true) {
+    } else if (isTabletOrMobile === true && isPortrait === false) {
+    } else {
+    }
+  });
+
   return (
     <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
-      <Header text1={"Welcome " + props.username} isPatient={true} />
+      {props.isPortrait === false && (
+        <Header text1={"Welcome " + props.username} isPatient={true} />
+      )}
       <div className="row">
         <div className="col-md-4">
           <SwipeableTemporaryDrawer

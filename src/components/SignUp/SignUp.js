@@ -28,11 +28,11 @@ export default function SignUp(props) {
   // eslint-disable-next-line
   useEffect(() => {
     if (isTabletOrMobile === true && isPortrait === true) {
-      setCardMarginTop(documentHeight / 2);
-      setCardHeight(1000);
+      setCardMarginTop(100);
+      setCardHeight(850);
       setSignUpGirlImageSize(300);
     } else if (isTabletOrMobile === true && isPortrait === false) {
-      setCardMarginTop(documentHeight / 2);
+      setCardMarginTop(100);
       setCardHeight(550);
       setSignUpGirlImageSize(300);
     } else {

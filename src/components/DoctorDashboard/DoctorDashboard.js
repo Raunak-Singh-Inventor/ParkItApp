@@ -53,6 +53,7 @@ export default function DoctorDashboard(props) {
   const [selectedPatient, setSelectedPatient] = useState("");
   const [message, setMessage] = useState("");
   const [orderedStringTimes, setOrderedStringTimes] = useState([]);
+  const [toggleButtonSize, setToggleButtonSize] = useState(200);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -65,6 +66,7 @@ export default function DoctorDashboard(props) {
   // eslint-disable-next-line
   useEffect(() => {
     if (isTabletOrMobile === true && isPortrait === true) {
+      setToggleButtonSize(120);
     } else if (isTabletOrMobile === true && isPortrait === false) {
     } else {
     }
@@ -340,7 +342,9 @@ export default function DoctorDashboard(props) {
 
   return (
     <>
-      <Header text1={"Welcome " + props.username} isPatient={false} />
+      {isPortrait === false && (
+        <Header text1={"Welcome " + props.username} isPatient={false} />
+      )}
       <div style={{ backgroundColor: "#ebd8ed", height: 1050 }}>
         <div className="row">
           <div className="col-md-3">
@@ -390,7 +394,10 @@ export default function DoctorDashboard(props) {
                 <ToggleButton
                   value="GSR"
                   aria-label="GSR"
-                  style={{ width: 200, backgroundColor: "#1d8f2c" }}
+                  style={{
+                    width: toggleButtonSize,
+                    backgroundColor: "#1d8f2c",
+                  }}
                 >
                   <FontAwesomeIcon
                     icon={faHandScissors}
@@ -401,7 +408,10 @@ export default function DoctorDashboard(props) {
                 <ToggleButton
                   value="Mic"
                   aria-label="Mic"
-                  style={{ width: 200, backgroundColor: "#fc5e03" }}
+                  style={{
+                    width: toggleButtonSize,
+                    backgroundColor: "#fc5e03",
+                  }}
                 >
                   <FontAwesomeIcon
                     icon={faMicrophoneAlt}
@@ -412,7 +422,10 @@ export default function DoctorDashboard(props) {
                 <ToggleButton
                   value="Gyro"
                   aria-label="Gyro"
-                  style={{ width: 200, backgroundColor: "#ad03fc" }}
+                  style={{
+                    width: toggleButtonSize,
+                    backgroundColor: "#ad03fc",
+                  }}
                 >
                   <FontAwesomeIcon
                     icon={faCompass}
@@ -528,14 +541,14 @@ export default function DoctorDashboard(props) {
                         <>
                           <ListItem
                             alignItems="flex-start"
-                            style={{ width: 800 }}
+                            style={{ width: 300 }}
                           >
                             <FontAwesomeIcon
                               icon={faPaperPlane}
                               style={{ height: 50, width: 30, marginRight: 20 }}
                             />
                             <ListItemText
-                            style={{ color: "#ad03fc" }}
+                              style={{ color: "#ad03fc" }}
                               primary={patient + " - " + time}
                               secondary={message}
                             />

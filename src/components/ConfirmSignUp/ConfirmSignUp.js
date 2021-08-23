@@ -28,11 +28,11 @@ export default function SignUp(props) {
   // eslint-disable-next-line
   useEffect(() => {
     if (isTabletOrMobile === true && isPortrait === true) {
-      setCardMarginTop(documentHeight / 2);
+      setCardMarginTop(100);
       setCardHeight(530);
       setCardMarginRight(0);
     } else if (isTabletOrMobile === true && isPortrait === false) {
-      setCardMarginTop(documentHeight / 2);
+      setCardMarginTop(100);
       setCardHeight(530);
       setCardMarginRight(80);
     } else {
@@ -75,6 +75,7 @@ export default function SignUp(props) {
               </div>
               <div>
                 <TextField
+                  style={{ marginBottom: 20 }}
                   label="authentication code"
                   name="authenticationCode"
                   type="authenticationCode"

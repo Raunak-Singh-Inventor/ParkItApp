@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "@material-ui/core";
+import { useMediaQuery } from "react-responsive";
 
 import rLegMassager from "../../../images/rLegMassager.png";
 import aef from "../../../images/aef.png";
@@ -10,10 +11,28 @@ import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer";
 import Header from "../../Header";
 
 export default function ProductsPage(props) {
+  // const isDesktopOrLaptop = useMediaQuery({
+  //   query: "(min-width: 1224px)",
+  // });
+  // const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+  // const isRetina = useMediaQuery({ query: "(min-resolution: 2dppx)" });
+
+  // eslint-disable-next-line
+  useEffect(() => {
+    if (isTabletOrMobile === true && isPortrait === true) {
+    } else if (isTabletOrMobile === true && isPortrait === false) {
+    } else {
+    }
+  });
+
   return (
     <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
-      <div className="row">
+      {props.isPortrait === false && (
         <Header text1={"Welcome " + props.username} isPatient={true} />
+      )}
+      <div className="row">
         <div className="col-md-4">
           <SwipeableTemporaryDrawer
             setStep={props.setStep}
@@ -45,7 +64,7 @@ export default function ProductsPage(props) {
                   "https://www.amazon.com/Reathlete-Compression-Circulation-Sequential-Controller/dp/B07Y1T3LJC/ref=sr_1_1_sspa?dchild=1&keywords=Parkinson&qid=1629678611&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzODk5OEUzNk1KQzM2JmVuY3J5cHRlZElkPUEwNTIzMzM3M1VKQVk2RVZFQUNINCZlbmNyeXB0ZWRBZElkPUEwMTUyNzQ5VVdLMElGSE1QNk1PJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ=="
                 }
               >
-                Reathlete Leg Massager
+                Leg Massager
               </a>
             </div>
           </Card>
@@ -69,7 +88,7 @@ export default function ProductsPage(props) {
                   "https://www.amazon.com/Weighted-Utensils-Tremors-Parkinsons-Patients/dp/B07KRRDH77/ref=sr_1_2?dchild=1&keywords=Parkinson&qid=1629679088&sr=8-2"
                 }
               >
-                Adaptive Eating Flatware
+                Eating Flatware
               </a>
             </div>
           </Card>
@@ -117,9 +136,11 @@ export default function ProductsPage(props) {
             <div>
               <a
                 style={{ fontSize: 40 }}
-                href={"https://puzzles.usatoday.com/"}
+                href={
+                  "https://www.amazon.com/Weighted-Tremors-Parkinsons-Strength-Arthritis/dp/B082DS5GW9/ref=sr_1_5?dchild=1&keywords=pen+for+parkinson%27s&qid=1629730685&sr=8-5"
+                }
               >
-                https://puzzles.usatoday.com/
+                Big Pen
               </a>
             </div>
           </Card>
