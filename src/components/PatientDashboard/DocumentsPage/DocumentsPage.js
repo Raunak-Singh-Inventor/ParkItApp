@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "@material-ui/core";
 
 import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer";
+import Header from "../../Header";
 
 import parkinsonfoundnationlogo from "../../../images/parkinsonfoundnationlogo.png";
 import apdalogo from "../../../images/apdalogo.png";
@@ -10,9 +11,10 @@ import usatodaypuzzles from "../../../images/usatodaypuzzles.png";
 
 export default function DocumentsPage(props) {
   return (
-    <div style={{ backgroundColor:"#ebd8ed", height: 1020 }}>
+    <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
+      <Header text1={"Welcome " + props.username} isPatient={true} />
       <div className="row">
-        <div className="col-md-4 d-flex align-items-center justify-content-center">
+        <div className="col-md-4">
           <SwipeableTemporaryDrawer
             setStep={props.setStep}
             signOut={props.signOut}
@@ -20,10 +22,10 @@ export default function DocumentsPage(props) {
           />
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h4>What would you like to view?</h4>
+          <h1>What would you like to view?</h1>
         </div>
       </div>
-      <div className="row" style={{ marginTop: 150 }}>
+      <div className="row" style={{ marginTop: 100 }}>
         <div className="col-md-6 d-flex align-items-center justify-content-center">
           <Card
             style={{

@@ -16,6 +16,7 @@ import {
   faSignOutAlt,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
+import Logo158x160 from "../../images/Logo158x160.png";
 
 const useStyles = makeStyles({
   list: {
@@ -56,7 +57,7 @@ export default function SwipeableTemporaryDrawer(props) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
+      <List style={{ backgroundColor: "#424242", color: "white" }}>
         {["Dashboard"].map((text, index) => (
           <ListItem
             onClick={() => {
@@ -71,26 +72,7 @@ export default function SwipeableTemporaryDrawer(props) {
               icon={faChartArea}
               style={{ height: 50, width: 30, marginRight: 20 }}
             />
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        {["Exercises"].map((text, index) => (
-          <ListItem
-            onClick={() => {
-              if (text === "Exercises") {
-                props.setStep(4);
-              }
-            }}
-            button
-            key={text}
-          >
-            <FontAwesomeIcon
-              icon={faRunning}
-              style={{ height: 50, width: 30, marginRight: 20 }}
-            />
-            <ListItemText primary={text} />
+            <ListItemText primary={<h3>{text}</h3>} />
           </ListItem>
         ))}
       </List>
@@ -104,12 +86,33 @@ export default function SwipeableTemporaryDrawer(props) {
             }}
             button
             key={text}
+            style={{ backgroundColor: "#424242", color: "white" }}
           >
             <FontAwesomeIcon
               icon={faInfo}
               style={{ height: 50, width: 30, marginRight: 20 }}
             />
-            <ListItemText primary={text} />
+            <ListItemText primary={<h3>{text}</h3>} />
+          </ListItem>
+        ))}
+      </List>
+      <List>
+        {["Exercises"].map((text, index) => (
+          <ListItem
+            onClick={() => {
+              if (text === "Exercises") {
+                props.setStep(4);
+              }
+            }}
+            button
+            key={text}
+            style={{ backgroundColor: "#424242", color: "white" }}
+          >
+            <FontAwesomeIcon
+              icon={faRunning}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
+            <ListItemText primary={<h3>{text}</h3>} />
           </ListItem>
         ))}
       </List>
@@ -123,12 +126,13 @@ export default function SwipeableTemporaryDrawer(props) {
             }}
             button
             key={text}
+            style={{ backgroundColor: "#424242", color: "white" }}
           >
             <FontAwesomeIcon
               icon={faShoppingCart}
               style={{ height: 50, width: 30, marginRight: 20 }}
             />
-            <ListItemText primary={text} />
+            <ListItemText primary={<h3>{text}</h3>} />
           </ListItem>
         ))}
       </List>
@@ -143,15 +147,17 @@ export default function SwipeableTemporaryDrawer(props) {
             }}
             button
             key={text}
+            style={{ backgroundColor: "#424242", color: "white" }}
           >
             <FontAwesomeIcon
               icon={faSignOutAlt}
               style={{ height: 50, width: 30, marginRight: 20 }}
             />
-            <ListItemText primary={text} />
+            <ListItemText primary={<h3>{text}</h3>} />
           </ListItem>
         ))}
       </List>
+      <img src={Logo158x160} style={{ marginLeft: 30, marginTop: 400 }} />
     </div>
   );
 

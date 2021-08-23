@@ -5,12 +5,13 @@ import { useMediaQuery } from "react-responsive";
 import confirmsignupgirl from "../../images/confirmsignupgirl.png";
 
 import SubmitButton from "../SubmitButton";
+import Header from "../Header";
 
 export default function SignUp(props) {
   const [documentHeight, setDocumentHeight] = useState(0);
-  const [cardMarginTop, setCardMarginTop] = useState(300);
+  const [cardMarginTop, setCardMarginTop] = useState(100);
   const [cardHeight, setCardHeight] = useState(430);
-  const [cardMarginLeft, setCardMarginLeft] = useState(0);
+  const [cardMarginRight, setCardMarginRight] = useState(0);
   // eslint-disable-next-line
   useEffect(() => {
     setDocumentHeight(document.documentElement.offsetHeight);
@@ -29,75 +30,74 @@ export default function SignUp(props) {
     if (isTabletOrMobile === true && isPortrait === true) {
       setCardMarginTop(documentHeight / 2);
       setCardHeight(530);
-      setCardMarginLeft(0);
+      setCardMarginRight(0);
     } else if (isTabletOrMobile === true && isPortrait === false) {
       setCardMarginTop(documentHeight / 2);
       setCardHeight(530);
-      setCardMarginLeft(80);
+      setCardMarginRight(80);
     } else {
-      setCardMarginTop(300);
+      setCardMarginTop(100);
       setCardHeight(530);
-      setCardMarginLeft(80);
+      setCardMarginRight(300);
     }
   });
 
   return (
     <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
-      <div style={{ height: 80, backgroundColor: "#f50057" }}>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4 align-items-center justify-content-center"></div>
-            <Card
-              className="col-md-4 align-items-center justify-content-center"
-              style={{
-                textAlign: "center",
-                marginTop: cardMarginTop,
-                width: 500,
-                height: cardHeight,
-                marginLeft: cardMarginLeft,
-              }}
-            >
-              <img
-                src={confirmsignupgirl}
-                alt={"confirmSignUp"}
-                style={{ width: 300 }}
-              />
-              <form noValidate autoComplete="off">
-                <div>
-                  <TextField
-                    label="username"
-                    name="username"
-                    onChange={props.onChange}
-                    error={props.isUsernameError}
-                    required
-                  />
-                </div>
-                <div>
-                  <TextField
-                    label="authentication code"
-                    name="authenticationCode"
-                    type="authenticationCode"
-                    onChange={props.onChange}
-                    error={props.isAuthenticationCodeError}
-                    required
-                  />
-                </div>
-                <SubmitButton
-                  username={props.username}
-                  password={"password"}
-                  email={"email"}
-                  phoneNumber={"phoneNumber"}
-                  role={"patient"}
-                  deviceID={"deviceID"}
-                  doctor={"doctor"}
-                  authenticationCode={props.authenticationCode}
-                  onClick={props.confirmSignUp}
-                  text={"Confirm Sign Up"}
+      <Header text1={""} isPatient={true} />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 align-items-center justify-content-center"></div>
+          <Card
+            className="col-md-4 align-items-center justify-content-center"
+            style={{
+              textAlign: "center",
+              marginTop: cardMarginTop,
+              width: 500,
+              height: cardHeight,
+              marginRight: cardMarginRight,
+            }}
+          >
+            <img
+              src={confirmsignupgirl}
+              alt={"confirmSignUp"}
+              style={{ width: 300 }}
+            />
+            <form noValidate autoComplete="off">
+              <div>
+                <TextField
+                  label="username"
+                  name="username"
+                  onChange={props.onChange}
+                  error={props.isUsernameError}
+                  required
                 />
-              </form>
-            </Card>
-            <div className="col-md-4 align-items-center justify-content-center"></div>
-          </div>
+              </div>
+              <div>
+                <TextField
+                  label="authentication code"
+                  name="authenticationCode"
+                  type="authenticationCode"
+                  onChange={props.onChange}
+                  error={props.isAuthenticationCodeError}
+                  required
+                />
+              </div>
+              <SubmitButton
+                username={props.username}
+                password={"password"}
+                email={"email"}
+                phoneNumber={"phoneNumber"}
+                role={"patient"}
+                deviceID={"deviceID"}
+                doctor={"doctor"}
+                authenticationCode={props.authenticationCode}
+                onClick={props.confirmSignUp}
+                text={"Confirm Sign Up"}
+              />
+            </form>
+          </Card>
+          <div className="col-md-4 align-items-center justify-content-center"></div>
         </div>
       </div>
     </div>

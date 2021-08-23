@@ -52,6 +52,7 @@ export default function DoctorDashboard(props) {
   const [patientsToDeviceIDs, setPatientsToDeviceIDs] = useState({});
   const [selectedPatient, setSelectedPatient] = useState("");
   const [message, setMessage] = useState("");
+  const [orderedStringTimes, setOrderedStringTimes] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -190,6 +191,7 @@ export default function DoctorDashboard(props) {
   let messages = [];
   let patients = [];
   let deviceIDs = {};
+  let stringTimes = [];
   useEffect(() => {
     async function fetchData() {
       const response = await API.graphql({
@@ -249,12 +251,78 @@ export default function DoctorDashboard(props) {
             deviceIDs[
               response.data.listMessagesToDoctors.items[j]["patientName"]
             ] = response.data.listMessagesToDoctors.items[j]["deviceID"];
+            stringTimes.push(
+              String(
+                Math.floor(
+                  (response.data.listMessagesToDoctors.items[j]["updatedAt"] %
+                    31536000) /
+                    2592000
+                )
+              ) +
+                "/" +
+                String(
+                  Math.floor(
+                    ((response.data.listMessagesToDoctors.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) /
+                      86400
+                  )
+                ) +
+                "/" +
+                String(
+                  Math.floor(
+                    response.data.listMessagesToDoctors.items[j]["updatedAt"] /
+                      31536000
+                  )
+                ) +
+                ":" +
+                String(
+                  Math.floor(
+                    (((response.data.listMessagesToDoctors.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) %
+                      86400) /
+                      3600
+                  )
+                ) +
+                "-" +
+                String(
+                  Math.floor(
+                    ((((response.data.listMessagesToDoctors.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) %
+                      86400) %
+                      3600) /
+                      60
+                  )
+                ) +
+                "-" +
+                String(
+                  Math.floor(
+                    ((((response.data.listMessagesToDoctors.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) %
+                      86400) %
+                      3600) %
+                      60
+                  )
+                )
+            );
           }
         }
       }
       setOrderedMessages(messages);
       setOrderedPatients(patients);
       setPatientsToDeviceIDs(deviceIDs);
+      setOrderedStringTimes(stringTimes);
     }
 
     fetchData();
@@ -263,6 +331,7 @@ export default function DoctorDashboard(props) {
   console.log("orderedMessages:", orderedMessages);
   console.log("orderedPatients:", orderedPatients);
   console.log("patientsToDeviceIDs", patientsToDeviceIDs);
+  console.log("orderedStringTimes:", orderedStringTimes);
 
   const onSelectChange = (e) => {
     setSelectedPatient(e.target.value);
@@ -272,7 +341,7 @@ export default function DoctorDashboard(props) {
   return (
     <>
       <Header text1={"Welcome " + props.username} isPatient={false} />
-      <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
+      <div style={{ backgroundColor: "#ebd8ed", height: 1050 }}>
         <div className="row">
           <div className="col-md-3">
             <SwipeableTemporaryDrawer
@@ -419,7 +488,7 @@ export default function DoctorDashboard(props) {
         </AreaChart>
         <Divider
           component="li"
-          style={{ height: 10, backgroundColor: "#fc035a" }}
+          style={{ height: 10, backgroundColor: "#424242" }}
         />
         <div className="row">
           <div className="col-md-3 d-flex align-items-center justify-content-center"></div>
@@ -443,7 +512,7 @@ export default function DoctorDashboard(props) {
             <TextareaAutosize
               aria-label="message"
               placeholder="Message"
-              style={{ width: 500, height: 200 }}
+              style={{ width: 500, height: 150 }}
               onChange={(e) => {
                 setMessage(e.target.value);
               }}
@@ -453,23 +522,28 @@ export default function DoctorDashboard(props) {
             <List style={{ backgroundColor: "white" }}>
               {orderedMessages.map((message, i) => {
                 return orderedPatients.map((patient, j) => {
-                  if (i <= 2 && j === i) {
-                    return (
-                      <>
-                        <ListItem
-                          alignItems="flex-start"
-                          style={{ width: 800 }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faPaperPlane}
-                            style={{ height: 50, width: 30, marginRight: 20 }}
-                          />
-                          <ListItemText primary={patient} secondary={message} />
-                        </ListItem>
-                        <Divider component="li" />
-                      </>
-                    );
-                  }
+                  return orderedStringTimes.map((time, k) => {
+                    if (i <= 2 && j === i && j === k && i === k) {
+                      return (
+                        <>
+                          <ListItem
+                            alignItems="flex-start"
+                            style={{ width: 800 }}
+                          >
+                            <FontAwesomeIcon
+                              icon={faPaperPlane}
+                              style={{ height: 50, width: 30, marginRight: 20 }}
+                            />
+                            <ListItemText
+                              primary={patient + " - " + time}
+                              secondary={message}
+                            />
+                          </ListItem>
+                          <Divider component="li" />
+                        </>
+                      );
+                    }
+                  });
                 });
               })}
             </List>

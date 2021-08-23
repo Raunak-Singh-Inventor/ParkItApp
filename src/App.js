@@ -405,9 +405,23 @@ function App() {
           sendMessageToPatient={sendMessageToPatient}
         />
       )}
-      {step === 4 && <ExercisesPage setStep={setStep} signOut={signOut} />}
-      {step === 5 && <DocumentsPage setStep={setStep} signOut={signOut} />}
-      {step === 6 && <ProductsPage setStep={setStep} signOut={signOut} />}
+      {step === 4 && (
+        <ExercisesPage
+          setStep={setStep}
+          signOut={signOut}
+          username={username}
+        />
+      )}
+      {step === 5 && (
+        <DocumentsPage
+          setStep={setStep}
+          signOut={signOut}
+          username={username}
+        />
+      )}
+      {step === 6 && (
+        <ProductsPage setStep={setStep} signOut={signOut} username={username} />
+      )}
     </div>
   );
 }

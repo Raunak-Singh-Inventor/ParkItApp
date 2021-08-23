@@ -49,6 +49,7 @@ export default function PatientDashboard(props) {
   const [isGyroSelected, setIsGyroSelected] = useState(true);
   const [message, setMessage] = useState("");
   const [orderedMessages, setOrderedMessages] = useState([]);
+  const [orderedStringTimes, setOrderedStringTimes] = useState([]);
 
   // const isDesktopOrLaptop = useMediaQuery({
   //   query: "(min-width: 1224px)",
@@ -182,6 +183,7 @@ export default function PatientDashboard(props) {
   let messages = [];
   let patients = [];
   let deviceIDs = {};
+  let stringTimes = [];
   useEffect(() => {
     async function fetchData() {
       const response = await API.graphql({
@@ -235,10 +237,76 @@ export default function PatientDashboard(props) {
             messages.push(
               response.data.listMessagesToPatients.items[j]["message"]
             );
+            stringTimes.push(
+              String(
+                Math.floor(
+                  (response.data.listMessagesToPatients.items[j]["updatedAt"] %
+                    31536000) /
+                    2592000
+                )
+              ) +
+                "/" +
+                String(
+                  Math.floor(
+                    ((response.data.listMessagesToPatients.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) /
+                      86400
+                  )
+                ) +
+                "/" +
+                String(
+                  Math.floor(
+                    response.data.listMessagesToPatients.items[j]["updatedAt"] /
+                      31536000
+                  )
+                ) +
+                " : " +
+                String(
+                  Math.floor(
+                    (((response.data.listMessagesToPatients.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) %
+                      86400) /
+                      3600
+                  )
+                ) +
+                "-" +
+                String(
+                  Math.floor(
+                    ((((response.data.listMessagesToPatients.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) %
+                      86400) %
+                      3600) /
+                      60
+                  )
+                ) +
+                "-" +
+                String(
+                  Math.floor(
+                    ((((response.data.listMessagesToPatients.items[j][
+                      "updatedAt"
+                    ] %
+                      31536000) %
+                      2592000) %
+                      86400) %
+                      3600) %
+                      60
+                  )
+                )
+            );
           }
         }
       }
       setOrderedMessages(messages);
+      setOrderedStringTimes(stringTimes);
     }
 
     fetchData();
@@ -248,7 +316,7 @@ export default function PatientDashboard(props) {
 
   return (
     <>
-      <Header text1={"Welcome " + props.username} isPatient={true}/>
+      <Header text1={"Welcome " + props.username} isPatient={true} />
       <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
         <div className="row">
           <div className="col-md-3">
@@ -384,7 +452,7 @@ export default function PatientDashboard(props) {
         </div>
         <Divider
           component="li"
-          style={{ height: 10, backgroundColor: "#fc035a" }}
+          style={{ height: 10, backgroundColor: "#424242" }}
         />
         <div className="row" style={{ marginTop: 20 }}>
           <div className="col-md-6 d-flex align-items-center justify-content-center">
@@ -399,7 +467,7 @@ export default function PatientDashboard(props) {
             <TextareaAutosize
               aria-label="message"
               placeholder="Message"
-              style={{ width: 500, height: 200 }}
+              style={{ width: 500, height: 150 }}
               onChange={(e) => {
                 setMessage(e.target.value);
               }}
@@ -408,28 +476,33 @@ export default function PatientDashboard(props) {
           <div className="col-md-6 d-flex align-items-center justify-content-center">
             <List style={{ backgroundColor: "white" }}>
               {orderedMessages.map((message, i) => {
-                if (i <= 2) {
-                  return (
-                    <>
-                      <ListItem alignItems="flex-start" style={{ width: 800 }}>
-                        <FontAwesomeIcon
-                          icon={faPaperPlane}
-                          style={{ height: 50, width: 30, marginRight: 20 }}
-                        />
-                        <ListItemText
-                          primary={props.doctor}
-                          secondary={message}
-                        />
-                      </ListItem>
-                      <Divider component="li" />
-                    </>
-                  );
-                }
+                return orderedStringTimes.map((time, k) => {
+                  if (i <= 2 && i === k) {
+                    return (
+                      <>
+                        <ListItem
+                          alignItems="flex-start"
+                          style={{ width: 800 }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faPaperPlane}
+                            style={{ height: 50, width: 30, marginRight: 20 }}
+                          />
+                          <ListItemText
+                            primary={props.doctor + " - " + time}
+                            secondary={message}
+                          />
+                        </ListItem>
+                        <Divider component="li" />
+                      </>
+                    );
+                  }
+                });
               })}
             </List>
           </div>
         </div>
-        <div className="row" style={{ marginTop: 20 }}>
+        <div className="row" style={{ marginTop: 0 }}>
           <div className="col-md-6 d-flex align-items-center justify-content-center">
             <Button
               variant="contained"

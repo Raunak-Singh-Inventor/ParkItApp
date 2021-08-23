@@ -8,6 +8,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Divider } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo158x160 from "../../images/Logo158x160.png";
 import {
   faChartArea,
   faSignOutAlt,
@@ -63,12 +64,13 @@ export default function SwipeableTemporaryDrawer(props) {
             }}
             button
             key={text}
+            style={{ backgroundColor: "#424242", color: "white" }}
           >
             <FontAwesomeIcon
               icon={faChartArea}
               style={{ height: 50, width: 30, marginRight: 20 }}
             />
-            <ListItemText primary={text} />
+            <ListItemText primary={<h3>{text}</h3>} />
           </ListItem>
         ))}
       </List>
@@ -83,15 +85,17 @@ export default function SwipeableTemporaryDrawer(props) {
             }}
             button
             key={text}
+            style={{ backgroundColor: "#424242", color: "white" }}
           >
             <FontAwesomeIcon
               icon={faSignOutAlt}
               style={{ height: 50, width: 30, marginRight: 20 }}
             />
-            <ListItemText primary={text} />
+            <ListItemText primary={<h3>{text}</h3>} />
           </ListItem>
         ))}
       </List>
+      <img src={Logo158x160} style={{ marginLeft: 30, marginTop: 400 }} />
     </div>
   );
 

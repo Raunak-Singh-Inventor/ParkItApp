@@ -7,12 +7,14 @@ import hrb from "../../../images/hrb.png";
 import bigPen from "../../../images/bigPen.png";
 
 import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer";
+import Header from "../../Header";
 
 export default function ProductsPage(props) {
   return (
     <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
       <div className="row">
-        <div className="col-md-4 d-flex align-items-center justify-content-center">
+        <Header text1={"Welcome " + props.username} isPatient={true} />
+        <div className="col-md-4">
           <SwipeableTemporaryDrawer
             setStep={props.setStep}
             signOut={props.signOut}
@@ -20,10 +22,10 @@ export default function ProductsPage(props) {
           />
         </div>
         <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h4>What would you like to buy?</h4>
+          <h1>What would you like to buy?</h1>
         </div>
       </div>
-      <div className="row" style={{ marginTop: 150 }}>
+      <div className="row" style={{ marginTop: 100 }}>
         <div className="col-md-6 d-flex align-items-center justify-content-center">
           <Card
             style={{

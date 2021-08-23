@@ -2,13 +2,15 @@ import React from "react";
 import { Card } from "@material-ui/core";
 
 import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer";
+import Header from "../../Header";
 
 export default function ExercisesPage(props) {
   return (
     <>
       <div style={{ backgroundColor: "#ebd8ed", height: 1020, height: 1020 }}>
+        <Header text1={"Welcome " + props.username} isPatient={true} />
         <div className="row">
-          <div className="col-md-4 d-flex align-items-center justify-content-center">
+          <div className="col-md-4">
             <SwipeableTemporaryDrawer
               setStep={props.setStep}
               signOut={props.signOut}
@@ -16,7 +18,7 @@ export default function ExercisesPage(props) {
             />
           </div>
           <div className="col-md-4 d-flex align-items-center justify-content-center">
-            <h4>Which exercise would you like to do?</h4>
+            <h2>Which exercise would you like to do?</h2>
           </div>
         </div>
         <div className="row" style={{ marginTop: 20 }}>
