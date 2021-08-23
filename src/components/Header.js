@@ -10,14 +10,14 @@ export default function Header(props) {
         <div className="col-md-3 align-items-center justify-content-center">
           <img src={Logo158x160} style={{ width: 80 }} />
         </div>
-        <h1
+        <h2
           className="col-md-6 align-items-center justify-content-center"
           style={{ color: "white", marginTop: 10 }}
         >
           Park It! Parkinson Doctor & Patient Portal
-        </h1>
+        </h2>
         {props.text1 !== "" && (
-          <h1
+          <h2
             className="col-md-3 align-items-center justify-content-center"
             style={{ color: "white", marginTop: 10 }}
           >
@@ -33,7 +33,7 @@ export default function Header(props) {
               />
             )}
             {props.text1}
-          </h1>
+          </h2>
         )}
       </div>
     </div>
