@@ -3,14 +3,21 @@ import { Button, TextField, Card } from "@material-ui/core";
 import { useMediaQuery } from "react-responsive";
 
 import signingirl from "../../images/signingirl.png";
+import cognito from "../../images/cognito.jpg";
+import edukit from "../../images/edukit.png";
+import DynamoDB from "../../images/DynamoDB.png";
+import heart from "../../images/heart.png";
+import appsync from "../../images/appsync.png";
+import amplify from "../../images/amplify.png";
 
 import SubmitButton from "../SubmitButton";
+import Header from "../Header";
 
 export default function SignUp(props) {
   const [documentHeight, setDocumentHeight] = useState(0);
-  const [cardMargintop, setCardMarginTop] = useState(300);
+  const [cardMargintop, setCardMarginTop] = useState(200);
   const [cardHeight, setCardHeight] = useState(550);
-  const [signInGirlImageSize, setSignInGirlImageSize] = useState(500);
+  const [signInGirlImageSize, setSignInGirlImageSize] = useState(100);
   // eslint-disable-next-line
   useEffect(() => {
     setDocumentHeight(document.documentElement.offsetHeight);
@@ -35,14 +42,15 @@ export default function SignUp(props) {
       setCardHeight(550);
       setSignInGirlImageSize(300);
     } else {
-      setCardMarginTop(300);
+      setCardMarginTop(100);
       setCardHeight(550);
       setSignInGirlImageSize(500);
     }
   });
 
   return (
-    <div style={{ height: 80, backgroundColor: "#f50057" }}>
+    <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
+      <Header text1={""} />
       <div className="container">
         <div className="row">
           <div className="col-md-4 align-items-center justify-content-center"></div>
@@ -71,7 +79,7 @@ export default function SignUp(props) {
                   <div>
                     <div>
                       <TextField
-                        style={{ marginTop: 20, width: 500 }}
+                        style={{ marginTop: 50, width: 500 }}
                         onChange={props.onChange}
                         label="username"
                         name="username"
@@ -90,7 +98,7 @@ export default function SignUp(props) {
                         required
                       />
                     </div>
-                    <div style={{ marginTop: 20 }}>
+                    <div style={{ marginTop: 50 }}>
                       <SubmitButton
                         username={props.username}
                         password={props.password}
@@ -104,12 +112,12 @@ export default function SignUp(props) {
                         text={"Sign In"}
                       />
                     </div>
-                    <div>
+                    <div style={{ marginTop: 50 }}>
                       <h6>-----or------</h6>
                     </div>
-                    <div>
+                    <div style={{ marginTop: 50 }}>
                       <Button onClick={props.createAccount}>
-                        Create Account
+                        <h5>Create Account</h5>
                       </Button>
                     </div>
                   </div>
@@ -118,6 +126,26 @@ export default function SignUp(props) {
             </div>
           </Card>
           <div className="col-md-4 align-items-center justify-content-center"></div>
+        </div>
+        <div className="row" style={{ marginTop: 20 }}>
+          <div className="col-md-4"></div>
+          <div className="col-md-4">
+            Made with {<img src={heart} style={{ width: 40 }} />} in React by
+            Raunak Singh
+          </div>
+        </div>
+        <div className="row" style={{ marginTop: 20 }}>
+          <div className="col-md-12">
+            Built on AWS EduKit&nbsp;
+            {<img src={edukit} style={{ width: 40 }} />}&nbsp;, Secured by AWS
+            Cognito&nbsp;{<img src={cognito} style={{ width: 40 }} />}&nbsp;,
+            Data stored in DynamoDB&nbsp;
+            {<img src={DynamoDB} style={{ width: 40 }} />}&nbsp;, Queries built
+            on AWS AppSync&nbsp;
+            {<img src={appsync} style={{ width: 40 }} />}&nbsp;, App deployed on
+            AWS Amplify&nbsp;
+            {<img src={amplify} style={{ width: 40 }} />}&nbsp;
+          </div>
         </div>
       </div>
     </div>

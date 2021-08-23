@@ -3,18 +3,16 @@ import { Card } from "@material-ui/core";
 
 import SwipeableTemporaryDrawer from "../SwipeableTemporaryDrawer";
 
-import background from "../../../images/excersizebg.jpg";
-
 export default function ExercisesPage(props) {
   return (
     <>
-      <div style={{ backgroundImage: `url(${background})`, height: 1020 }}>
+      <div style={{ backgroundColor: "#ebd8ed", height: 1020, height: 1020 }}>
         <div className="row">
           <div className="col-md-4 d-flex align-items-center justify-content-center">
             <SwipeableTemporaryDrawer
               setStep={props.setStep}
               signOut={props.signOut}
-              color={"primary"}
+              color={"secondary"}
             />
           </div>
           <div className="col-md-4 d-flex align-items-center justify-content-center">

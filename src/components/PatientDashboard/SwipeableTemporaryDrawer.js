@@ -7,6 +7,15 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Divider } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRunning,
+  faChartArea,
+  faInfo,
+  faShoppingCart,
+  faSignOutAlt,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles({
   list: {
@@ -58,6 +67,10 @@ export default function SwipeableTemporaryDrawer(props) {
             button
             key={text}
           >
+            <FontAwesomeIcon
+              icon={faChartArea}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -73,6 +86,10 @@ export default function SwipeableTemporaryDrawer(props) {
             button
             key={text}
           >
+            <FontAwesomeIcon
+              icon={faRunning}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -88,11 +105,34 @@ export default function SwipeableTemporaryDrawer(props) {
             button
             key={text}
           >
+            <FontAwesomeIcon
+              icon={faInfo}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
-      <Divider component="li"/>
+      <List>
+        {["Products"].map((text, index) => (
+          <ListItem
+            onClick={() => {
+              if (text === "Products") {
+                props.setStep(6);
+              }
+            }}
+            button
+            key={text}
+          >
+            <FontAwesomeIcon
+              icon={faShoppingCart}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider component="li" />
       <List>
         {["Sign Out"].map((text, index) => (
           <ListItem
@@ -104,6 +144,10 @@ export default function SwipeableTemporaryDrawer(props) {
             button
             key={text}
           >
+            <FontAwesomeIcon
+              icon={faSignOutAlt}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -119,8 +163,13 @@ export default function SwipeableTemporaryDrawer(props) {
             onClick={toggleDrawer(anchor, true)}
             variant="contained"
             color={props.color}
+            style={{ height: 50, width: 300 }}
           >
-            Open Menu
+            <FontAwesomeIcon
+              icon={faBars}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
+            <h5>Open Menu</h5>
           </Button>
           <SwipeableDrawer
             anchor={anchor}

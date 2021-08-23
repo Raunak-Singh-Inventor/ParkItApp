@@ -7,6 +7,12 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Divider } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChartArea,
+  faSignOutAlt,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles({
   list: {
@@ -58,6 +64,10 @@ export default function SwipeableTemporaryDrawer(props) {
             button
             key={text}
           >
+            <FontAwesomeIcon
+              icon={faChartArea}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -74,6 +84,10 @@ export default function SwipeableTemporaryDrawer(props) {
             button
             key={text}
           >
+            <FontAwesomeIcon
+              icon={faSignOutAlt}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -90,7 +104,11 @@ export default function SwipeableTemporaryDrawer(props) {
             variant="contained"
             color="secondary"
           >
-            Open Menu
+            <FontAwesomeIcon
+              icon={faBars}
+              style={{ height: 50, width: 30, marginRight: 20 }}
+            />
+            <h5>Open Menu</h5>
           </Button>
           <SwipeableDrawer
             anchor={anchor}

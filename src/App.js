@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { API, graphqlOperation, Auth } from "aws-amplify";
-import { createMessagesToDoctor, createMessagesToPatient } from "./graphql/mutations";
+import {
+  createMessagesToDoctor,
+  createMessagesToPatient,
+} from "./graphql/mutations";
 import "./App.css";
 
 import AWS from "aws-sdk";
@@ -13,6 +16,7 @@ import PatientDashboard from "./components/PatientDashboard/PatientDashboard";
 import DoctorDashboard from "./components/DoctorDashboard/DoctorDashboard";
 import ExercisesPage from "./components/PatientDashboard/ExercisesPage/ExercisesPage";
 import DocumentsPage from "./components/PatientDashboard/DocumentsPage/DocumentsPage";
+import ProductsPage from "./components/PatientDashboard/ProductsPage/ProductsPage";
 
 function App() {
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -403,6 +407,7 @@ function App() {
       )}
       {step === 4 && <ExercisesPage setStep={setStep} signOut={signOut} />}
       {step === 5 && <DocumentsPage setStep={setStep} signOut={signOut} />}
+      {step === 6 && <ProductsPage setStep={setStep} signOut={signOut} />}
     </div>
   );
 }

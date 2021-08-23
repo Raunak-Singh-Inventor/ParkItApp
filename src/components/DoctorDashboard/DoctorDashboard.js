@@ -22,8 +22,14 @@ import { API } from "aws-amplify";
 import { listMessagesToDoctors } from "../../graphql/queries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import {
+  faMicrophoneAlt,
+  faHandScissors,
+  faCompass,
+} from "@fortawesome/free-solid-svg-icons";
 
 import SwipeableTemporaryDrawer from "./SwipeableTemporaryDrawer";
+import Header from "../Header";
 
 export default function DoctorDashboard(props) {
   const [gsrAvg, setGsrAvg] = useState(0);
@@ -265,193 +271,228 @@ export default function DoctorDashboard(props) {
 
   return (
     <>
-      <div className="row">
-        <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <SwipeableTemporaryDrawer
-            setStep={props.setStep}
-            signOut={props.signOut}
-          />
-        </div>
-        <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h5>What measurement would you like to view?</h5>
-        </div>
-        <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h5>
-            Patient:{" "}
-            <Select
-              native
-              value={selectedPatient}
-              onChange={(e) => {
-                onSelectChange(e);
-                props.getMeasurements();
-                createData();
-              }}
-              inputProps={{
-                name: "patient",
-                id: "patient-native-simple",
-              }}
-            >
-              <option value={undefined}>{""}</option>
-              {[...new Set(orderedPatients)].map((patient) => (
-                <option value={patient}>{patient}</option>
-              ))}
-              ;
-            </Select>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
+      <Header text1={"Welcome " + props.username} isPatient={false} />
+      <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
         <div className="row">
-          <div className="col-md-4"></div>
-          <div className="col-md-4 d-flex align-items-center justify-content-center">
-            <ToggleButtonGroup
-              value={types}
-              onChange={handleType}
-              aria-label="text formatting"
-            >
-              <ToggleButton value="GSR" aria-label="GSR">
-                GSR
-              </ToggleButton>
-              <ToggleButton value="Mic" aria-label="Mic">
-                Mic
-              </ToggleButton>
-              <ToggleButton value="Gyro" aria-label="Gyro">
-                Gyro
-              </ToggleButton>
-            </ToggleButtonGroup>
+          <div className="col-md-3">
+            <SwipeableTemporaryDrawer
+              setStep={props.setStep}
+              signOut={props.signOut}
+            />
+          </div>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <h1>What measurement would you like to view?</h1>
+          </div>
+          <div className="col-md-3 d-flex align-items-center justify-content-center">
+            <h3>
+              Patient:{" "}
+              <Select
+                style={{ backgroundColor: "#fc035a", color: "white" }}
+                native
+                value={selectedPatient}
+                onChange={(e) => {
+                  onSelectChange(e);
+                  props.getMeasurements();
+                  createData();
+                }}
+                inputProps={{
+                  name: "patient",
+                  id: "patient-native-simple",
+                }}
+              >
+                <option value={undefined}>{""}</option>
+                {[...new Set(orderedPatients)].map((patient) => (
+                  <option value={patient}>{patient}</option>
+                ))}
+                ;
+              </Select>
+            </h3>
           </div>
         </div>
-      </div>
-      <AreaChart
-        width={window.innerWidth}
-        height={500}
-        data={data}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis />
-        <YAxis />
-        <Tooltip />
-        {isGsrSelected === true && (
-          <Area
-            type="monotone"
-            dataKey="gsr"
-            stackId="1"
-            stroke="#fc0303"
-            fill="#fc0303"
-          />
-        )}
-        {isMicSelected === true && (
-          <Area
-            type="monotone"
-            dataKey="mic"
-            stackId="1"
-            stroke="#fc5e03"
-            fill="#fc5e03"
-          />
-        )}
-        {isGyroSelected === true && (
-          <Area
-            type="monotone"
-            dataKey="pitch"
-            stackId="1"
-            stroke="#fcb103"
-            fill="#fcb103"
-          />
-        )}
-        {isGyroSelected === true && (
-          <Area
-            type="monotone"
-            dataKey="roll"
-            stackId="1"
-            stroke="#fc035a"
-            fill="#fc035a"
-          />
-        )}
-        {isGyroSelected === true && (
-          <Area
-            type="monotone"
-            dataKey="yaw"
-            stackId="1"
-            stroke="#ad03fc"
-            fill="blue"
-          />
-        )}
-      </AreaChart>
-      <Divider component="li" style={{ height: 10 }} />
-      <div className="row">
-        <div className="col-md-4 d-flex align-items-center justify-content-center"></div>
-        <div className="col-md-4 d-flex align-items-center justify-content-center">
-          <h2>Showing readings of&nbsp;</h2>
-          {types.map((type) => (
-            <h2>{type}&nbsp;</h2>
-          ))}
+        <div className="row">
+          <div className="row">
+            <div className="col-md-4"></div>
+            <div className="col-md-4 d-flex align-items-center justify-content-center">
+              <ToggleButtonGroup
+                value={types}
+                onChange={handleType}
+                aria-label="text formatting"
+              >
+                <ToggleButton
+                  value="GSR"
+                  aria-label="GSR"
+                  style={{ width: 200, backgroundColor: "#1d8f2c" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faHandScissors}
+                    style={{ height: 50, width: 30, marginRight: 20 }}
+                  />
+                  <h5 style={{ color: "white" }}>GSR</h5>
+                </ToggleButton>
+                <ToggleButton
+                  value="Mic"
+                  aria-label="Mic"
+                  style={{ width: 200, backgroundColor: "#fc5e03" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faMicrophoneAlt}
+                    style={{ height: 50, width: 30, marginRight: 20 }}
+                  />
+                  <h5 style={{ color: "white" }}>Mic</h5>
+                </ToggleButton>
+                <ToggleButton
+                  value="Gyro"
+                  aria-label="Gyro"
+                  style={{ width: 200, backgroundColor: "#ad03fc" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCompass}
+                    style={{ height: 50, width: 30, marginRight: 20 }}
+                  />
+                  <h5 style={{ color: "white" }}>Gyro</h5>
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="row" style={{ marginTop: 20 }}>
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
-          <h1>Send a message</h1>
+        <AreaChart
+          width={window.innerWidth}
+          height={500}
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+          style={{ backgroundColor: "white" }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis />
+          <YAxis />
+          <Tooltip />
+          {isGsrSelected === true && (
+            <Area
+              type="monotone"
+              dataKey="gsr"
+              stackId="1"
+              stroke="#fc0303"
+              fill="#fc0303"
+            />
+          )}
+          {isMicSelected === true && (
+            <Area
+              type="monotone"
+              dataKey="mic"
+              stackId="1"
+              stroke="#fc5e03"
+              fill="#fc5e03"
+            />
+          )}
+          {isGyroSelected === true && (
+            <Area
+              type="monotone"
+              dataKey="pitch"
+              stackId="1"
+              stroke="#fcb103"
+              fill="#fcb103"
+            />
+          )}
+          {isGyroSelected === true && (
+            <Area
+              type="monotone"
+              dataKey="roll"
+              stackId="1"
+              stroke="#fc035a"
+              fill="#fc035a"
+            />
+          )}
+          {isGyroSelected === true && (
+            <Area
+              type="monotone"
+              dataKey="yaw"
+              stackId="1"
+              stroke="#ad03fc"
+              fill="blue"
+            />
+          )}
+        </AreaChart>
+        <Divider
+          component="li"
+          style={{ height: 10, backgroundColor: "#fc035a" }}
+        />
+        <div className="row">
+          <div className="col-md-3 d-flex align-items-center justify-content-center"></div>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <h1>Showing readings of&nbsp;</h1>
+            {types.map((type) => (
+              <h1>{type}&nbsp;</h1>
+            ))}
+          </div>
         </div>
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
-          <h1>Recent Messages</h1>
+        <div className="row" style={{ marginTop: 20 }}>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <h1>Send a message</h1>
+          </div>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <h1>Recent Messages</h1>
+          </div>
         </div>
-      </div>
-      <div className="row" style={{ marginTop: 5 }}>
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
-          <TextareaAutosize
-            aria-label="message"
-            placeholder="Message"
-            style={{ width: 500, height: 200 }}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
-          />
+        <div className="row" style={{ marginTop: 5 }}>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <TextareaAutosize
+              aria-label="message"
+              placeholder="Message"
+              style={{ width: 500, height: 200 }}
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+            />
+          </div>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <List style={{ backgroundColor: "white" }}>
+              {orderedMessages.map((message, i) => {
+                return orderedPatients.map((patient, j) => {
+                  if (i <= 2 && j === i) {
+                    return (
+                      <>
+                        <ListItem
+                          alignItems="flex-start"
+                          style={{ width: 800 }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faPaperPlane}
+                            style={{ height: 50, width: 30, marginRight: 20 }}
+                          />
+                          <ListItemText primary={patient} secondary={message} />
+                        </ListItem>
+                        <Divider component="li" />
+                      </>
+                    );
+                  }
+                });
+              })}
+            </List>
+          </div>
         </div>
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
-          <List>
-            {orderedMessages.map((message, i) => {
-              return orderedPatients.map((patient, j) => {
-                if (i <= 2 && j === i) {
-                  return (
-                    <>
-                      <ListItem alignItems="flex-start" style={{ width: 800 }}>
-                        <FontAwesomeIcon
-                          icon={faPaperPlane}
-                          style={{ height: 50, width: 30, marginRight: 20 }}
-                        />
-                        <ListItemText primary={patient} secondary={message} />
-                      </ListItem>
-                      <Divider component="li" />
-                    </>
-                  );
-                }
-              });
-            })}
-          </List>
-        </div>
-      </div>
-      <div className="row" style={{ marginTop: 0 }}>
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
-          <Button
-            variant="contained"
-            color="secondary"
-            style={{ width: 500 }}
-            onClick={() => {
-              props.sendMessageToPatient(
-                selectedPatient,
-                message,
-                props.username
-              );
-            }}
-            disabled={selectedPatient === ""}
-          >
-            Send to {selectedPatient}
-          </Button>
+        <div className="row" style={{ marginTop: 0 }}>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ width: 500 }}
+              onClick={() => {
+                props.sendMessageToPatient(
+                  selectedPatient,
+                  message,
+                  props.username
+                );
+              }}
+              disabled={selectedPatient === ""}
+            >
+              Send to {selectedPatient}
+            </Button>
+          </div>
         </div>
       </div>
     </>

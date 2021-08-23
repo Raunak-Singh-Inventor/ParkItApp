@@ -42,132 +42,138 @@ export default function SignUp(props) {
   });
 
   return (
-    <div style={{ height: 80, backgroundColor: "#f50057" }}>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 align-items-center justify-content-center"></div>
-          <Card
-            className="col-md-4 align-items-center justify-content-center"
-            style={{
-              marginTop: cardMargintop,
-              width: 2000,
-              height: cardHeight,
-            }}
-          >
-            <div className="row">
-              <div className="col-md-6" style={{ textAlign: "center" }}>
-                <h1 style={{ fontSize: 64 }} className="SignUpText">
-                  Sign up to Park It!
-                </h1>
-                <img
-                  style={{ width: signUpGirlImageSize }}
-                  src={signupgirl}
-                  alt={"signUp"}
-                />
-              </div>
-              <div className="col-md-6">
-                <div style={{ marginTop: 20 }}>
-                  <ButtonGroup
-                    disableElevation
-                    size="large"
-                    color="secondary"
-                    onClick={props.onRolePickerChange}
-                  >
-                    <Button variant={props.patientRolePickerColor}>
-                      Patient
-                    </Button>
-                    <Button variant={props.doctorRolePickerColor}>
-                      Doctor
-                    </Button>
-                  </ButtonGroup>
-                  <form noValidate autoComplete="off" style={{ marginTop: 15 }}>
-                    <div>
-                      <TextField
-                        label="username"
-                        name="username"
-                        onChange={props.onChange}
-                        style={{ width: 500 }}
-                        error={props.isUsernameError}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 15 }}>
-                      <TextField
-                        label="password"
-                        name="password"
-                        type="password"
-                        onChange={props.onChange}
-                        style={{ width: 500 }}
-                        error={props.isPasswordError}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 15 }}>
-                      <TextField
-                        label="email"
-                        name="email"
-                        type="email"
-                        onChange={props.onChange}
-                        style={{ width: 500 }}
-                        error={props.isEmailError}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 15 }}>
-                      <TextField
-                        label="phone number"
-                        name="phone number"
-                        onChange={props.onChange}
-                        style={{ width: 500 }}
-                        error={props.isPhoneNumberError}
-                        value={props.phoneNumber}
-                        required
-                      />
-                    </div>
-                    <div style={{ marginTop: 15 }}>
-                      {props.role === "patient" && (
+    <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
+      <div style={{ height: 80, backgroundColor: "#f50057" }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4 align-items-center justify-content-center"></div>
+            <Card
+              className="col-md-4 align-items-center justify-content-center"
+              style={{
+                marginTop: cardMargintop,
+                width: 2000,
+                height: cardHeight,
+              }}
+            >
+              <div className="row">
+                <div className="col-md-6" style={{ textAlign: "center" }}>
+                  <h1 style={{ fontSize: 64 }} className="SignUpText">
+                    Sign up to Park It!
+                  </h1>
+                  <img
+                    style={{ width: signUpGirlImageSize }}
+                    src={signupgirl}
+                    alt={"signUp"}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <div style={{ marginTop: 20 }}>
+                    <ButtonGroup
+                      disableElevation
+                      size="large"
+                      color="secondary"
+                      onClick={props.onRolePickerChange}
+                    >
+                      <Button variant={props.patientRolePickerColor}>
+                        Patient
+                      </Button>
+                      <Button variant={props.doctorRolePickerColor}>
+                        Doctor
+                      </Button>
+                    </ButtonGroup>
+                    <form
+                      noValidate
+                      autoComplete="off"
+                      style={{ marginTop: 15 }}
+                    >
+                      <div>
                         <TextField
+                          label="username"
+                          name="username"
                           onChange={props.onChange}
-                          value={props.deviceID}
-                          name="deviceID"
-                          label="Device ID"
                           style={{ width: 500 }}
-                          error={props.isDeviceIDError}
+                          error={props.isUsernameError}
                           required
                         />
-                      )}
-                    </div>
-                    <div style={{ marginTop: 15 }}>
-                      {props.role === "patient" && (
+                      </div>
+                      <div style={{ marginTop: 15 }}>
                         <TextField
+                          label="password"
+                          name="password"
+                          type="password"
                           onChange={props.onChange}
-                          value={props.doctor}
-                          name="doctor"
-                          label="Your doctor's username"
                           style={{ width: 500 }}
-                          error={props.isDoctorError}
+                          error={props.isPasswordError}
                           required
                         />
-                      )}
-                    </div>
-                    <SubmitButton
-                      username={props.username}
-                      password={props.password}
-                      email={props.email}
-                      phoneNumber={props.phoneNumber}
-                      role={props.role}
-                      deviceID={props.deviceID}
-                      doctor={props.doctor}
-                      authenticationCode={"authenticationCode"}
-                      onClick={props.signUp}
-                      text={"Sign Up"}
-                    />
-                  </form>
+                      </div>
+                      <div style={{ marginTop: 15 }}>
+                        <TextField
+                          label="email"
+                          name="email"
+                          type="email"
+                          onChange={props.onChange}
+                          style={{ width: 500 }}
+                          error={props.isEmailError}
+                          required
+                        />
+                      </div>
+                      <div style={{ marginTop: 15 }}>
+                        <TextField
+                          label="phone number"
+                          name="phone number"
+                          onChange={props.onChange}
+                          style={{ width: 500 }}
+                          error={props.isPhoneNumberError}
+                          value={props.phoneNumber}
+                          required
+                        />
+                      </div>
+                      <div style={{ marginTop: 15 }}>
+                        {props.role === "patient" && (
+                          <TextField
+                            onChange={props.onChange}
+                            value={props.deviceID}
+                            name="deviceID"
+                            label="Device ID"
+                            style={{ width: 500 }}
+                            error={props.isDeviceIDError}
+                            required
+                          />
+                        )}
+                      </div>
+                      <div style={{ marginTop: 15 }}>
+                        {props.role === "patient" && (
+                          <TextField
+                            onChange={props.onChange}
+                            value={props.doctor}
+                            name="doctor"
+                            label="Your doctor's username"
+                            style={{ width: 500 }}
+                            error={props.isDoctorError}
+                            required
+                          />
+                        )}
+                      </div>
+                      <SubmitButton
+                        username={props.username}
+                        password={props.password}
+                        email={props.email}
+                        phoneNumber={props.phoneNumber}
+                        role={props.role}
+                        deviceID={props.deviceID}
+                        doctor={props.doctor}
+                        authenticationCode={"authenticationCode"}
+                        onClick={props.signUp}
+                        text={"Sign Up"}
+                      />
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Card>
-          <div className="col-md-4 align-items-center justify-content-center"></div>
+            </Card>
+            <div className="col-md-4 align-items-center justify-content-center"></div>
+          </div>
         </div>
       </div>
     </div>

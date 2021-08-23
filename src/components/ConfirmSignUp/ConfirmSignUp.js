@@ -42,60 +42,62 @@ export default function SignUp(props) {
   });
 
   return (
-    <div style={{ height: 80, backgroundColor: "#f50057" }}>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 align-items-center justify-content-center"></div>
-          <Card
-            className="col-md-4 align-items-center justify-content-center"
-            style={{
-              textAlign: "center",
-              marginTop: cardMarginTop,
-              width: 500,
-              height: cardHeight,
-              marginLeft: cardMarginLeft,
-            }}
-          >
-            <img
-              src={confirmsignupgirl}
-              alt={"confirmSignUp"}
-              style={{ width: 300 }}
-            />
-            <form noValidate autoComplete="off">
-              <div>
-                <TextField
-                  label="username"
-                  name="username"
-                  onChange={props.onChange}
-                  error={props.isUsernameError}
-                  required
-                />
-              </div>
-              <div>
-                <TextField
-                  label="authentication code"
-                  name="authenticationCode"
-                  type="authenticationCode"
-                  onChange={props.onChange}
-                  error={props.isAuthenticationCodeError}
-                  required
-                />
-              </div>
-              <SubmitButton
-                username={props.username}
-                password={"password"}
-                email={"email"}
-                phoneNumber={"phoneNumber"}
-                role={"patient"}
-                deviceID={"deviceID"}
-                doctor={"doctor"}
-                authenticationCode={props.authenticationCode}
-                onClick={props.confirmSignUp}
-                text={"Confirm Sign Up"}
+    <div style={{ backgroundColor: "#ebd8ed", height: 1020 }}>
+      <div style={{ height: 80, backgroundColor: "#f50057" }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4 align-items-center justify-content-center"></div>
+            <Card
+              className="col-md-4 align-items-center justify-content-center"
+              style={{
+                textAlign: "center",
+                marginTop: cardMarginTop,
+                width: 500,
+                height: cardHeight,
+                marginLeft: cardMarginLeft,
+              }}
+            >
+              <img
+                src={confirmsignupgirl}
+                alt={"confirmSignUp"}
+                style={{ width: 300 }}
               />
-            </form>
-          </Card>
-          <div className="col-md-4 align-items-center justify-content-center"></div>
+              <form noValidate autoComplete="off">
+                <div>
+                  <TextField
+                    label="username"
+                    name="username"
+                    onChange={props.onChange}
+                    error={props.isUsernameError}
+                    required
+                  />
+                </div>
+                <div>
+                  <TextField
+                    label="authentication code"
+                    name="authenticationCode"
+                    type="authenticationCode"
+                    onChange={props.onChange}
+                    error={props.isAuthenticationCodeError}
+                    required
+                  />
+                </div>
+                <SubmitButton
+                  username={props.username}
+                  password={"password"}
+                  email={"email"}
+                  phoneNumber={"phoneNumber"}
+                  role={"patient"}
+                  deviceID={"deviceID"}
+                  doctor={"doctor"}
+                  authenticationCode={props.authenticationCode}
+                  onClick={props.confirmSignUp}
+                  text={"Confirm Sign Up"}
+                />
+              </form>
+            </Card>
+            <div className="col-md-4 align-items-center justify-content-center"></div>
+          </div>
         </div>
       </div>
     </div>

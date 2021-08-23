@@ -18,8 +18,9 @@ export default function SubmitButton(props) {
         color="secondary"
         variant="contained"
         onClick={props.onClick}
+        style={{ height: 50, width: 300 }}
       >
-        {props.text}
+        <h5>{props.text}</h5>
       </Button>
     );
   } else if (
@@ -36,8 +37,9 @@ export default function SubmitButton(props) {
         color="secondary"
         variant="contained"
         onClick={props.onClick}
+        style={{ height: 50, width: 300 }}
       >
-        {props.text}
+        <h5>{props.text}</h5>
       </Button>
     );
   } else {
@@ -47,9 +49,10 @@ export default function SubmitButton(props) {
         color="secondary"
         variant="contained"
         onClick={props.onClick}
+        style={{ height: 50, width: 300 }}
         disabled
       >
-        {props.text}
+        <h5>{props.text}</h5>
       </Button>
     );
   }
